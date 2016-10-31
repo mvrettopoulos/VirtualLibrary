@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Roles View";
+}
+
+<div id="insert_role_modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="insert_role_modalContent">
+            @Html.Action("CreateRole")
+        </div>
+    </div>
+</div>
+
+<div id="delete_role_modal" class="modal" data-url="@Url.Action("DeleteRole")">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Delete role</h4>
+            </div>
+            <div class="modal-body" id="delete_role_modal_body">
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-danger" id="delete_role_modal_close_button">
+                    <i class="fa fa-close fa-lg"></i>
+                    <strong>Cancel</strong>
+                </a>
+                <button data-dismiss="modal" class="btn btn-success" id="delete_role_modal_submit_button">
+                    <i class="fa fa-check fa-lg"></i>
+                    <strong>Apply</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit_role_modal" class="modal" role="dialog" aria-hidden="true" data-url="@Url.Action("EditRole")">
+    <div class="modal-dialog">
+        <div class="modal-content" id="edit_role_modalContent">
+           
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Roles</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-roles">
+            <div class="panel-heading panel-heading-roles">
+                <div class="btn-group pull-right">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" id="insert_role_button" data-toggle="tooltip" title="Insert new role">
+                            <i class="fa fa-plus fa-lg"></i>
+                            <strong>Insert</strong>
+                        </button>
+                        <button class="btn btn-default" id="delete_role_button" data-toggle="tooltip" title="Delete existing role">
+                            <i class="fa fa-trash fa-lg"></i>
+                            <strong>Delete</strong>
+                        </button>
+                        <button class="btn btn-default" id="edit_role_button" data-toggle="tooltip" title="Edit existing role">
+                            <i class="fa fa-pencil fa-lg"></i>
+                            <strong>Edit</strong>
+                        </button>
+                    </div>
+                </div>
+                <h4>Overview</h4>
+            </div>
+            <div class="panel-body">
+                <div class="dataTables_wrapper">
+                    <table class="table table-striped table-bordered table-hover select" id="roles_overview_table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var role in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => role.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => role.Name)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-lg-12 text-right">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary" id="back-button" data-toggle="tooltip" title="Return home">
+                            <i class="fa fa-mail-reply fa-lg"></i>
+                            <strong>Back</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="notifications" id="roles_view_notification"></div>
+
+<script src="@Url.Content("~/Scripts/js/roles.view.js")"></script>
