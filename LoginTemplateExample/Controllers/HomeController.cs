@@ -9,10 +9,9 @@ using System.IO;
 
 namespace LoginTemplateExample.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
-        private Templa db = new DashboardEntities();
+        private LoginTemplateExampleEntities db = new LoginTemplateExampleEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
     (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

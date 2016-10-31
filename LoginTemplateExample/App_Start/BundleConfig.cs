@@ -20,8 +20,12 @@ namespace LoginTemplateExample
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/bower_components/bootstrap/dist/js/bootstrap.min.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/bootstrap.js", "~/Scripts/bootstrap.min.js", "~/Scripts/respond.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                     "~/Content/bootstrap.min.css",
+                     "~/Content/timeline.css",
+                     "~/Content/sb-admin-2.css"));
 
         }
     }

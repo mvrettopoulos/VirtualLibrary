@@ -13,10 +13,10 @@ namespace LoginTemplateExample.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LoginTemplateExampleEntities1 : DbContext
+    public partial class LoginTemplateExampleEntities : DbContext
     {
-        public LoginTemplateExampleEntities1()
-            : base("name=LoginTemplateExampleEntities1")
+        public LoginTemplateExampleEntities()
+            : base("name=LoginTemplateExampleEntities")
         {
         }
     

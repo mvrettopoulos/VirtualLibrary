@@ -1,7 +1,5 @@
-﻿@model IEnumerable<Inachus_Dashboard.Models.Navbar>
+﻿@model IEnumerable<LoginTemplateExample.Models.Navbar>
 
-@if (Request.IsAuthenticated)
-{
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -11,137 +9,12 @@
                 <span class="icon-bar"></span>
             </button>
             <!--<img title="Inachus" alt="Inachus" src="~/Content/images/Inachus_logo_final_CMYK_b.jpg" />-->
-          @Html.ActionLink("Inachus Dashboard v1.0", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
+          @Html.ActionLink("Virtual Library v0.1", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
         </div>
         @Html.Partial("_LoginPartial")
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="navbar">
-                <ul class="nav sidebar-nav" id="side-menu">
-                    <li>
-                        <img class="img-circle" />
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard fa-fw"></i> Home</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Events")"><i class="fa fa-gears fa-fw"></i> Events</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Loads")"><i class="fa fa-cube fa-fw"></i> Loads</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Materials")"><i class="fa fa-puzzle-piece fa-fw"></i> Materials</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Structures")"><i class="fa fa-building-o fa-fw"></i> Structures</a>
-                    </li>
-
-                    <li class="dropdown keep-open">
-                        <a href="#" id="dropdown" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-building fa-fw"></i> Buildings</a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="@Url.Action("Index", "Buildings")"><i class="fa fa-building fa-fw"></i> Models</a></li>
-                            <li><a href="@Url.Action("Index", "BasementTypes")"><i class="fa fa-building fa-fw"></i> Basements</a></li>
-                            <li><a href="@Url.Action("Index", "FloorTypes")"><i class="fa fa-building fa-fw"></i> Floors</a></li>
-                            <li><a href="@Url.Action("Index", "RoofTypes")"><i class="fa fa-building fa-fw"></i> Roofs</a></li>
-                            <li><a href="@Url.Action("Index", "BuildingAgeTypes")"><i class="fa fa-building fa-fw"></i> Ages</a></li>
-                            <li><a href="@Url.Action("Index", "BuildingTypes")"><i class="fa fa-building fa-fw"></i> Types</a></li>
-                            <li><a href="@Url.Action("Index", "ShearWallTypes")"><i class="fa fa-building fa-fw"></i> ShearWalls</a></li>
-                            <li><a href="@Url.Action("Index", "WallsColumnsTypes")"><i class="fa fa-building fa-fw"></i> WallsColumns</a></li>
-                            <li><a href="@Url.Action("Index", "CollapseType")"><i class="fa fa-building fa-fw"></i> CollapseType</a></li>
-                            <li><a href="@Url.Action("Index", "PercentFailure")"><i class="fa fa-building fa-fw"></i> PercentFailure</a></li>
-                            <li><a href="@Url.Action("Index", "PrexistingDamageType")"><i class="fa fa-building fa-fw"></i> PrexistingDamageType</a></li>
-                            <li><a href="@Url.Action("Index", "PrexistingDamageMagnitude")"><i class="fa fa-building fa-fw"></i> PrexistingDamageMagnitude</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="@Url.Action("Index", "CaseStudies")"><i class="fa fa-search fa-fw"></i> Case studies</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Maps")"><i class="fa fa-map-marker fa-fw"></i> Maps</a>
-                    </li>
-                    <li>
-                        <a href="http://www.inachus.eu/" target="_blank"><i class="fa fa-tag fa-fw"></i> Inachus Project</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
-        </div>
     </nav>
-}
-else
-{
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Inachus Dashboard v1.0", "Login", new { controller = "Account" }, new { @class = "navbar-brand" })
-        </div>
-        @Html.Partial("_LoginPartial")
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li>
-                        <img class="img-circle" />
-                    </li>
-                    <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" disabled placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" disabled type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                        <!-- /input-group -->
-                    </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-dashboard fa-fw"></i> Home</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-gears fa-fw"></i> Events</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-cube fa-fw"></i> Loads</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-puzzle-piece fa-fw"></i> Materials</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-building-o fa-fw"></i> Structures</a>
-                    </li>
 
-                    <li class="dropdown disabled keep-open">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-building fa-fw"></i>Buildings</a>
-                    </li>
-
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-search fa-fw"></i> Case studies</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-map-marker fa-fw"></i> Maps</a>
-                    </li>
-                    <li>
-                        <a href="http://www.inachus.eu/" target="_blank"><i class="fa fa-map-marker fa-fw"></i>Inachus Project</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
-        </div>
-    </nav>
-}
 <!-- /.navbar-static-side -->
 
 
 <script src="@Url.Content("~/Scripts/js/navbar.js")"></script>
-
-<script>
-$('.dropdown.keep-open').on({
-    "shown.bs.dropdown": function () { this.closable = false; },
-    "click": function () { this.closable = true; },
-    "hide.bs.dropdown": function () { return this.closable; }
-});</script>
