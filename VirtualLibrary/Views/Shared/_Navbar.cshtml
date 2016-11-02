@@ -1,0 +1,19 @@
+﻿@model IEnumerable<VirtualLibrary.Models.Navbar>
+
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          @Html.ActionLink("Virtual Library v0.1", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
+        </div>
+        @Html.Partial("_LoginPartial")
+    </nav>
+
+<!-- /.navbar-static-side -->
+
+
+<script src="@Url.Content("~/Scripts/js/navbar.js")"></script>

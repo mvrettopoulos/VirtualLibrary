@@ -1,0 +1,35 @@
+﻿@model VirtualLibrary.Models.RoleViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">Insert role</h4>
+</div>
+
+@using (Html.BeginForm("CreateRole", "Account"))
+{
+    <div class="modal-body" id="insert_role_modal_body">
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="fa fa-close fa-lg"></i>
+            <strong>Cancel</strong>
+        </button>
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check fa-lg"></i>
+            <strong>Apply</strong>
+        </button>
+    </div>
+}
+
+
