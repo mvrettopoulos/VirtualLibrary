@@ -248,6 +248,13 @@
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\angular-material.css" />
+    <Content Include="Content\angular-material.layout-attributes.css" />
+    <Content Include="Content\angular-material.layout-attributes.min.css" />
+    <Content Include="Content\angular-material.layouts.css" />
+    <Content Include="Content\angular-material.layouts.ie_fixes.css" />
+    <Content Include="Content\angular-material.layouts.min.css" />
+    <Content Include="Content\angular-material.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -422,6 +429,15 @@
       <DependentUpon>VirtualLibraryEntities.edmx</DependentUpon>
       <LastGenOutput>VirtualLibraryEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\angular-animate\angular-animate.js" />
+    <Content Include="Scripts\angular-animate\angular-animate.min.js" />
+    <Content Include="Scripts\angular-aria\angular-aria.js" />
+    <Content Include="Scripts\angular-aria\angular-aria.min.js" />
+    <Content Include="Scripts\angular-material\angular-material-mocks.js" />
+    <Content Include="Scripts\angular-material\angular-material.js" />
+    <Content Include="Scripts\angular-material\angular-material.min.js" />
+    <Content Include="Scripts\angular\angular.js" />
+    <Content Include="Scripts\angular\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="AppSettingsSecrets.config">
@@ -446,6 +462,8 @@
     <Content Include="Models\VirtualLibraryEntities.edmx.diagram">
       <DependentUpon>VirtualLibraryEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\angular-animate\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-aria\angular-aria.min.js.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
