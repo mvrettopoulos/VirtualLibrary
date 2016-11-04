@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VirtualLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VirtualLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -148,6 +148,9 @@
           <Property Name="username_id" Type="int" />
           <Property Name="reserved_date" Type="varchar" MaxLength="50" />
           <Property Name="return_date" Type="varchar" MaxLength="50" />
+          <Property Name="check_in_date" Type="varchar" MaxLength="50" />
+          <Property Name="check_ou_date" Type="varchar" MaxLength="50" />
+          <Property Name="renewTimes" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -421,8 +424,7 @@
             <End Role="Reservations" EntitySet="Reservations" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VirtualLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -565,6 +567,9 @@
           <Property Name="return_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Books" Relationship="Self.FK_Reservations_Books" FromRole="Reservations" ToRole="Books" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Reservations_Users" FromRole="Reservations" ToRole="Users" />
+          <Property Name="check_in_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="check_ou_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="renewTimes" Type="Int32" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -888,6 +893,9 @@
           <EntitySetMapping Name="Reservations">
             <EntityTypeMapping TypeName="VirtualLibraryModel.Reservations">
               <MappingFragment StoreEntitySet="Reservations">
+                <ScalarProperty Name="renewTimes" ColumnName="renewTimes" />
+                <ScalarProperty Name="check_ou_date" ColumnName="check_ou_date" />
+                <ScalarProperty Name="check_in_date" ColumnName="check_in_date" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="book_id" ColumnName="book_id" />
                 <ScalarProperty Name="username_id" ColumnName="username_id" />
