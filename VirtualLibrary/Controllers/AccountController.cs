@@ -169,8 +169,9 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 string role = "Guest";
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = UserManager.Create(user, model.Password);
                 if (result.Succeeded)
                 {
