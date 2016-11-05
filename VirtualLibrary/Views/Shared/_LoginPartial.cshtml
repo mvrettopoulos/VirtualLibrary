@@ -7,7 +7,12 @@
 
         <ul class="nav navbar-top-links navbar-right">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Books</a></li>
+            <li>
+                <a href="@Url.Action("Index", "Books")" data-toggle="tooltip" title="Books overview"> Books</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Libraries")" da data-toggle="tooltip" title="Libraries overview"> Libraries</a>
+            </li>
             <li>
                 <a href="@Url.Action("Index", "Manage")">
                     <i class="fa fa-user fa-fw"></i> Profile
