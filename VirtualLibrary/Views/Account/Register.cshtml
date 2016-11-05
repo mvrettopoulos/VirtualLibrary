@@ -11,24 +11,70 @@
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
+
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
+        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Username)        
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.firstName, new { @class = "col-md-2 control-label" })
+        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.firstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.firstName)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.lastName, new { @class = "col-md-2 control-label" })
+        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.lastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.lastName )        
+        </div>
+    </div>
+
+    <div class="form-group">
+            @Html.LabelFor(model => model.Date_of_Birth , new { @class = "col-md-2 control-label" })
+            @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+       <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Date_of_Birth, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "MM/DD/YYYY"})
+            @Html.ValidationMessageFor(model => model.Date_of_Birth)
+        </div>
+    </div>
+
+     <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+         @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+         <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email)
+         </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Password)
         </div>
     </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ConfirmPassword)
         </div>
     </div>
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />
