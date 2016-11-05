@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace VirtualLibrary.Models
 {
@@ -63,21 +64,46 @@ namespace VirtualLibrary.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Username is required.")]
+        [StringLength(15, MinimumLength = 3)]
+        [Display(Name = "User Name")]
+        [RegularExpression(@"(\S)+", ErrorMessage = " White Space is not allowed in User Names")]
+        [ScaffoldColumn(false)]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage ="First Name is required.")]
+        [StringLength(20, MinimumLength = 3)]
+        [Display(Name = "First Name")]
+        public string firstName { get; set; }
+
+        [Required(ErrorMessage ="Last Name is required.")]
+        [StringLength(15, MinimumLength = 3)]
+        [Display(Name = "Last Name")]
+        public string lastName { get; set; }
+
+        [Required(ErrorMessage ="Date of Birth is required.")]
+        [Display(Name ="Date of Birth")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? Date_of_Birth { get; set; }
+
+
+        [Required(ErrorMessage ="Email is required.")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Password is required.")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Confrimation of password is required.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
     }
 
     public class ResetPasswordViewModel
