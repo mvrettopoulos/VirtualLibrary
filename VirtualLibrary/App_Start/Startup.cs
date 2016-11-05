@@ -90,8 +90,8 @@ namespace VirtualLibrary.App_Start
             string roleGuest = "Guest";
             string roleModerator = "Moderator";
             string roleUser = "User";
-            string password = "administrator";
-            string email = "mvrettopoulos@iccs.gr";
+            string password = ConfigurationManager.AppSettings["AdminPass"];
+            string email = ConfigurationManager.AppSettings["AdminUser"];
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists(roleAdmin))
             {
