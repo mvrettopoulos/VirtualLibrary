@@ -34,6 +34,7 @@ namespace VirtualLibrary.Models
         public virtual DbSet<Books> Books { get; set; }
         public virtual DbSet<Books_Availability> Books_Availability { get; set; }
         public virtual DbSet<Books_Ratings> Books_Ratings { get; set; }
+        public virtual DbSet<C__MigrationHistory1> C__MigrationHistory1 { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Libraries> Libraries { get; set; }
         public virtual DbSet<Reservations> Reservations { get; set; }

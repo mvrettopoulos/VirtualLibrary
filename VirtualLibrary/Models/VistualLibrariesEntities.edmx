@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="VirtualLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="VirtualLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -82,17 +82,17 @@
           <Property Name="author_id" Type="int" />
           <Property Name="description" Type="varchar(max)" Nullable="false" />
           <Property Name="category_id" Type="int" />
-          <Property Name="image" Type="image" />
+          <Property Name="image" Type="varbinary(max)" />
           <Property Name="isbn" Type="int" />
           <Property Name="publisher" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Books_Authors">
           <Key>
-            <PropertyRef Name="book_id" />
-            <PropertyRef Name="author_id" />
+            <PropertyRef Name="Author_id" />
+            <PropertyRef Name="Books_id" />
           </Key>
-          <Property Name="book_id" Type="int" Nullable="false" />
-          <Property Name="author_id" Type="int" Nullable="false" />
+          <Property Name="Author_id" Type="int" Nullable="false" />
+          <Property Name="Books_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Books_Availability">
           <Key>
@@ -107,11 +107,11 @@
         </EntityType>
         <EntityType Name="Books_Categories">
           <Key>
-            <PropertyRef Name="book_id" />
-            <PropertyRef Name="category_id" />
+            <PropertyRef Name="Books_id" />
+            <PropertyRef Name="Category_id" />
           </Key>
-          <Property Name="book_id" Type="int" Nullable="false" />
-          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="Books_id" Type="int" Nullable="false" />
+          <Property Name="Category_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Books_Ratings">
           <Key>
@@ -122,6 +122,16 @@
           <Property Name="rating" Type="int" />
           <Property Name="user_id" Type="int" />
           <Property Name="comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -171,7 +181,7 @@
           <Property Name="date_of_birth" Type="varchar" MaxLength="50" />
           <Property Name="date_of_registration" Type="varchar" MaxLength="50" />
           <Property Name="membership_id" Type="int" />
-          <Property Name="image" Type="image" />
+          <Property Name="image" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_Books_Authors_Author">
           <End Role="Author" Type="Self.Author" Multiplicity="1" />
@@ -181,7 +191,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Books_Authors">
-              <PropertyRef Name="author_id" />
+              <PropertyRef Name="Author_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -193,7 +203,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Books_Authors">
-              <PropertyRef Name="book_id" />
+              <PropertyRef Name="Books_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -229,7 +239,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Books_Categories">
-              <PropertyRef Name="book_id" />
+              <PropertyRef Name="Books_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -241,7 +251,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Books_Categories">
-              <PropertyRef Name="category_id" />
+              <PropertyRef Name="Category_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -362,6 +372,7 @@
           <EntitySet Name="Books_Availability" EntityType="Self.Books_Availability" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books_Categories" EntityType="Self.Books_Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books_Ratings" EntityType="Self.Books_Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libraries" EntityType="Self.Libraries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
@@ -424,7 +435,8 @@
             <End Role="Reservations" EntitySet="Reservations" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VirtualLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -538,6 +550,16 @@
           <NavigationProperty Name="Books" Relationship="Self.FK_Books_Ratings_Books" FromRole="Books_Ratings" ToRole="Books" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Books_Ratings_Users" FromRole="Books_Ratings" ToRole="Users" />
         </EntityType>
+        <EntityType Name="C__MigrationHistory1">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -565,11 +587,11 @@
           <Property Name="username_id" Type="Int32" />
           <Property Name="reserved_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="return_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK_Reservations_Books" FromRole="Reservations" ToRole="Books" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Reservations_Users" FromRole="Reservations" ToRole="Users" />
           <Property Name="check_in_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="check_ou_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="renewTimes" Type="Int32" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Reservations_Books" FromRole="Reservations" ToRole="Books" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Reservations_Users" FromRole="Reservations" ToRole="Users" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -716,6 +738,7 @@
           <EntitySet Name="Books" EntityType="Self.Books" />
           <EntitySet Name="Books_Availability" EntityType="Self.Books_Availability" />
           <EntitySet Name="Books_Ratings" EntityType="Self.Books_Ratings" />
+          <EntitySet Name="C__MigrationHistory1" EntityType="Self.C__MigrationHistory1" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Libraries" EntityType="Self.Libraries" />
           <EntitySet Name="Reservations" EntityType="Self.Reservations" />
@@ -872,6 +895,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="C__MigrationHistory1">
+            <EntityTypeMapping TypeName="VirtualLibraryModel.C__MigrationHistory1">
+              <MappingFragment StoreEntitySet="C__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="VirtualLibraryModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -893,14 +926,14 @@
           <EntitySetMapping Name="Reservations">
             <EntityTypeMapping TypeName="VirtualLibraryModel.Reservations">
               <MappingFragment StoreEntitySet="Reservations">
-                <ScalarProperty Name="renewTimes" ColumnName="renewTimes" />
-                <ScalarProperty Name="check_ou_date" ColumnName="check_ou_date" />
-                <ScalarProperty Name="check_in_date" ColumnName="check_in_date" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="book_id" ColumnName="book_id" />
                 <ScalarProperty Name="username_id" ColumnName="username_id" />
                 <ScalarProperty Name="reserved_date" ColumnName="reserved_date" />
                 <ScalarProperty Name="return_date" ColumnName="return_date" />
+                <ScalarProperty Name="check_in_date" ColumnName="check_in_date" />
+                <ScalarProperty Name="check_ou_date" ColumnName="check_ou_date" />
+                <ScalarProperty Name="renewTimes" ColumnName="renewTimes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -937,18 +970,18 @@
           </AssociationSetMapping>
           <AssociationSetMapping Name="Books_Authors" TypeName="VirtualLibraryModel.Books_Authors" StoreEntitySet="Books_Authors">
             <EndProperty Name="Author">
-              <ScalarProperty Name="id" ColumnName="author_id" />
+              <ScalarProperty Name="id" ColumnName="Author_id" />
             </EndProperty>
             <EndProperty Name="Books">
-              <ScalarProperty Name="id" ColumnName="book_id" />
+              <ScalarProperty Name="id" ColumnName="Books_id" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Books_Categories" TypeName="VirtualLibraryModel.Books_Categories" StoreEntitySet="Books_Categories">
             <EndProperty Name="Books">
-              <ScalarProperty Name="id" ColumnName="book_id" />
+              <ScalarProperty Name="id" ColumnName="Books_id" />
             </EndProperty>
             <EndProperty Name="Category">
-              <ScalarProperty Name="id" ColumnName="category_id" />
+              <ScalarProperty Name="id" ColumnName="Category_id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

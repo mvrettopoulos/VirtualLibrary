@@ -18,7 +18,7 @@ namespace VirtualLibrary.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("VirtualLibrary", throwIfV1Schema: false)
+            : base("DBConnectionString", throwIfV1Schema: false)
         {
         }
         public static ApplicationDbContext Create()

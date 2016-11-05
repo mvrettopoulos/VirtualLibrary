@@ -183,67 +183,10 @@
     <Compile Include="Helpers\BinaryIntellectViewEngine.cs" />
     <Compile Include="Helpers\ConventionalModelMetadataProvider.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AspNetRoles.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserClaims.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserLogins.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUsers.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Author.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Books.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Books_Availability.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Books_Ratings.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Category.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Libraries.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageUsersRolesViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Navbar.cs" />
-    <Compile Include="Models\Reservations.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Users.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VirtualLibraryEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VirtualLibraryEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VirtualLibraryEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VirtualLibraryEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VirtualLibraryEntities.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
@@ -419,16 +362,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\VirtualLibraryEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VirtualLibraryEntities.edmx</DependentUpon>
-      <LastGenOutput>VirtualLibraryEntities.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\VirtualLibraryEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VirtualLibraryEntities.edmx</DependentUpon>
-      <LastGenOutput>VirtualLibraryEntities.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\angular-animate\angular-animate.js" />
     <Content Include="Scripts\angular-animate\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria\angular-aria.js" />
@@ -455,13 +388,6 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <EntityDeploy Include="Models\VirtualLibraryEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>VirtualLibraryEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\VirtualLibraryEntities.edmx.diagram">
-      <DependentUpon>VirtualLibraryEntities.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\angular-animate\angular-animate.min.js.map" />
     <Content Include="Scripts\angular-aria\angular-aria.min.js.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
