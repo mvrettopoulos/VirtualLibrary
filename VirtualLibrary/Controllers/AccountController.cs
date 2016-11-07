@@ -710,7 +710,7 @@ namespace VirtualLibrary.Controllers
         void sendMail(string message, string to, string Subject)
         {
             MailMessage msg = new MailMessage();
-            msg.From = new MailAddress("inachus_platform_no_reply@iccs.gr");
+            msg.From = new MailAddress("acceteam3@gmail.com");
             msg.To.Add(new MailAddress(to));
             msg.Subject = Subject;
             msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message, null, MediaTypeNames.Text.Plain));
