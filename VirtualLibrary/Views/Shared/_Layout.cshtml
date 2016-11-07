@@ -8,6 +8,9 @@
     <meta name="author" content="">
     <title>Virtual Library</title>
     @Styles.Render("~/Content/css")
+    <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
 
     <!-- Scripts -->
     @Scripts.Render("~/bundles/jquery")
@@ -16,7 +19,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.select.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap.min.js"></script>
     @RenderSection("scripts", required: false)
 </head>
 <body>

@@ -1,114 +1,61 @@
-﻿#map {
-
+﻿﻿#map {
     height: 600px;
 }
-
 #back-button {
-
     color: #FFF;
 }
-
 #media-player {
-
     text-align: center;
 }
-
 #administrator_menu_hyperlink {
-
     color: #FFF;
 }
-
 #user_menu_hyperlink {
-
     color: #FFF;
 }
-
 .row.selected td {
     background-color: black !important; /* Add !important to make sure override datables base styles */
 }
-
 .modal-body {
-
   background-color: #EEEEEE;
 }
-
-.modal-title {
-
-  color: black;
-}
-
-
 .panel-roles {
-
     border-color: #BED891;
 }
-
 .panel-roles > .panel-heading-roles {
-
   color: #fff;
   background-color: #BED891;
   border-color: #BED891;
 }
-
 .panel-roles > .panel-heading-roles + .panel-collapse > .panel-body {
-
   border-top-color: #BED891;
 }
-
 .panel-roles > .panel-heading-roles .badge {
-
   color: #BED891;
   background-color: #fff;
 }
-
 .panel-roles > .panel-footer + .panel-collapse > .panel-body {
-
     border-bottom-color:#BED891;
 }
-
 .panel-users {
-
     border-color: #635192;
 }
-
 .panel-users > .panel-heading-users {
-
   color: #fff;
   background-color: #635192;
   border-color:  #635192;
 }
-
 .panel-users > .panel-heading-users + .panel-collapse > .panel-body {
-
   border-top-color: #635192;
 }
-
-.panel-users > .panel-heading-users .badge {
-
+.panel-users > .panel-heading-roles .badge {
   color: #635192;
   background-color: #fff;
 }
-
 .panel-users > .panel-footer + .panel-collapse > .panel-body {
-
     border-bottom-color:#635192;
 }
-
-
-
-.panel-buildings {
-    border-color: #330066;
-}
-.panel-buildings > .panel-heading {
-    background: #330066; 
-    color: #ffffff;
-    border-color: #330066;
-}
-
-
-
 .navbar-inverse {
-
   background-image: -webkit-linear-gradient(top, #3c3c3c 0, #222 100%);
   background-image: -o-linear-gradient(top, #3c3c3c 0, #222 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#3c3c3c), to(#222));
@@ -122,7 +69,6 @@
 .no-top-margin {
     margin-top: 0px;
 }
-
 .sidebar-nav .dropdown-menu {
     float :none;
     position: relative;
@@ -133,17 +79,14 @@
     border: none;
     box-shadow: none;
 }
-
 .sidebar-nav li a {
     display: block;
     padding: 10px 15px 10px 30px;    
 }
-
 .dropdown-menu > li > a {
     color: #337ab7;
     padding-left:50px;
 }
-
 #page-wrapper {
     padding: 30px;
 }
