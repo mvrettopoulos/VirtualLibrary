@@ -62,29 +62,49 @@ namespace VirtualLibrary.Models
         public bool RememberMe { get; set; }
     }
 
+    public class MinimumAgeAttribute : ValidationAttribute
+    {
+        int _minimumAge;
+        public MinimumAgeAttribute(int minimumAge)
+        {
+            _minimumAge = minimumAge;
+        }
+         public override bool IsValid(object value)
+        {
+            DateTime date;
+            if (DateTime.TryParse(value.ToString(), out date))
+            {
+                return date.AddYears(_minimumAge) < DateTime.Now;
+            }
+
+            return false;
+        }
+    }
+
     public class RegisterViewModel
     {
-        [Required(ErrorMessage ="Username is required.")]
+        [Required(ErrorMessage = "Username is required.")]
         [StringLength(15, MinimumLength = 3)]
         [Display(Name = "User Name")]
         [RegularExpression(@"(\S)+", ErrorMessage = " White Space is not allowed in User Names")]
         [ScaffoldColumn(false)]
         public string Username { get; set; }
 
-        [Required(ErrorMessage ="First Name is required.")]
+        [Required(ErrorMessage = "First Name is required.")]
         [StringLength(20, MinimumLength = 3)]
         [Display(Name = "First Name")]
         public string firstName { get; set; }
 
-        [Required(ErrorMessage ="Last Name is required.")]
+        [Required(ErrorMessage = "Last Name is required.")]
         [StringLength(15, MinimumLength = 3)]
         [Display(Name = "Last Name")]
         public string lastName { get; set; }
 
-        [Required(ErrorMessage ="Date of Birth is required.")]
-        [Display(Name ="Date of Birth")]
+        [Required(ErrorMessage = "Date of Birth is required")]
+        [MinimumAge(18)]
+        [Display(Name = "Date of Birth")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? Date_of_Birth { get; set; }
+        public Nullable<System.DateTime> Date_of_Birth { get; set; }
 
 
         [Required(ErrorMessage ="Email is required.")]
