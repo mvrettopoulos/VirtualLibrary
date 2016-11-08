@@ -52,7 +52,7 @@
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
          @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
          <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" , placeholder = "jane@microsoft.com" })
             @Html.ValidationMessageFor(model => model.Email)
          </div>
     </div>
