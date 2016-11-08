@@ -83,12 +83,14 @@ namespace VirtualLibrary.Models
 
         [Required(ErrorMessage ="Date of Birth is required.")]
         [Display(Name ="Date of Birth")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [RegularExpression(@"^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$", ErrorMessage ="This is not a valid date. ")]
         public DateTime? Date_of_Birth { get; set; }
 
 
         [Required(ErrorMessage ="Email is required.")]
         [EmailAddress]
+        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" , ErrorMessage = "This is not a valid email adress.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
