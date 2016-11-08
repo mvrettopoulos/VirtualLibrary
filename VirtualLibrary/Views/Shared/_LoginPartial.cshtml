@@ -6,39 +6,41 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-top-links navbar-right">
-            <li><a href="#">Home</a></li>
             <li>
-                <a href="@Url.Action("Index", "Books")" data-toggle="tooltip" title="Books overview"> Books</a>
+                <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a href="@Url.Action("Index", "Libraries")" da data-toggle="tooltip" title="Libraries overview"> Libraries</a>
+                <a href="@Url.Action("Index", "Books")"> Books</a>
             </li>
             <li>
-                <a href="@Url.Action("Index", "Manage")">
-                    <i class="fa fa-user fa-fw"></i> Profile
+                <a href="@Url.Action("Index", "Libraries")"> Libraries</a>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user_menu_hyperlink">
+                    @User.Identity.GetUserName()
                 </a>
-            <li>
-                @if (User.IsInRole("Admin"))
-                {
-                <li>
-                    <a href="@Url.Action("Users", "Account")" data-toggle="tooltip" title="Users overview"><i class="fa fa-users fa-fw"></i> Users</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Roles", "Account")" data-toggle="tooltip" title="Roles overview"><i class="fa fa-tasks fa-fw"></i> Roles</a>
-                </li>
-                }
-                <li class="dropdown">
-                    <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                        @User.Identity.GetUserName()
-                    </a>
-                </li>
-
-
-                <li class="divider"></li>
-                <li>
-                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                </li>
-            </ul>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="@Url.Action("Index", "Manage")">
+                            <i class="fa fa-user fa-fw"></i> Profile
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Users", "Account")" data-toggle="tooltip" title="Users overview"><i class="fa fa-users fa-fw"></i> Users</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Roles", "Account")" data-toggle="tooltip" title="Roles overview"><i class="fa fa-tasks fa-fw"></i> Roles</a>
+                        </li>
+                    }
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
     }
 }

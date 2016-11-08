@@ -452,13 +452,13 @@ namespace VirtualLibrary.Controllers
                         new { userId = user.Id },
                         protocol: Request.Url.Scheme);
                 var currentUser = UserManager.FindByName(user.UserName);
-                sendMail("<h1>New account is available on Inachus Dashboard.</h1>" +
+                sendMail("<h1>New account is available on Virtual Library.</h1>" +
                     "<p>With credentials:<br>" +
                     "username: " + user.Email + "<br>" +
                     "password: " + pass + "</p>" +
                     "<p>You can log in by clicking this link: <a href=\"" + callbackUrl + "\">link</a></p>" +
                     "<p>Please change your password at your first log in in the profile menu!</p>"
-                    , user.Email, "Inachus Dashboard Acoount");
+                    , user.Email, "Virtual Library Acoount");
                 foreach (var role in model.roles)
                 {
                     if (role.isRole && !UserManager.IsInRole(user.Id, role.roleName))
@@ -710,7 +710,7 @@ namespace VirtualLibrary.Controllers
         void sendMail(string message, string to, string Subject)
         {
             MailMessage msg = new MailMessage();
-            msg.From = new MailAddress("inachus_platform_no_reply@iccs.gr");
+            msg.From = new MailAddress("acceteam3@gmail.com");
             msg.To.Add(new MailAddress(to));
             msg.Subject = Subject;
             msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message, null, MediaTypeNames.Text.Plain));
