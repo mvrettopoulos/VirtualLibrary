@@ -622,6 +622,9 @@
     <Content Include="Views\Shared\EditorTemplates\UserEditRoleView.cshtml" />
     <Content Include="Views\Libraries\Index.cshtml" />
     <Content Include="Views\Libraries\Delete.cshtml" />
+    <Content Include="Views\Libraries\Create.cshtml" />
+    <Content Include="Views\Libraries\Edit.cshtml" />
+    <Content Include="Views\Libraries\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

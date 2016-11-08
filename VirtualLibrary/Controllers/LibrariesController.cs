@@ -18,6 +18,22 @@ namespace VirtualLibrary.Controllers
             return View(db.Libraries.ToList());
         }
 
+        // GET: Libraries/Details/1
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var library = db.Libraries.Find(id);
+            if (library == null)
+            {
+                return HttpNotFound();
+            }
+            return View(library);
+        }
+
         // GET: Libraries/Delete/1
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -35,7 +51,7 @@ namespace VirtualLibrary.Controllers
             return View(library);
         }
 
-        // POsT Libraries/Delete/1
+        // POST Libraries/Delete/1
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -46,5 +62,80 @@ namespace VirtualLibrary.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+        // GET: Libraries/Create
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create()
+        {
+            return View("Create");
+        }
+
+        // POST Libraries/Create
+        [HttpPost, ActionName("Create")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create([Bind(Include = "University_Name, Building, Location")]VirtualLibrary.Models.Libraries library)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Libraries.Add(library);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (System.Data.DataException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(library);
+        }
+
+        // GET: Libraries/Edit/1
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(FormCollection fcNotUsed, int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var library = db.Libraries.Find(id);
+            if (library == null)
+            {
+                return HttpNotFound();
+            }
+            return View(library);
+        }
+
+        // POST: Libraries/Edit/1
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var libraryToUpdate = db.Libraries.Find(id);
+            if (TryUpdateModel(libraryToUpdate, "",
+               new string[] { "University_Name", "Building", "Location" }))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (System.Data.DataException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+            return View(libraryToUpdate);
+        }
+
     }
 }
