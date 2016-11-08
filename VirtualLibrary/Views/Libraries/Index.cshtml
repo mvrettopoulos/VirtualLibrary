@@ -1,0 +1,39 @@
+﻿@model IEnumerable<VirtualLibrary.Models.Libraries>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.University_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Building)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.University_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Building)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

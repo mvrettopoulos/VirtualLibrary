@@ -31,6 +31,10 @@
         <AssociationConnector Association="VirtualLibraryModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.Books_Authors" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.Books_Categories" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Librarians" Width="1.5" PointX="11.25" PointY="7.25" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Users_Users" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Librarians_Libraries" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Librarians_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

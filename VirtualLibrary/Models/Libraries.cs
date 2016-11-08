@@ -18,6 +18,7 @@ namespace VirtualLibrary.Models
         public Libraries()
         {
             this.Books_Availability = new HashSet<Books_Availability>();
+            this.Librarians = new HashSet<Librarians>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,7 @@ namespace VirtualLibrary.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Books_Availability> Books_Availability { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Librarians> Librarians { get; set; }
     }
 }

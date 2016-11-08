@@ -40,5 +40,6 @@ namespace VirtualLibrary.Models
         public virtual DbSet<Reservations> Reservations { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Librarians> Librarians { get; set; }
     }
 }

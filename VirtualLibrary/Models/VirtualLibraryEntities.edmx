@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VirtualLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VirtualLibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -140,6 +140,14 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Librarians">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="username_id" Type="int" />
+          <Property Name="library_id" Type="int" />
+        </EntityType>
         <EntityType Name="Libraries">
           <Key>
             <PropertyRef Name="id" />
@@ -159,7 +167,7 @@
           <Property Name="reserved_date" Type="varchar" MaxLength="50" />
           <Property Name="return_date" Type="varchar" MaxLength="50" />
           <Property Name="check_in_date" Type="varchar" MaxLength="50" />
-          <Property Name="check_ou_date" Type="varchar" MaxLength="50" />
+          <Property Name="check_out_date" Type="varchar" MaxLength="50" />
           <Property Name="renewTimes" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -182,6 +190,9 @@
           <Property Name="date_of_registration" Type="varchar" MaxLength="50" />
           <Property Name="membership_id" Type="int" />
           <Property Name="image" Type="varbinary(max)" />
+          <Property Name="aspnet_user_id" Type="nvarchar" MaxLength="128" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="bad_user" Type="bit" />
         </EntityType>
         <Association Name="FK_Books_Authors_Author">
           <End Role="Author" Type="Self.Author" Multiplicity="1" />
@@ -335,6 +346,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Librarians_Libraries">
+          <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
+          <End Role="Librarians" Type="Self.Librarians" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libraries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Librarians">
+              <PropertyRef Name="library_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Librarians_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Librarians" Type="Self.Librarians" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Librarians">
+              <PropertyRef Name="username_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reservations_Books">
           <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
           <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
@@ -359,6 +394,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Users_Users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="aspnet_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="VirtualLibraryModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -374,6 +421,7 @@
           <EntitySet Name="Books_Ratings" EntityType="Self.Books_Ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Librarians" EntityType="Self.Librarians" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libraries" EntityType="Self.Libraries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -426,6 +474,14 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Librarians_Libraries" Association="Self.FK_Librarians_Libraries">
+            <End Role="Libraries" EntitySet="Libraries" />
+            <End Role="Librarians" EntitySet="Librarians" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Librarians_Users" Association="Self.FK_Librarians_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Librarians" EntitySet="Librarians" />
+          </AssociationSet>
           <AssociationSet Name="FK_Reservations_Books" Association="Self.FK_Reservations_Books">
             <End Role="Books" EntitySet="Books" />
             <End Role="Reservations" EntitySet="Reservations" />
@@ -434,9 +490,12 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Reservations" EntitySet="Reservations" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Users" Association="Self.FK_Users_Users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VirtualLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -498,6 +557,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Users" Relationship="VirtualLibraryModel.FK_Users_Users" FromRole="AspNetUsers" ToRole="Users" />
         </EntityType>
         <EntityType Name="Author">
           <Key>
@@ -577,6 +637,7 @@
           <Property Name="Building" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Books_Availability" Relationship="Self.FK_Books_Availability_Libraries" FromRole="Libraries" ToRole="Books_Availability" />
+          <NavigationProperty Name="Librarians" Relationship="VirtualLibraryModel.FK_Librarians_Libraries" FromRole="Libraries" ToRole="Librarians" />
         </EntityType>
         <EntityType Name="Reservations">
           <Key>
@@ -588,10 +649,10 @@
           <Property Name="reserved_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="return_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="check_in_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="check_ou_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="renewTimes" Type="Int32" />
           <NavigationProperty Name="Books" Relationship="Self.FK_Reservations_Books" FromRole="Reservations" ToRole="Books" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Reservations_Users" FromRole="Reservations" ToRole="Users" />
+          <Property Name="check_out_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -615,6 +676,11 @@
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Books_Ratings" Relationship="Self.FK_Books_Ratings_Users" FromRole="Users" ToRole="Books_Ratings" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Users" FromRole="Users" ToRole="Reservations" />
+          <Property Name="aspnet_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="bad_user" Type="Boolean" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VirtualLibraryModel.FK_Users_Users" FromRole="Users" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Librarians" Relationship="VirtualLibraryModel.FK_Librarians_Users" FromRole="Users" ToRole="Librarians" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -788,7 +854,66 @@
             <End Role="Books" EntitySet="Books" />
             <End Role="Category" EntitySet="Category" />
           </AssociationSet>
+          <EntitySet Name="Librarians" EntityType="VirtualLibraryModel.Librarians" />
+          <AssociationSet Name="FK_Users_Users" Association="VirtualLibraryModel.FK_Users_Users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Librarians_Libraries" Association="VirtualLibraryModel.FK_Librarians_Libraries">
+            <End Role="Libraries" EntitySet="Libraries" />
+            <End Role="Librarians" EntitySet="Librarians" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Librarians_Users" Association="VirtualLibraryModel.FK_Librarians_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Librarians" EntitySet="Librarians" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Librarians">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="username_id" Type="Int32" />
+          <Property Name="library_id" Type="Int32" />
+          <NavigationProperty Name="Libraries" Relationship="VirtualLibraryModel.FK_Librarians_Libraries" FromRole="Librarians" ToRole="Libraries" />
+          <NavigationProperty Name="Users" Relationship="VirtualLibraryModel.FK_Librarians_Users" FromRole="Librarians" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Users_Users">
+          <End Type="VirtualLibraryModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VirtualLibraryModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="aspnet_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Librarians_Libraries">
+          <End Type="VirtualLibraryModel.Libraries" Role="Libraries" Multiplicity="0..1" />
+          <End Type="VirtualLibraryModel.Librarians" Role="Librarians" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libraries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Librarians">
+              <PropertyRef Name="library_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Librarians_Users">
+          <End Type="VirtualLibraryModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="VirtualLibraryModel.Librarians" Role="Librarians" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Librarians">
+              <PropertyRef Name="username_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -926,13 +1051,13 @@
           <EntitySetMapping Name="Reservations">
             <EntityTypeMapping TypeName="VirtualLibraryModel.Reservations">
               <MappingFragment StoreEntitySet="Reservations">
+                <ScalarProperty Name="check_out_date" ColumnName="check_out_date" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="book_id" ColumnName="book_id" />
                 <ScalarProperty Name="username_id" ColumnName="username_id" />
                 <ScalarProperty Name="reserved_date" ColumnName="reserved_date" />
                 <ScalarProperty Name="return_date" ColumnName="return_date" />
                 <ScalarProperty Name="check_in_date" ColumnName="check_in_date" />
-                <ScalarProperty Name="check_ou_date" ColumnName="check_ou_date" />
                 <ScalarProperty Name="renewTimes" ColumnName="renewTimes" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -951,6 +1076,9 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="VirtualLibraryModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="bad_user" ColumnName="bad_user" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="aspnet_user_id" ColumnName="aspnet_user_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
@@ -984,6 +1112,15 @@
               <ScalarProperty Name="id" ColumnName="Category_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Librarians">
+            <EntityTypeMapping TypeName="VirtualLibraryModel.Librarians">
+              <MappingFragment StoreEntitySet="Librarians">
+                <ScalarProperty Name="library_id" ColumnName="library_id" />
+                <ScalarProperty Name="username_id" ColumnName="username_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
