@@ -1,6 +1,6 @@
 ﻿@model VirtualLibrary.Models.Users
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Profile";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -10,12 +10,34 @@
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
+
+
+        <dd>
+            <img src=@Html.DisplayFor(model=>model.image) alt="Profile Picture" style="float:left;width:42px;height:42px;">
+        </dd>
         <dt>UserName:</dt>
         <dd>
             @Html.DisplayFor(model => model.username)
         </dd>
+        <dt>Id: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt>Date of Birth: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.date_of_birth)
+        </dd>
+        <dt>Date of Registration: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.date_of_registration)
+        </dd>
+        <dt>Membership ID: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.membership_id)
+        </dd>
 
-    @*    <dt>Password:</dt>
+
+        @*    <dt>Password:</dt>
     <dd>
         [
         @if (Model.HasPassword)
@@ -58,7 +80,7 @@
                 ]
             </dd>
         *@
-      @*  <dt>Two-Factor Authentication:</dt>
+        @*  <dt>Two-Factor Authentication:</dt>
     <dd>
         <p>
             There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>

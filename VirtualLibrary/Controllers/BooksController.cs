@@ -22,9 +22,7 @@ namespace VirtualLibrary.Controllers
         }
 
         // GET: Books/Details/5
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,8 +38,7 @@ namespace VirtualLibrary.Controllers
         }
 
         // GET: Books/Create
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Create()
         {
             return View();
@@ -52,8 +49,7 @@ namespace VirtualLibrary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Create([Bind(Include = "id,title,author_id,description,category_id,image,isbn,publisher")] Books books)
         {
             if (ModelState.IsValid)
@@ -67,8 +63,7 @@ namespace VirtualLibrary.Controllers
         }
 
         // GET: Books/Edit/5
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,8 +83,7 @@ namespace VirtualLibrary.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit([Bind(Include = "id,title,author_id,description,category_id,image,isbn,publisher")] Books books)
         {
             if (ModelState.IsValid)
@@ -102,8 +96,7 @@ namespace VirtualLibrary.Controllers
         }
 
         // GET: Books/Delete/5
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -121,8 +114,7 @@ namespace VirtualLibrary.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult DeleteConfirmed(int id)
         {
             Books books = db.Books.Find(id);

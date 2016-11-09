@@ -68,6 +68,10 @@ namespace VirtualLibrary.Controllers
 
             var userId = User.Identity.GetUserId();
             var model = db.Users.SingleOrDefault(s => s.aspnet_user_id == userId);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
             //    new IndexViewModel
             //{
             //    HasPassword = HasPassword(),
