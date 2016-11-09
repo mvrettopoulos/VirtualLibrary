@@ -21,7 +21,7 @@ namespace VirtualLibrary.Models
         public Nullable<int> reserved { get; set; }
         public Nullable<int> available { get; set; }
     
-        public virtual Books Books { get; set; }
         public virtual Libraries Libraries { get; set; }
+        public virtual Books Books { get; set; }
     }
 }

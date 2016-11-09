@@ -23,7 +23,7 @@ namespace VirtualLibrary.Models
         public Nullable<int> renewTimes { get; set; }
         public string check_out_date { get; set; }
     
-        public virtual Books Books { get; set; }
         public virtual Users Users { get; set; }
+        public virtual Books Books { get; set; }
     }
 }

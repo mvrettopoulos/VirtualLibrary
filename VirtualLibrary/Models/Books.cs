@@ -26,11 +26,9 @@ namespace VirtualLibrary.Models
     
         public int id { get; set; }
         public string title { get; set; }
-        public Nullable<int> author_id { get; set; }
         public string description { get; set; }
-        public Nullable<int> category_id { get; set; }
         public byte[] image { get; set; }
-        public Nullable<int> isbn { get; set; }
+        public string isbn { get; set; }
         public string publisher { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
