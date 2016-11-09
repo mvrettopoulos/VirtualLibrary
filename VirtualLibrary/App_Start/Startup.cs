@@ -18,6 +18,7 @@ namespace VirtualLibrary.App_Start
 {
     public class Startup
     {
+        private VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
     (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public void Configuration(IAppBuilder app)
@@ -84,6 +85,7 @@ namespace VirtualLibrary.App_Start
         }
         public async void InitializeAdministrator()
         {
+            
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
             string roleAdmin = "Admin";
@@ -92,6 +94,10 @@ namespace VirtualLibrary.App_Start
             string roleUser = "User";
             string password = ConfigurationManager.AppSettings["AdminPass"];
             string email = ConfigurationManager.AppSettings["AdminUser"];
+
+           
+
+           
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists(roleAdmin))
             {
@@ -116,6 +122,13 @@ namespace VirtualLibrary.App_Start
             if (adminresult.Succeeded)
             {
                 var currentUser = UserManager.FindByName(user.UserName);
+                var libraryUser = new Users();
+                libraryUser.active = true;
+                libraryUser.username = email;
+                libraryUser.aspnet_user_id = currentUser.Id;
+                db.Users.Add(libraryUser);
+                db.SaveChanges();
+                
                 var result = UserManager.AddToRole(currentUser.Id, roleAdmin);
             }
         }
