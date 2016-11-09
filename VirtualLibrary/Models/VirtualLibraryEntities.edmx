@@ -193,6 +193,8 @@
           <Property Name="aspnet_user_id" Type="nvarchar" MaxLength="128" />
           <Property Name="active" Type="bit" Nullable="false" />
           <Property Name="bad_user" Type="bit" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Books_Authors_Author">
           <End Role="Author" Type="Self.Author" Multiplicity="1" />
@@ -681,6 +683,8 @@
           <Property Name="bad_user" Type="Boolean" />
           <NavigationProperty Name="AspNetUsers" Relationship="VirtualLibraryModel.FK_Users_Users" FromRole="Users" ToRole="AspNetUsers" />
           <NavigationProperty Name="Librarians" Relationship="VirtualLibraryModel.FK_Librarians_Users" FromRole="Users" ToRole="Librarians" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -1076,6 +1080,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="VirtualLibraryModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
                 <ScalarProperty Name="bad_user" ColumnName="bad_user" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="aspnet_user_id" ColumnName="aspnet_user_id" />
