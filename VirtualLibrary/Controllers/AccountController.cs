@@ -177,6 +177,24 @@ namespace VirtualLibrary.Controllers
                 {
                     var currentUser = UserManager.FindByName(user.UserName);
                     UserManager.AddToRole(currentUser.Id, role);
+
+                    var NewUser = new Users();
+
+                    VirtualLibraryEntities db = new VirtualLibraryEntities();
+                    NewUser.aspnet_user_id = currentUser.Id;
+                    NewUser.active = false;
+                    NewUser.bad_user = false;
+                    NewUser.username = model.Username;
+                    NewUser.first_name = model.firstName;
+                    NewUser.last_name = model.lastName;
+                    NewUser.date_of_birth = model.Date_of_Birth;
+                    DateTime today = DateTime.Today;
+                    NewUser.date_of_registration = Convert.ToString(today);
+
+
+                    db.Users.Add(NewUser);
+                    db.SaveChanges();
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action(
                        "ConfirmEmail", "Account",
