@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<VirtualLibrary.Models.Books>
 
+
 @{
     ViewBag.Title = "Index";
 }
@@ -15,13 +16,13 @@
             @Html.DisplayNameFor(model => model.title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.author_id)
+            @Html.DisplayNameFor(model => model.Author)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.category_id)
+            @Html.DisplayNameFor(model => model.Category)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.image)
@@ -41,13 +42,19 @@
             @Html.DisplayFor(modelItem => item.title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.author_id)
+            @foreach (var author in item.Author)
+            {
+                @Html.DisplayFor(modelItem => author.author_name)
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.category_id)
+            @foreach (var category in item.Category)
+            {
+                @Html.DisplayFor(modelItem => category.Description)
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.image)

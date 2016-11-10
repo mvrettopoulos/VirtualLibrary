@@ -57,22 +57,14 @@ namespace VirtualLibrary.App_Start
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: ConfigurationManager.AppSettings["MicrosoftClientID"],
+                clientSecret: ConfigurationManager.AppSettings["MicrosoftClientSecret"]);
             app.UseTwitterAuthentication(new TwitterAuthenticationOptions
             {
                 ConsumerKey = ConfigurationManager.AppSettings["TwiterClientID"],
                 ConsumerSecret = ConfigurationManager.AppSettings["TwiterClientSecret"],
-                BackchannelCertificateValidator = new CertificateSubjectKeyIdentifierValidator(new[]
-                {
-                    "A5EF0B11CEC04103A34A659048B21CE0572D7D47", // VeriSign Class 3 Secure Server CA - G2
-                    "0D445C165344C1827E1D20AB25F40163D8BE79A5", // VeriSign Class 3 Secure Server CA - G3
-                    "7FD365A7C2DDECBBF03009F34339FA02AF333133", // VeriSign Class 3 Public Primary Certification Authority - G5
-                    "39A55D933676616E73A761DFA16A7E59CDE66FAD", // Symantec Class 3 Secure Server CA - G4
-                    "5168FF90AF0207753CCCD9656462A212B859723B", //DigiCert SHA2 High Assurance Server C‎A 
-                    "B13EC36903F8BF4701D498261A0802EF63642BC3" //DigiCert High Assurance EV Root CA
-                })
+                
             });
             app.UseFacebookAuthentication(
                appId: ConfigurationManager.AppSettings["FacebookClientID"],
@@ -85,7 +77,7 @@ namespace VirtualLibrary.App_Start
         }
         public async void InitializeAdministrator()
         {
-            
+
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
             string roleAdmin = "Admin";
@@ -95,9 +87,9 @@ namespace VirtualLibrary.App_Start
             string password = ConfigurationManager.AppSettings["AdminPass"];
             string email = ConfigurationManager.AppSettings["AdminUser"];
 
-           
 
-           
+
+
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists(roleAdmin))
             {
@@ -128,7 +120,7 @@ namespace VirtualLibrary.App_Start
                 libraryUser.aspnet_user_id = currentUser.Id;
                 db.Users.Add(libraryUser);
                 db.SaveChanges();
-                
+
                 var result = UserManager.AddToRole(currentUser.Id, roleAdmin);
             }
         }
