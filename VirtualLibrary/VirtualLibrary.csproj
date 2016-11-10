@@ -178,6 +178,7 @@
     <Compile Include="Controllers\LibrariesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -638,6 +639,7 @@
     <Content Include="Views\Libraries\Create.cshtml" />
     <Content Include="Views\Libraries\Details.cshtml" />
     <Content Include="Views\Libraries\Edit.cshtml" />
+    <Content Include="Views\Search\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
