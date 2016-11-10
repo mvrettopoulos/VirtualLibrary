@@ -1,4 +1,8 @@
-﻿#map {
+﻿body{
+    font: "Open Sans";
+    background-color:#eee;
+}
+#map {
 
     height: 600px;
 }
@@ -145,5 +149,61 @@
 }
 
 #page-wrapper {
-    padding: 30px;
+       
+}
+
+.background-image{
+    padding:0px;
+    margin:0px;
+   height: 400px;
+    width: 100%;
+     background-image: url(images/libraries.png);
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+#pinBoot {
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+}
+img {
+  width: 40%;
+  max-width: 50%;
+  height: auto;
+}
+.white-panel {
+  position: absolute;
+  background: white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+}
+/*
+stylize any heading tags withing white-panel below
+*/
+
+.white-panel h1 {
+  font-size: 1em;
+}
+.white-panel h1 a {
+  color: #A92733;
+}
+.white-panel:hover {
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+  margin-top: -5px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+#home_header {
+    background:#f2d13e none repeat scroll 0 0;
+    color:white;
+    padding: 50px;
+    font: 300 40px/40px "Open Sans";
+}
+
+#by_authors{
+     color:#f2d13e;
 }
