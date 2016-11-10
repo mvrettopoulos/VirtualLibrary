@@ -43,7 +43,7 @@
             @Html.LabelFor(model => model.Date_of_Birth , new { @class = "col-md-2 control-label" })
             @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Date_of_Birth, new { @class = "form-control" , ID="datepicker"})
+            @Html.TextBoxFor(m => m.Date_of_Birth, new { @class = "form-control" , id="datepicker"})
             @Html.ValidationMessageFor(model => model.Date_of_Birth)
         </div>
     </div>
@@ -89,9 +89,10 @@
 
 <script type="text/javascript">
 
-    $(function () $( "#datepicker" ).datepicker)({
+    $("#datepicker").datepicker({
         changeMonth: true,
         changeYear: true,
         yearRange: "1930:2010"
-    })
+
+    });
 </script>
