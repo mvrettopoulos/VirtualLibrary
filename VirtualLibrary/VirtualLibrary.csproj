@@ -224,9 +224,11 @@
     <Compile Include="Models\Libraries.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\ManageUsersRolesViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Navbar.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Reservations.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
@@ -558,6 +560,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jQuery.Bootstrap.js" />
     <Content Include="Scripts\jQuery.Bootstrap.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -565,6 +569,7 @@
     <Content Include="Scripts\js\login.view.js" />
     <Content Include="Scripts\js\navbar.js" />
     <Content Include="Scripts\js\roles.view.js" />
+    <Content Include="Scripts\js\libraries.view.js" />
     <Content Include="Scripts\js\users.view.js" />
     <Content Include="Scripts\leaflet-0.7.3.js" />
     <Content Include="Scripts\leaflet-0.7.3.min.js" />
@@ -638,7 +643,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>

@@ -3,37 +3,125 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.University_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Building)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.University_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Building)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
-}
+<div id="insert_library_modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="insert_library_modalContent">
+            @Html.Action("Create")
+        </div>
+    </div>
+</div>
 
-</table>
+<div id="delete_user_modal" class="modal" data-url="@Url.Action("Delete")">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Delete Library</h4>
+            </div>
+            <div class="modal-body" id="delete_library_modal_body">
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-danger" id="delete_library_modal_close_button">
+                    <i class="fa fa-close fa-lg"></i>
+                    <strong>Cancel</strong>
+                </a>
+                <button data-dismiss="modal" class="btn btn-success" id="delete_library_modal_submit_button">
+                    <i class="fa fa-check fa-lg"></i>
+                    <strong>Apply</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit_library_modal" class="modal" data-url="@Url.Action("Edit")" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="edit_library_modalContent">
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Libraries</h1>
+        <p>@Html.ActionLink("Create New", "Create")</p>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-librarys">
+            <div class="panel-heading panel-heading-librarys">
+                <div class="btn-group pull-right">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" id="insert_library_button" data-toggle="tooltip" title="Insert new library">
+                            <i class="fa fa-plus fa-lg"></i>
+                            <strong>Insert</strong>
+                        </button>
+                        <button class="btn btn-default" id="delete_library_button" data-toggle="tooltip" title="Delete existing library">
+                            <i class="fa fa-trash fa-lg"></i>
+                            <strong>Delete</strong>
+                        </button>
+                        <button class="btn btn-default" id="edit_library_button" data-toggle="tooltip" title="Edit existing library">
+                            <i class="fa fa-pencil fa-lg"></i>
+                            <strong>Edit</strong>
+                        </button>
+                    </div>
+                </div>
+                <h4>Overview</h4>
+            </div>
+            <div class="panel-body">
+                <div class="dataTables_wrapper">
+                    <table class="table table-striped table-bordered table-hover select" id="librarys_overview_table">
+                        <thead>
+                            <tr>
+                                <th>University Name</th>
+                                <th>Building</th>
+                                <th>Location</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var library in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => library.University_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => library.Building)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => library.Location)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = library.id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = library.id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = library.id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-lg-12 text-right">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary" id="back-button" data-toggle="tooltip" title="Return home">
+                            <i class="fa fa-mail-reply fa-lg"></i>
+                            <strong>Back</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="notifications" id="libraries_view_notification"></div>
+<script src="@Url.Content("~/Scripts/js/users.view.js")"></script>
