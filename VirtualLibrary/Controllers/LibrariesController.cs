@@ -48,7 +48,7 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            return View(library);
+            return PartialView(library);
         }
 
         // POST Libraries/Delete/1
@@ -69,14 +69,14 @@ namespace VirtualLibrary.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            return View("Create");
+            return PartialView("Create");
         }
 
         // POST Libraries/Create
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "University_Name, Building, Location")]VirtualLibrary.Models.Libraries library)
+        public ActionResult Create(VirtualLibrary.Models.Libraries library)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace VirtualLibrary.Controllers
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
-            return View(library);
+            return PartialView(library);
         }
 
         // GET: Libraries/Edit/1
@@ -108,7 +108,7 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            return View(library);
+            return PartialView(library);
         }
 
         // POST: Libraries/Edit/1
@@ -134,7 +134,7 @@ namespace VirtualLibrary.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
                 }
             }
-            return View(libraryToUpdate);
+            return PartialView(libraryToUpdate);
         }
 
     }

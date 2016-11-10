@@ -16,10 +16,11 @@ $(document).ready(function () {
             style: 'single'
         },
         columns: [
-            { "data": "id" },
-            { "data": "University_Name" },
+            { "data": "id"},
+            { "data": "University Name" },
             { "data": "Building" },
-            { "data": "Location" }
+            { "data": "Location" },
+            { "data": "Actions"}
         ]
     });
 });
