@@ -72,9 +72,9 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            //    new IndexViewModel
+                //new IndexViewModel
             //{
-            //    HasPassword = HasPassword(),
+            //   HasPassword = HasPassword(),
             //    PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
             //    TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
             //    Logins = await UserManager.GetLoginsAsync(userId),

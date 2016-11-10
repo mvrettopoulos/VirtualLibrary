@@ -13,7 +13,15 @@
 
 
         <dd>
-            <img src=@Html.DisplayFor(model=>model.image) alt="Profile Picture" style="float:left;width:42px;height:42px;">
+            <img src=@Html.DisplayFor(model => model.image) alt="Profile Picture" style="float: left; width: 42px; height: 42px;">
+        </dd>
+        <dt>First Name: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.first_name)
+        </dd>
+        <dt>Last Name: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.last_name)
         </dd>
         <dt>UserName:</dt>
         <dd>
@@ -35,7 +43,17 @@
         <dd>
             @Html.DisplayFor(model => model.membership_id)
         </dd>
+        <dd>
 
+            @Html.ActionLink("Change your password", "ChangePassword")
+
+        </dd>
+
+        <dt>Reservations: </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reservations)
+        </dd>
+        
 
         @*    <dt>Password:</dt>
     <dd>
@@ -50,7 +68,7 @@
         }
         ]
     </dd>
-    <dt>External Logins:</dt>
+   @* <dt>External Logins:</dt>
     <dd>
         @Model.Logins.Count [
         @Html.ActionLink("Manage", "ManageLogins") ]
