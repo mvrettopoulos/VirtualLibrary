@@ -188,7 +188,7 @@ namespace VirtualLibrary.Controllers
                     NewUser.username = model.Username;
                     NewUser.first_name = model.firstName;
                     NewUser.last_name = model.lastName;
-                    NewUser.date_of_birth = model.Date_of_Birth;
+                    NewUser.date_of_birth = model.Date_of_Birth.ToString();
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
 
@@ -759,7 +759,7 @@ namespace VirtualLibrary.Controllers
         void sendMail(string message, string to, string Subject)
         {
             MailMessage msg = new MailMessage();
-            msg.From = new MailAddress("acceteam3@gmail.com");
+            msg.From = new MailAddress("acce.team.3@gmail.com");
             msg.To.Add(new MailAddress(to));
             msg.Subject = Subject;
             msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message, null, MediaTypeNames.Text.Plain));

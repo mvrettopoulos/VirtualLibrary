@@ -128,8 +128,9 @@ namespace VirtualLibrary.Models
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]
         [Display(Name = "Date of Birth")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public string Date_of_Birth { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? Date_of_Birth { get; set; }
 
 
         [Required(ErrorMessage ="Email is required.")]
