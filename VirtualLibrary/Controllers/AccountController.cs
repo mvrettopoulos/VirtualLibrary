@@ -23,6 +23,8 @@ namespace VirtualLibrary.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        VirtualLibraryEntities db = new VirtualLibraryEntities();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
@@ -169,7 +171,7 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 string role = "Guest";
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = UserManager.Create(user, model.Password);
@@ -180,7 +182,6 @@ namespace VirtualLibrary.Controllers
 
                     var NewUser = new Users();
 
-                    VirtualLibraryEntities db = new VirtualLibraryEntities();
                     NewUser.aspnet_user_id = currentUser.Id;
                     NewUser.active = false;
                     NewUser.bad_user = false;
@@ -371,12 +372,15 @@ namespace VirtualLibrary.Controllers
             }
         }
         //
-        // POST: /Account/ExternalLoginConfirmation
+        // POST: 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
+
+            string role = "Guest";
+
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Manage");
@@ -389,17 +393,44 @@ namespace VirtualLibrary.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    var currentUser = UserManager.FindByName(user.UserName);
+                    UserManager.AddToRole(currentUser.Id, role);
+
+                    var NewUser = new Users();
+
+
+                    NewUser.aspnet_user_id = currentUser.Id;
+                    NewUser.active = false;
+                    NewUser.bad_user = false;
+                    NewUser.username = model.Username;
+                    NewUser.first_name = model.firstName;
+                    NewUser.last_name = model.lastName;
+                    NewUser.date_of_birth = model.Date_of_Birth;
+                    DateTime today = DateTime.Today;
+                    NewUser.date_of_registration = Convert.ToString(today);
+
+
+                    db.Users.Add(NewUser);
+                    db.SaveChanges();
+
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
+
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
                 }
+
+
+
                 AddErrors(result);
             }
             ViewBag.ReturnUrl = returnUrl;

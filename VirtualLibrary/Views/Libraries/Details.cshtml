@@ -40,31 +40,6 @@
                 @Html.DisplayFor(model => librarian.Users.last_name)
             }
         </dd>
-
-        <div id="map"></div>
-        <script>
-            var my_location = '@Html.Raw(Json.Encode(Model.Location))';
-            console.log(my_location);
-            my_location = my_location.replace('"','').replace('"','');
-            my_location = my_location.replace(/[\(\)]/g, '').split(',');
-            console.log(parseInt(my_location[0]));
-            console.log(parseInt(my_location[1]));
-            function initMap() {
-                var uluru = { lat: parseFloat(my_location[0]), lng: parseFloat(my_location[1]) };
-                var map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 4,
-                  center: uluru
-                });
-                var marker = new google.maps.Marker({
-                  position: uluru,
-                  map: map
-                });
-              }
-        </script>
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB40DbXOFV2NNaPFRK_ikR-baLmOAlH2K8&callback=initMap">
-        </script>
-
     </dl>
 </div>
 <p>
