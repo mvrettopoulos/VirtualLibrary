@@ -278,6 +278,7 @@
     <Content Include="Content\angular-material.layouts.ie_fixes.css" />
     <Content Include="Content\angular-material.layouts.min.css" />
     <Content Include="Content\angular-material.min.css" />
+    <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

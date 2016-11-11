@@ -20,9 +20,9 @@
                 <p>
                     @foreach (AuthenticationDescription p in loginProviders)
                     {
-                        if (p.AuthenticationType.ToLower().Equals("google"))
+                        if (p.AuthenticationType.ToLower().Equals("microsoft"))
                         {
-                            <button type="submit" class="btn btn-block btn-social btn-@p.AuthenticationType.ToLower()-plus" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i class="fa fa-@p.AuthenticationType.ToLower()"></i>Sign in with @p.AuthenticationType</button>
+                            <button type="submit" class="btn btn-block btn-social btn-@p.AuthenticationType.ToLower()" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account"><i class="fa fa-windows"></i>Sign in with @p.AuthenticationType</button>
                         }
                         else
                         {
