@@ -41,6 +41,8 @@ namespace VirtualLibrary.Controllers
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Create()
         {
+            ViewBag.authorColumns = new SelectList(db.Author, "id", "author_name");
+            ViewBag.categoryColumns = new SelectList(db.Category, "id", "Description");
             return View();
         }
 
@@ -50,7 +52,7 @@ namespace VirtualLibrary.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Create([Bind(Include = "id,title,author_id,description,category_id,image,isbn,publisher")] Books books)
+        public ActionResult Create(Books books)
         {
             if (ModelState.IsValid)
             {
@@ -89,6 +91,8 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(books).State = EntityState.Modified;
+                ViewBag.authorColumns = new SelectList(db.Author, "id", "author_name");
+                ViewBag.categoryColumns = new SelectList(db.Category, "id", "Description");
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
