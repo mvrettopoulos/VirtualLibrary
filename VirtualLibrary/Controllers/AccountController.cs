@@ -496,11 +496,20 @@ namespace VirtualLibrary.Controllers
                     AddErrors(result);
                     return PartialView("_CreateUser", user);
                 }
+                var currentUser = UserManager.FindByName(user.UserName);
+                var newUser = new Users();
+                newUser.active = true;
+                newUser.aspnet_user_id = currentUser.Id;
+                newUser.bad_user = false;
+                DateTime today = DateTime.Today;
+                newUser.date_of_registration = Convert.ToString(today);
+                newUser.username = currentUser.UserName;
+                db.Users.Add(newUser);
+                db.SaveChanges();
                 var callbackUrl = Url.Action(
                         "Login", "Account",
                         new { userId = user.Id },
                         protocol: Request.Url.Scheme);
-                var currentUser = UserManager.FindByName(user.UserName);
                 sendMail("<h1>New account is available on Virtual Library.</h1>" +
                     "<p>With credentials:<br>" +
                     "username: " + user.Email + "<br>" +
@@ -545,6 +554,10 @@ namespace VirtualLibrary.Controllers
         public ActionResult DeleteUserConfirmed(string id)
         {
             var user = UserManager.FindById(id.ToString());
+
+            var libraryUser = db.Users.Single(s => s.aspnet_user_id == user.Id);
+            db.Users.Remove(libraryUser);
+            db.SaveChanges();
             UserManager.Delete(user);
             return RedirectToAction("Users");
         }
