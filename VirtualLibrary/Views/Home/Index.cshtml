@@ -27,7 +27,7 @@
                 }else{
                 <img src="@item.image" alt="">
                 }
-                <h2><a href="#">@item.title</a></h2>
+                <h2>@Html.ActionLink(item.title, "GetBook", "Search", new { id = item.id },null)</h2>
                 <h3 id="by_authors">By 
                 @foreach (var author in item.Author)
                 {
