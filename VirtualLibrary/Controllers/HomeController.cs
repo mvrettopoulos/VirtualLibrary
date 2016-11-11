@@ -15,7 +15,7 @@ namespace VirtualLibrary.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
     (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        [AllowAnonymous]
+        [RequireHttps]
         public ActionResult Index()
         {
             var topBooks = db.Books.OrderByDescending(s =>s.views).Take(5).ToList();
