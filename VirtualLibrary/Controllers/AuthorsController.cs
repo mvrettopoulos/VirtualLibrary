@@ -15,6 +15,7 @@ namespace VirtualLibrary.Controllers
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
             var authors = db.Author;
@@ -27,11 +28,13 @@ namespace VirtualLibrary.Controllers
                 return View("Authors");
             }
         }
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
         public ActionResult Create()
         {
             return PartialView("_Create");
         }
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AuthorViewModel model)
@@ -47,6 +50,7 @@ namespace VirtualLibrary.Controllers
             }
             return PartialView("_Create", model);
         }
+        [Authorize(Roles = "Admin, Moderator")]
         // GET: Authors/Details/5
         public ActionResult Details(int? id)
         {
@@ -61,7 +65,9 @@ namespace VirtualLibrary.Controllers
             }
             return View(author);
         }
+
         // GET: Authors/Edit/5
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,6 +87,7 @@ namespace VirtualLibrary.Controllers
         // POST: Authors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(AuthorViewModel model)
@@ -104,6 +111,7 @@ namespace VirtualLibrary.Controllers
             }
             return PartialView("_Edit", model);
         }
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
         public ActionResult Delete(int? id)
         {
@@ -119,6 +127,7 @@ namespace VirtualLibrary.Controllers
             return PartialView("_Delete", @author);
         }
         // POST: Authors/Delete/5
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
