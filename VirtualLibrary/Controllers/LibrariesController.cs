@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net;
+using EntityFramework.Extensions;
 
 namespace VirtualLibrary.Controllers
 {
@@ -58,6 +59,8 @@ namespace VirtualLibrary.Controllers
         public ActionResult Delete(FormCollection fcNotUsed, int id)
         {
             var library = db.Libraries.Find(id);
+            db.Librarians.Where(c => c.library_id == id).Delete();
+            db.Books_Availability.Where(c => c.library_id == id).Delete();
             db.Libraries.Remove(library);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -78,20 +81,15 @@ namespace VirtualLibrary.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create(VirtualLibrary.Models.Libraries library)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Libraries.Add(library);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                db.Libraries.Add(library);
+                db.SaveChanges();
+                return Json(new { success = true });
             }
-            catch (System.Data.DataException)
-            {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-            }
-            return PartialView(library);
+
+            return PartialView("Create", library);
         }
 
         // GET: Libraries/Edit/1
