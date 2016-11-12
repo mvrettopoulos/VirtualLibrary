@@ -1,5 +1,5 @@
 ﻿@model VirtualLibrary.Models.Libraries
-@using (Html.BeginForm("Delete", "Libraries", FormMethod.Post))
+@using (Html.BeginForm("Delete", "Libraries", FormMethod.Post, new { @id = "delete_library_form" }))
 {
     @Html.AntiForgeryToken()
     <h3>Are you sure you want to delete this?</h3>
@@ -33,9 +33,5 @@
 
         </dl>
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
     </div>
 }

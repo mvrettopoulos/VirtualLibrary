@@ -4,60 +4,104 @@
     ViewBag.Title = "GetBook";
 }
 
-<h2>GetBook</h2>
 
-<div>
-    <h4>Books</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.title)
-        </dd>
+<div class="row">
+    <div class="col-lg-4 img-search-book">
+        @if (Model.image == null)
+        {
+            <img src="~/Content/images/no_available_image.png" alt="">
+        }
+        else
+        {
+            <img src="@Model.image" alt="">
+        }
+        <script>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
+            $(window).load(function () {
+                $('.img-search-book').find('img').each(function () {
+                    var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
+                    $(this).addClass(imgClass);
+                });
+            });
+        </script>
 
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.image)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.isbn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.isbn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.publisher)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.publisher)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.views)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.views)
-        </dd>
-
-    </dl>
+    </div>
+    <div class="col-lg-7">
+        <h2>@Html.DisplayFor(model => model.title)</h2>
+        <div class="form-group">
+            @Html.LabelFor(m => m.description, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DisplayFor(m => m.description)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.isbn, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DisplayFor(m => m.isbn)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.views, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DisplayFor(m => m.views)
+            </div>
+        </div>
+    </div>
 </div>
+
+
+@* <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                      @Html.DisplayNameFor(model => model.title)
+            </dt>
+
+            <dd>
+
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.image)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.image)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.isbn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isbn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.publisher)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.publisher)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.views)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.views)
+            </dd>
+
+        </dl>
+    </div>
+*@
 

@@ -31,12 +31,12 @@ namespace VirtualLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Books books = db.Books.Find(id);
-            if (books == null)
+            Books book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(books);
+            return View(book);
         }
     }
 }
