@@ -125,7 +125,7 @@ namespace VirtualLibrary.Controllers
                 try
                 {
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return Json(new { success = true });
                 }
                 catch (System.Data.DataException)
                 {
