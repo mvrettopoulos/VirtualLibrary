@@ -190,6 +190,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibrariesController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Models\Author.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthorViewModel.cs" />
     <Compile Include="Models\Books.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
@@ -282,6 +284,7 @@
     <Content Include="Content\angular-material.layouts.ie_fixes.css" />
     <Content Include="Content\angular-material.layouts.min.css" />
     <Content Include="Content\angular-material.min.css" />
+    <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -445,6 +448,8 @@
     <Content Include="Content\images\no_available_image.png" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\sb-admin-2.css" />
+    <Content Include="Content\styles\alert-bangtidy.css" />
+    <Content Include="Content\styles\alert-blackgloss.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -511,6 +516,7 @@
     <Content Include="Scripts\angular-material\angular-material.min.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="AppSettingsSecrets.config">
@@ -630,6 +636,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\authors.view.js" />
     <Content Include="Scripts\js\books.view.js" />
     <Content Include="Scripts\js\home.view.js" />
     <Content Include="Scripts\js\login.view.js" />
@@ -703,6 +710,10 @@
     <Content Include="Views\Libraries\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\GetBook.cshtml" />
+    <Content Include="Views\Authors\Index.cshtml" />
+    <Content Include="Views\Authors\_Edit.cshtml" />
+    <Content Include="Views\Authors\_Delete.cshtml" />
+    <Content Include="Views\Authors\_Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

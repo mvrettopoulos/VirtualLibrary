@@ -28,6 +28,9 @@
                         <li>
                             <a href="@Url.Action("Index", "Books")"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Books</a>
                         </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Authors")"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Authors</a>
+                        </li>
                     }
                     @if (User.IsInRole("Admin"))
                     {
