@@ -82,7 +82,7 @@ function bindFormInsert(dialog) {
 
 $('#delete_book_button').on('click', function () {
 
-    if (usersView.table.rows('.selected').data().length == 0) {
+    if (booksView.table.rows('.selected').data().length == 0) {
 
         $('#delete_book_button').prop('disabled', true);
 

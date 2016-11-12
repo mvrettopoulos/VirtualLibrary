@@ -39,20 +39,21 @@ namespace VirtualLibrary.Controllers
 
         // GET: Books/Create
         [Authorize(Roles = "Admin, Moderator")]
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.authorColumns = new SelectList(db.Author, "id", "author_name");
             ViewBag.categoryColumns = new SelectList(db.Category, "id", "Description");
-            return View();
+            return PartialView("Create");
         }
 
         // POST: Books/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Create(Books books)
+        public ActionResult Create(VirtualLibrary.Models.Books books)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +62,7 @@ namespace VirtualLibrary.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(books);
+            return PartialView(books);
         }
 
         // GET: Books/Edit/5
@@ -77,13 +78,13 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            return View(books);
+            return PartialView(books);
         }
 
         // POST: Books/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit([Bind(Include = "id,title,author_id,description,category_id,image,isbn,publisher")] Books books)
@@ -112,7 +113,7 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            return View(books);
+            return PartialView(books);
         }
 
         // POST: Books/Delete/5

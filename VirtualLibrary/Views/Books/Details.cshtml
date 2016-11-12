@@ -1,10 +1,5 @@
 ﻿@model VirtualLibrary.Models.Books
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
 
 <div>
     <h4>Books</h4>
@@ -23,7 +18,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Author)
+            @foreach (var author in Model.Author)
+            {
+                @Html.DisplayFor(modelItem => author.author_name)
+            }
         </dd>
 
         <dt>
@@ -31,7 +29,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.description)
+            @foreach (var category in Model.Category)
+            {
+                @Html.DisplayFor(modelItem => category.Description)
+            }
         </dd>
 
         <dt>
