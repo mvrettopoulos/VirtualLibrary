@@ -193,11 +193,35 @@
   max-width: 100%;
   width: 100%;
 }
+
 img {
   width: 40%;
   max-width: 50%;
   height: auto;
 }
+
+.img-search-book img {
+     width: 100%;
+  max-width: 100%;
+}
+
+
+.img-search-book {
+    width: 40%;
+    height: 40%;
+    margin: 0 auto;
+}
+.img-search-book img.wide {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+}
+.img-search-book img.tall {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+}​
+
 .white-panel {
   position: absolute;
   background: white;
@@ -277,7 +301,7 @@ stylize any heading tags withing white-panel below
     }
 }
 
-.form-control{
+.form-search{
     height:50px;
 }
 
