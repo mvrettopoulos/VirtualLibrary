@@ -1,0 +1,48 @@
+﻿@model VirtualLibrary.Models.Libraries
+
+<div>
+    <h4>Libraries</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.University_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.University_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Building)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Building)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Librarians)
+        </dt>
+
+        <dd>
+            @foreach (var librarian in Model.Librarians)
+            {
+                @Html.DisplayFor(model => librarian.Users.first_name)
+                @Html.Raw(" ")
+                @Html.DisplayFor(model => librarian.Users.last_name)
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

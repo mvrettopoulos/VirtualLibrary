@@ -4,32 +4,37 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c0bf68c23a104acc85e1c017eea03a5d" Name="Diagram1">
+      <Diagram DiagramId="7b78fff1e0a7463fa04f59e6e8e69b04" Name="Diagram1">
         <EntityTypeShape EntityType="VirtualLibraryModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.AspNetRoles" Width="1.5" PointX="7.75" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.AspNetUserClaims" Width="1.5" PointX="12.25" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.AspNetUserLogins" Width="1.5" PointX="12.25" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.AspNetUsers" Width="1.5" PointX="10" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Author" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Books" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Books_Availability" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Books_Ratings" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Category" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Libraries" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Author" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Books_Availability" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Books_Ratings" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.C__MigrationHistory1" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Category" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Libraries" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.Reservations" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Users" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Users" Width="1.5" PointX="2.625" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="VirtualLibraryModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="VirtualLibraryModel.FK_Books_Availability_Books" ManuallyRouted="false" />
-        <AssociationConnector Association="VirtualLibraryModel.FK_Books_Ratings_Books" ManuallyRouted="false" />
-        <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Books" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Books_Availability_Libraries" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Books_Ratings_Users" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Users" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="VirtualLibraryModel.Books_Authors" ManuallyRouted="false" />
-        <AssociationConnector Association="VirtualLibraryModel.Books_Categories" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Librarians" Width="1.5" PointX="11.25" PointY="7.25" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Users_Users" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Librarians_Libraries" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Librarians_Users" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Books" Width="1.5" PointX="3" PointY="13.75" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Books_Availability_Books" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Books_Ratings_Books" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Books" />
+        <AssociationConnector Association="VirtualLibraryModel.Books_Authors" />
+        <AssociationConnector Association="VirtualLibraryModel.Books_Categories" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

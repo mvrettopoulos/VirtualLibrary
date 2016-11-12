@@ -1,15 +1,60 @@
-﻿
+﻿@model IEnumerable<VirtualLibrary.Models.Books>
+
 @{
     ViewBag.Title = "Home View";
 }
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Home</h1>
+<div class="row rowHomePage">
+    <div class="col-lg-12 background-image">
     </div>
+    <div id="home_header" class="col-lg-12">
+       <h1  class="text-center">PLUNGE INTO THE WONDERFUL
+        WORLD OF READING</h1>
+    </div>
+    <div class="col-lg-12 ">
+        <h1 class="page-header text-center">Most Popular</h1>
+    </div>
+    <div class="col-lg-12 ">
+
+
+        <section id="pinBoot">
+
+           @foreach (var item in Model)
+           {
+            <article class="white-panel">
+                @if(@item.image == null){
+                <img src="~/Content/images/no_available_image.png" alt="">
+                }else{
+                <img src="@item.image" alt="">
+                }
+                <h2>@Html.ActionLink(item.title, "GetBook", "Search", new { id = item.id },null)</h2>
+                <h3 id="by_authors">By 
+                @foreach (var author in item.Author)
+                {
+                    var last = item.Author.Last();
+                    if (author.Equals(last))
+                    {
+                        @Html.DisplayFor(modelItem => author.author_name)
+                    }
+                    else
+                    {
+                       @Html.DisplayFor(modelItem => author.author_name) @(", ")
+                    }
+
+                }
+                </h3>
+                
+            </article>
+           }
+            
+        </section>
+
+
+                       
+</div>
     <!-- /.col-lg-12 -->
 </div>
 
-
+<script src="@Url.Content("~/Scripts/js/home.view.js")"></script>
 <script src="@Url.Content("~/bower_components/morrisjs/morris.min.js")"></script>
 <script src="@Url.Content("~/Scripts/morris-data.js")"></script>

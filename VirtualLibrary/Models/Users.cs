@@ -19,6 +19,7 @@ namespace VirtualLibrary.Models
         {
             this.Books_Ratings = new HashSet<Books_Ratings>();
             this.Reservations = new HashSet<Reservations>();
+            this.Librarians = new HashSet<Librarians>();
         }
     
         public int id { get; set; }
@@ -27,10 +28,18 @@ namespace VirtualLibrary.Models
         public string date_of_registration { get; set; }
         public Nullable<int> membership_id { get; set; }
         public byte[] image { get; set; }
+        public string aspnet_user_id { get; set; }
+        public bool active { get; set; }
+        public Nullable<bool> bad_user { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Books_Ratings> Books_Ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservations> Reservations { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Librarians> Librarians { get; set; }
     }
 }

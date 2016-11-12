@@ -6,47 +6,60 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-top-links navbar-right">
-            <li><a href="#">Home</a></li>
             <li>
-                <a href="@Url.Action("Index", "Books")" data-toggle="tooltip" title="Books overview"> Books</a>
+                <a href="@Url.Action("Index", "Home")">Home</a>
             </li>
             <li>
-                <a href="@Url.Action("Index", "Libraries")" da data-toggle="tooltip" title="Libraries overview"> Libraries</a>
+                <a href="@Url.Action("Index", "Search")">Search</a>
             </li>
-            <li>
-                <a href="@Url.Action("Index", "Manage")">
-                    <i class="fa fa-user fa-fw"></i> Profile
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="user_menu_hyperlink">
+                    @User.Identity.GetUserName()
                 </a>
-            <li>
-                @if (User.IsInRole("Admin"))
-                {
-                <li>
-                    <a href="@Url.Action("Users", "Account")" data-toggle="tooltip" title="Users overview"><i class="fa fa-users fa-fw"></i> Users</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Roles", "Account")" data-toggle="tooltip" title="Roles overview"><i class="fa fa-tasks fa-fw"></i> Roles</a>
-                </li>
-                }
-                <li class="dropdown">
-                    <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                        @User.Identity.GetUserName()
-                    </a>
-                </li>
-
-
-                <li class="divider"></li>
-                <li>
-                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                </li>
-            </ul>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="@Url.Action("Index", "Manage")">
+                            <i class="fa fa-user fa-fw"></i> Profile
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Books")"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Books</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Libraries")" data-toggle="tooltip" title="Libraries overview"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i> Libraries</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Users", "Account")" data-toggle="tooltip" title="Users overview"><i class="fa fa-users fa-fw"></i> Users</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Roles", "Account")" data-toggle="tooltip" title="Roles overview"><i class="fa fa-tasks fa-fw"></i> Roles</a>
+                        </li>
+                    }
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Log off</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
     }
 }
 else
 {
     <ul class="nav navbar-top-links navbar-right">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Books</a></li>
+        <li>
+            <a href="@Url.Action("Index", "Home")">Home</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "Search")">Search</a>
+        </li>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>

@@ -23,6 +23,8 @@ namespace VirtualLibrary.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        VirtualLibraryEntities db = new VirtualLibraryEntities();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
@@ -169,7 +171,7 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 string role = "Guest";
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = UserManager.Create(user, model.Password);
@@ -177,6 +179,23 @@ namespace VirtualLibrary.Controllers
                 {
                     var currentUser = UserManager.FindByName(user.UserName);
                     UserManager.AddToRole(currentUser.Id, role);
+
+                    var NewUser = new Users();
+
+                    NewUser.aspnet_user_id = currentUser.Id;
+                    NewUser.active = false;
+                    NewUser.bad_user = false;
+                    NewUser.username = model.Username;
+                    NewUser.first_name = model.firstName;
+                    NewUser.last_name = model.lastName;
+                    NewUser.date_of_birth = model.Date_of_Birth.ToString();
+                    DateTime today = DateTime.Today;
+                    NewUser.date_of_registration = Convert.ToString(today);
+
+
+                    db.Users.Add(NewUser);
+                    db.SaveChanges();
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action(
                        "ConfirmEmail", "Account",
@@ -353,12 +372,15 @@ namespace VirtualLibrary.Controllers
             }
         }
         //
-        // POST: /Account/ExternalLoginConfirmation
+        // POST: 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
+
+            string role = "Guest";
+
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Manage");
@@ -371,17 +393,44 @@ namespace VirtualLibrary.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    var currentUser = UserManager.FindByName(user.UserName);
+                    UserManager.AddToRole(currentUser.Id, role);
+
+                    var NewUser = new Users();
+
+
+                    NewUser.aspnet_user_id = currentUser.Id;
+                    NewUser.active = false;
+                    NewUser.bad_user = false;
+                    NewUser.username = model.Username;
+                    NewUser.first_name = model.firstName;
+                    NewUser.last_name = model.lastName;
+                    NewUser.date_of_birth = model.Date_of_Birth;
+                    DateTime today = DateTime.Today;
+                    NewUser.date_of_registration = Convert.ToString(today);
+
+
+                    db.Users.Add(NewUser);
+                    db.SaveChanges();
+
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
+
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
                 }
+
+
+
                 AddErrors(result);
             }
             ViewBag.ReturnUrl = returnUrl;
@@ -447,18 +496,27 @@ namespace VirtualLibrary.Controllers
                     AddErrors(result);
                     return PartialView("_CreateUser", user);
                 }
+                var currentUser = UserManager.FindByName(user.UserName);
+                var newUser = new Users();
+                newUser.active = true;
+                newUser.aspnet_user_id = currentUser.Id;
+                newUser.bad_user = false;
+                DateTime today = DateTime.Today;
+                newUser.date_of_registration = Convert.ToString(today);
+                newUser.username = currentUser.UserName;
+                db.Users.Add(newUser);
+                db.SaveChanges();
                 var callbackUrl = Url.Action(
                         "Login", "Account",
                         new { userId = user.Id },
                         protocol: Request.Url.Scheme);
-                var currentUser = UserManager.FindByName(user.UserName);
-                sendMail("<h1>New account is available on Inachus Dashboard.</h1>" +
+                sendMail("<h1>New account is available on Virtual Library.</h1>" +
                     "<p>With credentials:<br>" +
                     "username: " + user.Email + "<br>" +
                     "password: " + pass + "</p>" +
                     "<p>You can log in by clicking this link: <a href=\"" + callbackUrl + "\">link</a></p>" +
                     "<p>Please change your password at your first log in in the profile menu!</p>"
-                    , user.Email, "Inachus Dashboard Acoount");
+                    , user.Email, "Virtual Library Acoount");
                 foreach (var role in model.roles)
                 {
                     if (role.isRole && !UserManager.IsInRole(user.Id, role.roleName))
@@ -496,6 +554,10 @@ namespace VirtualLibrary.Controllers
         public ActionResult DeleteUserConfirmed(string id)
         {
             var user = UserManager.FindById(id.ToString());
+
+            var libraryUser = db.Users.Single(s => s.aspnet_user_id == user.Id);
+            db.Users.Remove(libraryUser);
+            db.SaveChanges();
             UserManager.Delete(user);
             return RedirectToAction("Users");
         }
@@ -710,7 +772,7 @@ namespace VirtualLibrary.Controllers
         void sendMail(string message, string to, string Subject)
         {
             MailMessage msg = new MailMessage();
-            msg.From = new MailAddress("inachus_platform_no_reply@iccs.gr");
+            msg.From = new MailAddress("acce.team.3@gmail.com");
             msg.To.Add(new MailAddress(to));
             msg.Subject = Subject;
             msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(message, null, MediaTypeNames.Text.Plain));
