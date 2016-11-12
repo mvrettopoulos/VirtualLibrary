@@ -67,6 +67,7 @@ namespace VirtualLibrary.Controllers
 
         // GET: Books/Edit/5
         [Authorize(Roles = "Admin, Moderator")]
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (id == null)
