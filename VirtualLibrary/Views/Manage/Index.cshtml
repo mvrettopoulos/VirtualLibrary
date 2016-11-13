@@ -3,6 +3,14 @@
     ViewBag.Title = "Profile";
 }
 
+<div id="insert_image_modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="insert_modal_modalContent">
+            @Html.Action("GetFileUpload")
+        </div>
+    </div>
+</div>
+
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
@@ -13,7 +21,18 @@
 
 
         <dd>
-            <img src=@Html.DisplayFor(model => model.image) alt="Profile Picture" style="float: left; width: 42px; height: 42px;">
+            @if (Model.image == null)
+            {
+                <img src="~/Content/images/no_available_image.png" alt="">
+            }
+            else
+            {
+                <img src="model.image" alt="">
+            }
+
+
+            <button id='upload'>Upload profile picture</button>
+
         </dd>
         <dt>First Name: </dt>
         <dd>
@@ -53,35 +72,35 @@
         <dd>
             @Html.DisplayFor(model => model.Reservations)
         </dd>
-        
+
 
         @*    <dt>Password:</dt>
-    <dd>
-        [
-        @if (Model.HasPassword)
-        {
-            @Html.ActionLink("Change your password", "ChangePassword")
-        }
-        else
-        {
-            @Html.ActionLink("Create", "SetPassword")
-        }
-        ]
-    </dd>
-   @* <dt>External Logins:</dt>
-    <dd>
-        @Model.Logins.Count [
-        @Html.ActionLink("Manage", "ManageLogins") ]
-    </dd>
+             <dd>
+                 [
+                 @if (Model.HasPassword)
+                 {
+                     @Html.ActionLink("Change your password", "ChangePassword")
+                 }
+                 else
+                 {
+                     @Html.ActionLink("Create", "SetPassword")
+                 }
+                 ]
+             </dd>
+            @* <dt>External Logins:</dt>
+             <dd>
+                 @Model.Logins.Count [
+                 @Html.ActionLink("Manage", "ManageLogins") ]
+             </dd>
 
-        Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+                 Phone Numbers can used as a second factor of verification in a two-factor authentication system.
 
-         See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-            for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+                  See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                     for details on setting up this ASP.NET application to support two-factor authentication using SMS.
 
-         Uncomment the following block after you have set up two-factor authentication
-    *@
-        @*  
+                  Uncomment the following block after you have set up two-factor authentication
+        *@
+        @*
             <dt>Phone Number:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None") [
@@ -99,31 +118,33 @@
             </dd>
         *@
         @*  <dt>Two-Factor Authentication:</dt>
-    <dd>
-        <p>
-            There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-            for details on setting up this ASP.NET application to support two-factor authentication.
-        </p>
-        @if (Model.TwoFactor)
-            {
-                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>Enabled
-                    <input type="submit" value="Disable" class="btn btn-link" />
-                    </text>
-                }
-            }
-            else
-            {
-                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>Disabled
-                    <input type="submit" value="Enable" class="btn btn-link" />
-                    </text>
-                }
-            }
-    </dd>*@
+            <dd>
+                <p>
+                    There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                    for details on setting up this ASP.NET application to support two-factor authentication.
+                </p>
+                @if (Model.TwoFactor)
+                    {
+                        using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <text>Enabled
+                            <input type="submit" value="Disable" class="btn btn-link" />
+                            </text>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <text>Disabled
+                            <input type="submit" value="Enable" class="btn btn-link" />
+                            </text>
+                        }
+                    }
+            </dd>*@
     </dl>
 </div>
+
+<script src="@Url.Content("~/Scripts/js/upload.js")"></script>

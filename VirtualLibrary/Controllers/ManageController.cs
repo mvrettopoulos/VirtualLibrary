@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VirtualLibrary.Models;
 using VirtualLibrary.App_Start;
+using System.IO;
+using System.Data.Entity;
 
 namespace VirtualLibrary.Controllers
 {
@@ -34,9 +36,9 @@ namespace VirtualLibrary.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -64,6 +66,9 @@ namespace VirtualLibrary.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.FileUploadSuccess ? "Your image has been changed."
+                : message == ManageMessageId.FileUploadError ? "You have not selected an image."
+                : message == ManageMessageId.FileTypeError ? "You need to upload a .png file"
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -72,7 +77,7 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-                //new IndexViewModel
+            //new IndexViewModel
             //{
             //   HasPassword = HasPassword(),
             //    PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
@@ -282,7 +287,7 @@ namespace VirtualLibrary.Controllers
                 }
                 AddErrors(result);
                 return View(model);
-                
+
             }
             return View(model);
         }
@@ -375,9 +380,64 @@ namespace VirtualLibrary.Controllers
             }
 
             base.Dispose(disposing);
+
         }
 
-#region Helpers
+        //GET: Upload Profile Picture
+        [HttpGet]
+        public ActionResult GetFileUpload()
+        {
+
+            return PartialView("FileUpload"); // toDo
+        }
+        // POST:Upload Profile Picture
+        [HttpPost]
+        public ActionResult FileUpload(HttpPostedFileBase file)
+        {
+            ManageMessageId? message;
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.SingleOrDefault(s => s.aspnet_user_id == userId);
+
+            if (file != null)
+            {
+                var supportedTypes = new[] { "jpg", "jpeg", "png" };
+
+                var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+                if (supportedTypes.Contains(fileExt))
+                {
+                    //file.FileName.Contains(".png")
+                    // save the image path path to the database or you can send image
+                    // directly to database
+                    // in-case if you want to store byte[] ie. for DB
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        file.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+                        user = new Users { id = user.id, image = array };
+                        db.Users.Add(user);
+                        db.Entry(user).State = EntityState.Added;
+                        // db.Entry(user).Property(x => x.image).IsModified = true;
+                        db.SaveChanges();
+
+
+                    }
+                    message = ManageMessageId.FileUploadSuccess;
+                }
+                else
+                {
+                    message = ManageMessageId.FileTypeError;
+                }
+            }
+            else
+            {
+                message = ManageMessageId.FileUploadError;
+            }
+
+
+            // after successfully uploading redirect the user
+            return RedirectToAction("Index", new { Message = message });
+        }
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -426,9 +486,13 @@ namespace VirtualLibrary.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            FileUploadSuccess,
+            FileUploadError,
+            FileTypeError,
             Error
+
         }
 
-#endregion
+        #endregion
     }
 }
