@@ -10,4 +10,12 @@ namespace VirtualLibrary.Models
     public partial class Libraries
     {
     }
+
+    [MetadataType(typeof(MetaData.BooksMetaData))]
+    public partial class Books
+    {
+    }
+
+
+
 }
