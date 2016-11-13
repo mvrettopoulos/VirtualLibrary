@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibrariesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
@@ -638,6 +640,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\js\authors.view.js" />
     <Content Include="Scripts\js\books.view.js" />
+    <Content Include="Scripts\js\categories.view.js" />
     <Content Include="Scripts\js\home.view.js" />
     <Content Include="Scripts\js\login.view.js" />
     <Content Include="Scripts\js\navbar.js" />
@@ -714,6 +717,10 @@
     <Content Include="Views\Authors\_Edit.cshtml" />
     <Content Include="Views\Authors\_Delete.cshtml" />
     <Content Include="Views\Authors\_Create.cshtml" />
+    <Content Include="Views\Categories\_Create.cshtml" />
+    <Content Include="Views\Categories\_Delete.cshtml" />
+    <Content Include="Views\Categories\_Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

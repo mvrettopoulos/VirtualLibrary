@@ -10,7 +10,7 @@ using VirtualLibrary.Models;
 namespace VirtualLibrary.Controllers
 {
     [Authorize]
-    public class AuthorsController : Controller
+    public class CategoriesController : Controller
     {
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
@@ -18,14 +18,14 @@ namespace VirtualLibrary.Controllers
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
-            var authors = db.Author;
-            if (authors != null)
+            var categories = db.Category;
+            if (categories != null)
             {
-                return View(authors.ToList());
+                return View(categories.ToList());
             }
             else
             {
-                return View("Authors");
+                return View("Categories");
             }
         }
         [Authorize(Roles = "Admin, Moderator")]
@@ -37,36 +37,36 @@ namespace VirtualLibrary.Controllers
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AuthorViewModel model)
+        public ActionResult Create(CategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Author author = new Author();
-                author.author_name = model.authorName;
-                db.Author.Add(author);
+                Category category = new Category();
+                category.Description = model.description;
+                db.Category.Add(category);
                 db.SaveChanges();
-                log.Info("Author created.");
+                log.Info("Category created.");
                 return Json(new { success = true });
             }
             return PartialView("_Create", model);
         }
         [Authorize(Roles = "Admin, Moderator")]
-        // GET: Authors/Details/5
+        // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.Author.Find(id);
-            if (author == null)
+            Category category = db.Category.Find(id);
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(author);
+            return View(category);
         }
 
-        // GET: Authors/Edit/5
+        // GET: Categories/Edit/5
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
@@ -74,39 +74,39 @@ namespace VirtualLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.Author.Find(id);
+            Category category = db.Category.Find(id);
 
-            if (author == null)
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            var model = new AuthorViewModel();
-            model.authorName = author.author_name;
+            var model = new CategoryViewModel();
+            model.description = category.Description;
             return PartialView("_Edit", model);
         }
-        // POST: Authors/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AuthorViewModel model)
+        public ActionResult Edit(CategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Author author = new Author();
-                author.id = Convert.ToInt32(model.id);
-                author.author_name = model.authorName;
+                Category category = new Category();
+                category.id = Convert.ToInt32(model.id);
+                category.Description = model.description;
                 try
                 {
-                    db.Entry(author).State = EntityState.Modified;
+                    db.Entry(category).State = EntityState.Modified;
                     db.SaveChanges();
                 }
                 catch (DataException e)
                 {
                     log.Error("Database error:", e);
                 }
-                log.Info("Author updated.");
+                log.Info("Category updated.");
                 return Json(new { success = true });
             }
             return PartialView("_Edit", model);
@@ -119,22 +119,22 @@ namespace VirtualLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.Author.Find(id);
-            if (author == null)
+            Category category = db.Category.Find(id);
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return PartialView("_Delete", @author);
+            return PartialView("_Delete", @category);
         }
-        // POST: Authors/Delete/5
+        // POST: Categories/Delete/5
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var author = db.Author.Find(id);
-            author.Books.Clear();
-            db.Author.Remove(author);
+            var category = db.Category.Find(id);
+            category.Books.Clear();
+            db.Category.Remove(category);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

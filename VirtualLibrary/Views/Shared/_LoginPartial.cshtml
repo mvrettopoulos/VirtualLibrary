@@ -29,7 +29,10 @@
                             <a href="@Url.Action("Index", "Books")"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Books</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index", "Authors")"><i class="fa fa-book fa-fw" aria-hidden="true"></i> Authors</a>
+                            <a href="@Url.Action("Index", "Authors")"><i class="fa fa-address-card fa-fw" aria-hidden="true"></i> Authors</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Categories")"><i class="fa fa-th-list fa-fw" aria-hidden="true"></i> Categories</a>
                         </li>
                     }
                     @if (User.IsInRole("Admin"))
