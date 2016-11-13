@@ -45,12 +45,12 @@ namespace VirtualLibrary.Models
             [DataType(DataType.Text)]
             [StringLength(60, ErrorMessage = "The ISBN should be at least 5 characters", MinimumLength = 5)]
             [Display(Name = "ISBN")]
-            public byte isbn { get; set; }
+            public string isbn { get; set; }
 
             [DataType(DataType.Text)]
             [StringLength(60, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
             [Display(Name = "Publisher")]
-            public byte publisher { get; set; }
+            public string publisher { get; set; }
 
             public int views { get; set; }
 
