@@ -40,7 +40,7 @@ namespace VirtualLibrary.Controllers
         // GET: Books/Create
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Create(int[] AuthorId, int[] CategoryId)
         {
             var authors = db.Author.Select(c => new {
                 AuthorID = c.id,
