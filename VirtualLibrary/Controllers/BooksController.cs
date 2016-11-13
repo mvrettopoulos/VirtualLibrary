@@ -40,10 +40,18 @@ namespace VirtualLibrary.Controllers
         // GET: Books/Create
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Create(int[] AuthorId, int[] CategoryId)
         {
-            ViewBag.authorColumns = new SelectList(db.Author, "id", "author_name");
-            ViewBag.categoryColumns = new SelectList(db.Category, "id", "Description");
+            var authors = db.Author.Select(c => new {
+                AuthorID = c.id,
+                AuthorName = c.author_name
+            }).ToList();
+            var categories = db.Category.Select(c => new {
+                CategoryID = c.id,
+                CategoryDescription = c.Description
+            }).ToList();
+            ViewBag.Author = new MultiSelectList(authors, "AuthorID", "AuthorName");
+            ViewBag.Category = new MultiSelectList(categories, "CategoryID", "CategoryDescription");
             return PartialView("Create");
         }
 
@@ -59,7 +67,7 @@ namespace VirtualLibrary.Controllers
             {
                 db.Books.Add(books);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { success = true });
             }
 
             return PartialView(books);
