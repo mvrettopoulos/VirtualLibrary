@@ -19,22 +19,6 @@ namespace VirtualLibrary.Controllers
             return View(db.Libraries.ToList());
         }
 
-        // GET: Libraries/Details/1
-        [HttpGet]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var library = db.Libraries.Find(id);
-            if (library == null)
-            {
-                return HttpNotFound();
-            }
-            return View(library);
-        }
-
         // GET: Libraries/Delete/1
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -56,7 +40,7 @@ namespace VirtualLibrary.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete(FormCollection fcNotUsed, int id)
+        public ActionResult DeleteConfirm(int id)
         {
             var library = db.Libraries.Find(id);
             db.Librarians.Where(c => c.library_id == id).Delete();
@@ -112,7 +96,7 @@ namespace VirtualLibrary.Controllers
         // POST: Libraries/Edit/1
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(FormCollection fcNotUsed, int? id)
+        public ActionResult _Edit(int? id)
         {
             if (id == null)
             {
