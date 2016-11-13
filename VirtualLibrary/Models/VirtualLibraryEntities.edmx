@@ -97,8 +97,8 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="book_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="book_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="library_id" Type="int" />
           <Property Name="quantity" Type="int" />
           <Property Name="reserved" Type="int" />
@@ -143,7 +143,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username_id" Type="int" />
           <Property Name="library_id" Type="int" />
         </EntityType>

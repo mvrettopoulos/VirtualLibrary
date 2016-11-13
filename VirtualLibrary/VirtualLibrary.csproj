@@ -260,6 +260,7 @@
     <Compile Include="Models\Users.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsersForLibraryViewModel.cs" />
     <Compile Include="Models\VirtualLibraryEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

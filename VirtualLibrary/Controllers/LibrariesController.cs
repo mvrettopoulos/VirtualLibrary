@@ -12,6 +12,7 @@ namespace VirtualLibrary.Controllers
     public class LibrariesController : Controller
     {
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Libraries
         public ActionResult Index()
@@ -134,34 +135,50 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView(library);
+            var users = GetLibrarians();
+
+            var model = new UsersForLibraryViewModel { AllLibrarians = users, Library = library, ThisLibrarian = null};
+
+            return PartialView(model);
         }
 
 
         // POST: Libraries/Librarians/1
         [HttpPost, ActionName("Librarians")]
         [ValidateAntiForgeryToken]
-        public ActionResult Librarians(FormCollection fcNotUsed, int? id)
+        public ActionResult Librarians(int? id, UsersForLibraryViewModel model)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var libraryToUpdate = db.Libraries.Find(id);
-            if (TryUpdateModel(libraryToUpdate, "",
-               new string[] { "University_Name", "Building", "Location" }))
+            if (ModelState.IsValid)
             {
-                try
-                {
-                    db.SaveChanges();
-                    return Json(new { success = true });
-                }
-                catch (System.Data.DataException)
-                {
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                }
+                Librarians is_librarian = new Librarians();
+                Libraries LibraryLibrarian = db.Libraries.Where(c => c.id == id).Single();
+                is_librarian.Libraries = LibraryLibrarian;
+                int j;
+                int.TryParse(model.ThisLibrarian, out j);
+                Users UserLibrarian = db.Users.Where(c => c.id == j).Single();
+                is_librarian.Users = UserLibrarian;
+                db.Librarians.Add(is_librarian);
+                db.SaveChanges();
+                return Json(new { success = true });
             }
-            return PartialView(libraryToUpdate);
+            return PartialView(model);
+        }
+
+
+        private IEnumerable<SelectListItem> GetLibrarians()
+        {
+            var all_librarians = db.Users.Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.id.ToString(),
+                                    Text = x.username
+                                });
+
+            return new SelectList(all_librarians, "Value", "Text");
         }
 
 
