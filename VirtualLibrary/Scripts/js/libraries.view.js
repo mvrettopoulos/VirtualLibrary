@@ -20,7 +20,7 @@ $(document).ready(function () {
             { "data": "University Name" },
             { "data": "Building" },
             { "data": "Location" },
-            { "data": "Actions"}
+            { "data": "Librarians"}
         ]
     });
 });
@@ -136,6 +136,39 @@ $('#edit_library_button').on('click', function () {
         });
     }
 });
+
+$('#librarians_button').on('click', function () {
+
+    if (librariesView.table.rows('.selected').data().length == 0) {
+
+        $('#librarians_button').prop('disabled', true);
+
+        $('#libraries_view_notification').notify({
+
+            message: { text: 'No library has been selected' },
+            fadeOut: { enabled: true, delay: 2000 },
+            closable: false,
+            type: 'blackgloss',
+            onClose: function () {
+
+                $('#librarians_button').prop('disabled', false);
+            }
+
+        }).show();
+    }
+    else {
+
+        var url = $('#librarians_modal').data('url') + '/' + librariesView.table_row_data.id;
+
+        $.get(url, function (data) {
+
+            $('#librarians_modalContent').html(data);
+            $('#librarians_modal').modal('show');
+            bindFormEdit();
+        });
+    }
+});
+
 
 function bindFormEdit(dialog) {
     $('form', dialog).submit(function (e) {

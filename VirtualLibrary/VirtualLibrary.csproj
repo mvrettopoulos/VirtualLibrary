@@ -721,6 +721,7 @@
     <Content Include="Views\Categories\_Delete.cshtml" />
     <Content Include="Views\Categories\_Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Libraries\Librarians.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

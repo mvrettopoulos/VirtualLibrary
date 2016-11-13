@@ -95,7 +95,7 @@ namespace VirtualLibrary.Controllers
         // GET: Libraries/Edit/1
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(FormCollection fcNotUsed, int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -112,7 +112,7 @@ namespace VirtualLibrary.Controllers
         // POST: Libraries/Edit/1
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(FormCollection fcNotUsed, int? id)
         {
             if (id == null)
             {
@@ -134,6 +134,52 @@ namespace VirtualLibrary.Controllers
             }
             return PartialView(libraryToUpdate);
         }
+
+
+        // GET: Libraries/Librarians/1
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Librarians(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var library = db.Libraries.Find(id);
+            if (library == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(library);
+        }
+
+
+        // POST: Libraries/Librarians/1
+        [HttpPost, ActionName("Librarians")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Librarians(FormCollection fcNotUsed, int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var libraryToUpdate = db.Libraries.Find(id);
+            if (TryUpdateModel(libraryToUpdate, "",
+               new string[] { "University_Name", "Building", "Location" }))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                catch (System.Data.DataException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+            }
+            return PartialView(libraryToUpdate);
+        }
+
 
     }
 }
