@@ -119,9 +119,8 @@
 @media(min-width:768px) {
     .sidebar {
         z-index: 1;
-        position: absolute;
+        position: static;
         width: 250px;
-        margin-top: 51px;
     }
 
     .navbar-top-links .dropdown-messages,
@@ -349,4 +348,10 @@ table.dataTable thead .sorting_desc_disabled {
 .row {
     margin-left: 0px !important;
     margin-right: 0px !important;
+}
+
+.page-main-layout{
+     border-left: 1px solid #e7e7e7;
+     background-color: #fff;
+     height:100vh;
 }

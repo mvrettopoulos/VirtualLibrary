@@ -1,0 +1,24 @@
+﻿@model IEnumerable<VirtualLibrary.Models.Books>
+
+@{
+    ViewBag.Title = "Home View";
+}
+
+
+<div class="row">
+    @Html.Partial("_SideNavBar")
+
+
+    <div class="page-main-layout col-lg-10">
+        <h1 class="page-header">Notifications</h1>
+    </div>
+
+
+
+    <!-- /.col-lg-12 -->
+</div>
+
+
+<script src="@Url.Content("~/Scripts/js/home.view.js")"></script>
+<script src="@Url.Content("~/bower_components/morrisjs/morris.min.js")"></script>
+<script src="@Url.Content("~/Scripts/morris-data.js")"></script>
