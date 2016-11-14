@@ -10,8 +10,6 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Libraries</h4>
-            <hr />
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.id)
 
@@ -39,18 +37,19 @@
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    <i class="fa fa-close fa-lg"></i>
-                    <strong>Cancel</strong>
-                </button>
-                <button type="submit" class="btn btn-success">
-                    <i class="fa fa-check fa-lg"></i>
-                    <strong>Apply</strong>
-                </button>
-            </div>
         </div>
+    </div>        
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="fa fa-close fa-lg"></i>
+            <strong>Cancel</strong>
+        </button>
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check fa-lg"></i>
+            <strong>Apply</strong>
+        </button>
     </div>
+
 }
 
 @section Scripts {
