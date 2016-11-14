@@ -10,12 +10,15 @@ using VirtualLibrary.Models;
 using VirtualLibrary.App_Start;
 using System.IO;
 using System.Data.Entity;
+using System.Data;
 
 namespace VirtualLibrary.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+  (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
@@ -413,11 +416,23 @@ namespace VirtualLibrary.Controllers
                     {
                         file.InputStream.CopyTo(ms);
                         byte[] array = ms.GetBuffer();
-                        user = new Users { id = user.id, image = array };
-                        db.Users.Add(user);
-                        db.Entry(user).State = EntityState.Added;
-                        // db.Entry(user).Property(x => x.image).IsModified = true;
-                        db.SaveChanges();
+                        user.image = array;
+                        try
+                        {
+                            db.Entry(user).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        catch (DataException e)
+                        {
+                            log.Error("Database error:", e);
+                        }
+                        log.Info("Image updated.");
+                        /* user = new Users { id = user.id, image = array };
+                         db.Entry(user).CurrentValues.SetValues(array);
+                         //db.Users.Attach(user);
+                         //db.Entry(user).State = EntityState.Added;
+                         //db.Entry(user).Property(x => x.image).IsModified = true;
+                         db.SaveChanges();*/
 
 
                     }
