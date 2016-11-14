@@ -203,6 +203,7 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibrarianDashboardController.cs" />
     <Compile Include="Controllers\LibrariesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
@@ -736,6 +737,8 @@
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Libraries\Librarians.cshtml" />
     <Content Include="Views\Manage\FileUpload.cshtml" />
+    <Content Include="Views\Shared\_SideNavBar.cshtml" />
+    <Content Include="Views\LibrarianDashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
