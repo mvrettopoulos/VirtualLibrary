@@ -18,6 +18,9 @@ using System.Web.Security;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Web.Services.Description;
+using System.IO;
+using System.Drawing;
+
 namespace VirtualLibrary.Controllers
 {
     [Authorize]
@@ -182,6 +185,14 @@ namespace VirtualLibrary.Controllers
 
                     var NewUser = new Users();
 
+                    byte[] array;
+                    Image img = Image.FromFile(Server.MapPath("/Content/images/no_available_image.png"));
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        array = ms.ToArray();
+                    }
+
                     NewUser.aspnet_user_id = currentUser.Id;
                     NewUser.active = false;
                     NewUser.bad_user = false;
@@ -191,7 +202,7 @@ namespace VirtualLibrary.Controllers
                     NewUser.date_of_birth = model.Date_of_Birth.ToString();
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
-
+                    NewUser.image = array;
 
                     db.Users.Add(NewUser);
                     db.SaveChanges();
@@ -415,8 +426,7 @@ namespace VirtualLibrary.Controllers
                     NewUser.date_of_birth = model.Date_of_Birth;
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
-
-
+                   
                     db.Users.Add(NewUser);
                     db.SaveChanges();
 
