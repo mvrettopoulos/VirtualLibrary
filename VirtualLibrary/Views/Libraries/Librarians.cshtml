@@ -14,7 +14,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.ThisLibrarian, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.ThisLibrarian, Model.AllLibrarians, "---Select---");
+                    @Html.DropDownListFor(model => model.ThisLibrarian, Model.AllLibrarians, new { multiple = "multiple" });
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@ namespace VirtualLibrary.Models
     public class UsersForLibraryViewModel
     {
         public IEnumerable<SelectListItem> AllLibrarians { get; set; }
-        public String ThisLibrarian { get; set; }
+        public int[] ThisLibrarian { get; set; }
         public Libraries Library { get; set; }
 
 
