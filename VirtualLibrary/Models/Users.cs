@@ -26,7 +26,7 @@ namespace VirtualLibrary.Models
         public string username { get; set; }
         public string date_of_birth { get; set; }
         public string date_of_registration { get; set; }
-        public Nullable<int> membership_id { get; set; }
+        public Nullable<long> membership_id { get; set; }
         public byte[] image { get; set; }
         public string aspnet_user_id { get; set; }
         public bool active { get; set; }

@@ -187,7 +187,7 @@
           <Property Name="username" Type="varchar" MaxLength="50" />
           <Property Name="date_of_birth" Type="varchar" MaxLength="50" />
           <Property Name="date_of_registration" Type="varchar" MaxLength="50" />
-          <Property Name="membership_id" Type="int" />
+          <Property Name="membership_id" Type="bigint" />
           <Property Name="image" Type="varbinary(max)" />
           <Property Name="aspnet_user_id" Type="nvarchar" MaxLength="128" />
           <Property Name="active" Type="bit" Nullable="false" />
@@ -639,7 +639,7 @@
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="date_of_birth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="date_of_registration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="membership_id" Type="Int32" />
+          <Property Name="membership_id" Type="Int64" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Books_Ratings" Relationship="Self.FK_Books_Ratings_Users" FromRole="Users" ToRole="Books_Ratings" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Users" FromRole="Users" ToRole="Reservations" />
