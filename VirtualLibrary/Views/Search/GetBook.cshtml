@@ -9,12 +9,14 @@
 <div class="row">
     <div class="col-lg-2 col-lg-offset-1">
         @if (Model.image == null)
-        {
+            {
             <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">
         }
         else
         {
-            <img class="img-search-book" src="@Model.image" alt="">
+            string imageBase64 = Convert.ToBase64String(Model.image);
+            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+            <img class="img-search-book" src="@imageSrc" />
         }
         <script>
 
@@ -79,17 +81,44 @@
             <h1><small class="pull-right">@Model.Books_Ratings.Count comments</small> Comments </h1>
         </div>
         <div class="comments-list">
+
+            @foreach (var comment in Model.Books_Ratings)
+            {
+                <div class="media">
+                    <p class="pull-right"><small>@comment.timestamp</small></p>
+                    <div class="media-left">
+                        @if (comment.Users.image == null)
+                        {
+                            <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">
+                        }
+                        else
+                        {
+                            string imageBase64 = Convert.ToBase64String(comment.Users.image);
+                            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                            <img class="img-search-book" src="@imageSrc" />
+                        }
+                    </div>
+                    <div class="media-body">
+
+                        <h4 class="media-heading user_name">@comment.Users.username</h4>
+                        @comment.comment
+
+
+                    </div>
+                </div>
+            }
+
             <div class="media">
                 <p class="pull-right"><small>5 days ago</small></p>
                 <a class="media-left" href="#">
-                    <img src="http://lorempixel.com/40/40/people/1/">
+                    <img src="http://lorempixel.com/40/40/people/2/">
                 </a>
                 <div class="media-body">
 
                     <h4 class="media-heading user_name">Baltej Singh</h4>
                     Wow! this is really great.
 
-                
+                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
                 </div>
             </div>
         </div>

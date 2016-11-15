@@ -6,14 +6,18 @@
     @foreach (var item in Model)
             {
         <article class="white-panel">
-            @if (@item.image == null)
-                {
+
+            @if (item.image == null)
+            {
                 <img src="~/Content/images/no_available_image.png" alt="">
             }
             else
             {
-                <img src="@item.image" alt="">
+                string imageBase64 = Convert.ToBase64String(item.image);
+                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                <img src="@imageSrc" />
             }
+
             <h2>@Html.ActionLink(item.title, "GetBook", "Search", new { id = item.id }, null)</h2>
             <h3 id="by_authors">
                 By
