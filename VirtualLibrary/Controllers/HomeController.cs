@@ -18,7 +18,7 @@ namespace VirtualLibrary.Controllers
         [RequireHttps]
         public ActionResult Index()
         {
-            var topBooks = db.Books.OrderByDescending(s =>s.views).Take(5).ToList();
+            var topBooks = db.Books.OrderByDescending(s =>s.views).Take(8).ToList();
             return View(topBooks);
         }
     }

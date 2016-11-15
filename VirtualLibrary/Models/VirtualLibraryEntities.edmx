@@ -121,6 +121,7 @@
           <Property Name="rating" Type="int" />
           <Property Name="user_id" Type="int" />
           <Property Name="comment" Type="nvarchar(max)" />
+          <Property Name="timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -576,6 +577,7 @@
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Books_Ratings_Users" FromRole="Books_Ratings" ToRole="Users" />
           <NavigationProperty Name="Books" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books_Ratings" ToRole="Books" />
+          <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="C__MigrationHistory1">
           <Key>
@@ -984,6 +986,7 @@
           <EntitySetMapping Name="Books_Ratings">
             <EntityTypeMapping TypeName="VirtualLibraryModel.Books_Ratings">
               <MappingFragment StoreEntitySet="Books_Ratings">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="book_id" ColumnName="book_id" />
                 <ScalarProperty Name="rating" ColumnName="rating" />
