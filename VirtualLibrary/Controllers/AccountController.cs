@@ -203,6 +203,9 @@ namespace VirtualLibrary.Controllers
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
                     NewUser.image = array;
+                    NewUser.membership_id = model.membership_id;
+                    model.membership_id = Convert.ToInt64(model.membership_id_string);
+                    NewUser.membership_id = model.membership_id;
 
                     db.Users.Add(NewUser);
                     db.SaveChanges();
@@ -416,6 +419,13 @@ namespace VirtualLibrary.Controllers
 
                     var NewUser = new Users();
 
+                    byte[] array;
+                    Image img = Image.FromFile(Server.MapPath("/Content/images/no_available_image.png"));
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        array = ms.ToArray();
+                    }
 
                     NewUser.aspnet_user_id = currentUser.Id;
                     NewUser.active = false;
@@ -426,7 +436,11 @@ namespace VirtualLibrary.Controllers
                     NewUser.date_of_birth = model.Date_of_Birth;
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
-                   
+                    NewUser.image = array;
+                    NewUser.membership_id = model.membership_id;
+                    model.membership_id = Convert.ToInt64(model.membership_id_string);
+                    NewUser.membership_id = model.membership_id;
+
                     db.Users.Add(NewUser);
                     db.SaveChanges();
 

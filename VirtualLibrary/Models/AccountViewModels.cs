@@ -34,6 +34,15 @@ namespace VirtualLibrary.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        public long membership_id { get; set; }
+
+        [Required(ErrorMessage = "Membership ID is required.")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Membership ID must be a 12-digit number")]
+        [StringLength(12, MinimumLength = 12, ErrorMessage = "Membership ID must be a 12-digit number")]
+        [Display(Name = "Membership ID")]
+        public string membership_id_string { get; set; }
+
     }
 
     public class ExternalLoginListViewModel
@@ -150,6 +159,13 @@ namespace VirtualLibrary.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        public long membership_id { get; set; }
+
+        [Required(ErrorMessage = "Membership ID is required.")]
+        [RegularExpression(@"^[0-9]*$" , ErrorMessage ="Membership ID must be a 12-digit number")]
+        [StringLength(12, MinimumLength = 12 , ErrorMessage = "Membership ID must be a 12-digit number")]
+        [Display(Name = "Membership ID")]
+        public string membership_id_string { get; set; }
     }
 
     public class ResetPasswordViewModel

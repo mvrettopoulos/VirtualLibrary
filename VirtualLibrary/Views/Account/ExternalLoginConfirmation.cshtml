@@ -43,6 +43,16 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.membership_id_string, new { @class = "col-md-2 control-label" })
+        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.membership_id_string, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.membership_id_string)
+        </div>
+    </div>
+
+
+    <div class="form-group">
         @Html.LabelFor(m => m.Date_of_Birth, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Date_of_Birth, new { @class = "form-control" })
