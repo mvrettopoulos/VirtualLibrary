@@ -135,7 +135,7 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            var users = GetLibrarians();
+            var users = GetLibrarians((int)id);
 
             var model = new UsersForLibraryViewModel { AllLibrarians = users, Library = library, ThisLibrarian = null};
 
@@ -157,28 +157,37 @@ namespace VirtualLibrary.Controllers
                 Librarians is_librarian = new Librarians();
                 Libraries LibraryLibrarian = db.Libraries.Where(c => c.id == id).Single();
                 is_librarian.Libraries = LibraryLibrarian;
-                int j;
-                int.TryParse(model.ThisLibrarian, out j);
-                Users UserLibrarian = db.Users.Where(c => c.id == j).Single();
-                is_librarian.Users = UserLibrarian;
-                db.Librarians.Add(is_librarian);
+                db.Librarians.Where(c => c.library_id == id).Delete();
                 db.SaveChanges();
+                foreach (int librarian_id in model.ThisLibrarian)
+                {
+                    Users UserLibrarian = db.Users.Where(c => c.id == librarian_id).Single();
+                    is_librarian.Users = UserLibrarian;
+                    db.Librarians.Add(is_librarian);
+                    db.SaveChanges();
+                }
                 return Json(new { success = true });
             }
             return PartialView(model);
         }
 
-
-        private IEnumerable<SelectListItem> GetLibrarians()
+        private IEnumerable<SelectListItem> GetLibrarians(int libraryid)
         {
-            var all_librarians = db.Users.Select(x =>
+            var selected = db.Librarians.Where(c => c.library_id == libraryid).Select(u => u.username_id).ToList();
+            var all_librarians = db.Users.Where(u => u.AspNetUsers.AspNetRoles.Any(r => r.Name == "Moderator")).Select(x =>
                                 new SelectListItem
                                 {
                                     Value = x.id.ToString(),
-                                    Text = x.username
-                                });
+                                    Text = x.username,
+                                }); ;
+            //var all_librarians = db.Users.Select(x =>
+            //                    new SelectListItem
+            //                    {
+            //                        Value = x.id.ToString(),
+            //                        Text = x.username,
+            //                    });
 
-            return new SelectList(all_librarians, "Value", "Text");
+            return new MultiSelectList(all_librarians, "Value", "Text", selected);
         }
 
 

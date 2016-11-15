@@ -580,6 +580,9 @@ namespace VirtualLibrary.Controllers
             var user = UserManager.FindById(id.ToString());
 
             var libraryUser = db.Users.Single(s => s.aspnet_user_id == user.Id);
+            libraryUser.Librarians.Clear();
+            libraryUser.Books_Ratings.Clear();
+            libraryUser.Reservations.Clear();
             db.Users.Remove(libraryUser);
             db.SaveChanges();
             UserManager.Delete(user);
