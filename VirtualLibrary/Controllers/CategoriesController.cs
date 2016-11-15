@@ -25,7 +25,7 @@ namespace VirtualLibrary.Controllers
             }
             else
             {
-                return View("Categories");
+                return View("Index");
             }
         }
         [Authorize(Roles = "Admin, Moderator")]

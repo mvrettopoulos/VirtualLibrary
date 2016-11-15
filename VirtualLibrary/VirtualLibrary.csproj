@@ -207,6 +207,7 @@
     <Compile Include="Controllers\LibrariesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
+    <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -655,6 +656,7 @@
     <Content Include="Scripts\js\home.view.js" />
     <Content Include="Scripts\js\login.view.js" />
     <Content Include="Scripts\js\navbar.js" />
+    <Content Include="Scripts\js\ratings.view.js" />
     <Content Include="Scripts\js\roles.view.js" />
     <Content Include="Scripts\js\libraries.view.js" />
     <Content Include="Scripts\js\Upload.js" />
@@ -739,6 +741,8 @@
     <Content Include="Views\Manage\FileUpload.cshtml" />
     <Content Include="Views\Shared\_SideNavBar.cshtml" />
     <Content Include="Views\LibrarianDashboard\Index.cshtml" />
+    <Content Include="Views\Ratings\Index.cshtml" />
+    <Content Include="Views\Ratings\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
