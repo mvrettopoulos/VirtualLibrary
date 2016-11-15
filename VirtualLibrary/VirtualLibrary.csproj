@@ -265,6 +265,7 @@
     <Compile Include="Models\Reservations.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
@@ -306,6 +307,9 @@
     <Content Include="Content\Bootstrap.FontAwsome.css" />
     <Content Include="Content\Bootstrap.FontAwsome.min.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen-sprite.png" />
+    <Content Include="Content\chosen.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
@@ -559,6 +563,8 @@
     </Content>
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap4.js" />
@@ -743,6 +749,7 @@
     <Content Include="Views\LibrarianDashboard\Index.cshtml" />
     <Content Include="Views\Ratings\Index.cshtml" />
     <Content Include="Views\Ratings\_Delete.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

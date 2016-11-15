@@ -7,6 +7,7 @@
 /// <reference path="angular-material/angular-material-mocks.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="bootstrap-notify.js" />
+/// <reference path="chosen.jquery.min.js" />
 /// <reference path="datatables/autofill.bootstrap.min.js" />
 /// <reference path="datatables/autofill.bootstrap4.min.js" />
 /// <reference path="datatables/autofill.foundation.min.js" />

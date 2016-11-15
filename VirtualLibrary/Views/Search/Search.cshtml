@@ -1,0 +1,38 @@
+﻿@model IEnumerable<VirtualLibrary.Models.Books>
+
+
+<section id="pinBoot">
+
+    @foreach (var item in Model)
+            {
+        <article class="white-panel">
+            @if (@item.image == null)
+                {
+                <img src="~/Content/images/no_available_image.png" alt="">
+            }
+            else
+            {
+                <img src="@item.image" alt="">
+            }
+            <h2>@Html.ActionLink(item.title, "GetBook", "Search", new { id = item.id }, null)</h2>
+            <h3 id="by_authors">
+                By
+                @foreach (var author in item.Author)
+                {
+                    var last = item.Author.Last();
+                    if (author.Equals(last))
+                    {
+                        @Html.DisplayFor(modelItem => author.author_name)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => author.author_name) @(", ")
+                    }
+                }
+            </h3>
+
+        </article>
+    }
+
+</section>
+<script src="@Url.Content("~/Scripts/js/home.view.js")"></script>
