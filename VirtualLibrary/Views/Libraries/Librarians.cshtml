@@ -12,9 +12,9 @@
             <h4>Librarians</h4>
             <hr />
             <div class="form-group">
-                @Html.LabelFor(model => model.ThisLibrarian, htmlAttributes: new { @class = "control-label col-md-2" })
+                <b>Select Librarians</b>
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.ThisLibrarian, Model.AllLibrarians, new { multiple = "multiple" });
+                    @Html.DropDownListFor(model => model.ThisLibrarian, Model.AllLibrarians as MultiSelectList, new { multiple = "multiple", @class = "form-control chosen-select", data_placeholder = "Select" })
                 </div>
             </div>
         </div>
@@ -31,8 +31,17 @@
     </div>
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+
+<script>    $(".chosen-select").chosen({
+        placeholder_text_multiple: "Select Librarian",
+        disable_search_threshold: 10,
+        no_results_text: "Oops, nothing found!",
+        width: "100%"
+    }); </script> 
+
+
