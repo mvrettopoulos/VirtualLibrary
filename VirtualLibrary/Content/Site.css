@@ -311,6 +311,19 @@ stylize any heading tags withing white-panel below
     font-size:14px;
     font-weight: bold;
 }
-.comments-list .media{
-    border-bottom: 1px dotted #ccc;
+.review-list .media{
+    border-top: 2px groove #ccc;
+}
+
+.animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
 }

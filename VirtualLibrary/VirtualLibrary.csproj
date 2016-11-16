@@ -663,6 +663,7 @@
     <Content Include="Scripts\js\login.view.js" />
     <Content Include="Scripts\js\navbar.js" />
     <Content Include="Scripts\js\ratings.view.js" />
+    <Content Include="Scripts\js\review.view.js" />
     <Content Include="Scripts\js\roles.view.js" />
     <Content Include="Scripts\js\libraries.view.js" />
     <Content Include="Scripts\js\Upload.js" />
@@ -750,6 +751,8 @@
     <Content Include="Views\Ratings\Index.cshtml" />
     <Content Include="Views\Ratings\_Delete.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
+    <Content Include="Views\Ratings\Reviews.cshtml" />
+    <Content Include="Views\Search\Reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
