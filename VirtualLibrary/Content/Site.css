@@ -135,7 +135,33 @@
     border-color: #330066;
 }
 
+.panel-availability {
 
+    border-color: #635192;
+}
+
+.panel-availability > .panel-heading-availability {
+
+  color: #fff;
+  background-color: #635192;
+  border-color:  #635192;
+}
+
+.panel-availability > .panel-heading-availability + .panel-collapse > .panel-body {
+
+  border-top-color: #635192;
+}
+
+.panel-availability > .panel-heading-availability .badge {
+
+  color: #635192;
+  background-color: #fff;
+}
+
+.panel-availability > .panel-footer + .panel-collapse > .panel-body {
+
+    border-bottom-color:#635192;
+}
 
 .navbar-inverse {
 

@@ -14,6 +14,8 @@ namespace VirtualLibrary.Controllers
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         // GET: Libraries
         public ActionResult Index()
         {

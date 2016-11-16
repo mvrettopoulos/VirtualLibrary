@@ -54,6 +54,7 @@
 /// <reference path="jquery-ui-1.12.1.js" />
 /// <reference path="jquery-ui-1.12.1.min.js" />
 /// <reference path="js/authors.view.js" />
+/// <reference path="js/availability.view.js" />
 /// <reference path="js/books.view.js" />
 /// <reference path="js/categories.view.js" />
 /// <reference path="js/home.view.js" />
