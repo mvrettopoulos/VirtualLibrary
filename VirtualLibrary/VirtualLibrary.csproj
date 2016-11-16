@@ -251,9 +251,6 @@
     <Compile Include="Models\C__MigrationHistory1.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\database_firewall_rules.cs">
-      <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Librarians.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
