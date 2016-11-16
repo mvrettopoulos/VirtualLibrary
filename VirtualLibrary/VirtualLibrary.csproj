@@ -235,6 +235,7 @@
     <Compile Include="Models\Books.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BooksViewModel.cs" />
     <Compile Include="Models\Books_Availability.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
