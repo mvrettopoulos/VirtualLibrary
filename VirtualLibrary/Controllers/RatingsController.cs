@@ -13,7 +13,7 @@ namespace VirtualLibrary.Controllers
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
+
         // GET: Ratings
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
@@ -28,6 +28,19 @@ namespace VirtualLibrary.Controllers
                 return View("Index");
             }
         }
+
+        [Authorize(Roles = "Admin, Moderator, User")]
+        [HttpPost]
+        public ActionResult Create(FormCollection form)
+        {
+            string rating = form["rating"];
+            string comment = form["comment"];
+            log.Info(rating);
+            log.Info(comment);
+
+            return PartialView("Reviews", db.Books_Ratings.ToList());
+        }
+
 
 
         [Authorize(Roles = "Admin, Moderator")]
