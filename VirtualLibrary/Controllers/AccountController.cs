@@ -191,6 +191,7 @@ namespace VirtualLibrary.Controllers
                     {
                         img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                         array = ms.ToArray();
+                        ms.Close();
                     }
 
                     NewUser.aspnet_user_id = currentUser.Id;
@@ -199,7 +200,7 @@ namespace VirtualLibrary.Controllers
                     NewUser.username = model.Username;
                     NewUser.first_name = model.firstName;
                     NewUser.last_name = model.lastName;
-                    NewUser.date_of_birth = model.Date_of_Birth.ToString();
+                    NewUser.date_of_birth = model.Date_of_Birth;
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
                     NewUser.image = array;
@@ -425,6 +426,7 @@ namespace VirtualLibrary.Controllers
                     {
                         img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                         array = ms.ToArray();
+                        ms.Close();
                     }
 
                     NewUser.aspnet_user_id = currentUser.Id;
