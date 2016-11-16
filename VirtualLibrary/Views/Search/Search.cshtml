@@ -1,6 +1,15 @@
 ﻿@model IEnumerable<VirtualLibrary.Models.Books>
 
 
+@if (ViewBag.StatusMessage != null)
+{
+    <div class="row text-center">
+        <p class="alert alert-danger">@ViewBag.StatusMessage</p>
+    </div>
+}
+
+
+
 <section id="pinBoot">
 
     @foreach (var item in Model)

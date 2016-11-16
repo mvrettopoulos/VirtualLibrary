@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,7 +19,6 @@ namespace VirtualLibrary.Controllers
         // GET: Search
         public ActionResult Index()
         {
-            ViewBag.Filters = getFilterList();
             ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "ID", "Description", null);
             return View();
         }
@@ -26,8 +28,6 @@ namespace VirtualLibrary.Controllers
         {
             return PartialView("Search", db.Books.OrderByDescending(s => s.views).ToList());
         }
-
-
 
         // GET: Search/Books
         [HttpPost]
@@ -46,6 +46,11 @@ namespace VirtualLibrary.Controllers
                 var books = db.Books.Where(b => b.title.Contains(search)
                 || b.isbn.Contains(search) || b.publisher.Contains(search)
                 || b.description.Contains(search)).ToList();
+                if (books.Count == 0)
+                {
+                    ViewBag.StatusMessage = "No Books found!!!";
+                }
+
                 return PartialView("Search", books);
             }
             else if (command == "AdvancedSearch")
@@ -55,7 +60,6 @@ namespace VirtualLibrary.Controllers
                 string words = form["words"];
                 string categories = form["category"];
                 var booksList = new List<Books>();
-                List<Category> categoryList = new List<Category>();
                 if (authorName != string.Empty && categories == null && words == string.Empty)
                 {
                     log.Info("Search only for author");
@@ -110,6 +114,10 @@ namespace VirtualLibrary.Controllers
 
                 }
                 booksList = booksList.OrderByDescending(b => b.views).ToList();
+                if (booksList.Count == 0)
+                {
+                    ViewBag.StatusMessage = "No Books found!!!";
+                }
                 return PartialView("Search", booksList);
             }
             return PartialView("Search");
@@ -128,16 +136,24 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
+            book.views = ++book.views;
+            try
+            {
+                db.Entry(book).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                   log.Error("Entity of type "+eve.Entry.Entity.GetType().Name+" in state " + eve.Entry.State+" has the following validation errors:");
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        log.Error("- Property: "+ ve.PropertyName + ", Error: "+ve.ErrorMessage);
+                    }
+                }
+            }
             return View(book);
-        }
-
-        private List<String> getFilterList()
-        {
-            List<string> listFilters = new List<string>();
-            listFilters.Add("Most popular");
-            listFilters.Add("Top rated");
-            listFilters.Add("Most commented");
-            return listFilters;
         }
     }
 }

@@ -78,12 +78,12 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="title" Type="varchar(max)" />
           <Property Name="description" Type="varchar(max)" Nullable="false" />
           <Property Name="image" Type="varbinary(max)" />
           <Property Name="isbn" Type="varchar" MaxLength="50" />
           <Property Name="publisher" Type="nvarchar" MaxLength="50" />
-          <Property Name="views" Type="int" />
+          <Property Name="views" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Books_Authors">
           <Key>
@@ -576,8 +576,8 @@
           <Property Name="user_id" Type="Int32" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Books_Ratings_Users" FromRole="Books_Ratings" ToRole="Users" />
-          <NavigationProperty Name="Books" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books_Ratings" ToRole="Books" />
           <Property Name="timestamp" annotation:StoreGeneratedPattern="Computed" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Books" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books_Ratings" ToRole="Books" />
         </EntityType>
         <EntityType Name="C__MigrationHistory1">
           <Key>
@@ -794,7 +794,7 @@
             <End Role="Books" EntitySet="Books" />
             <End Role="Category" EntitySet="Category" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Librarians">
           <Key>
             <PropertyRef Name="id" />
@@ -846,17 +846,17 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="isbn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="views" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Books_Availability" Relationship="VirtualLibraryModel.FK_Books_Availability_Books" FromRole="Books" ToRole="Books_Availability" />
           <NavigationProperty Name="Books_Ratings" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books" ToRole="Books_Ratings" />
           <NavigationProperty Name="Reservations" Relationship="VirtualLibraryModel.FK_Reservations_Books" FromRole="Books" ToRole="Reservations" />
           <NavigationProperty Name="Author" Relationship="VirtualLibraryModel.Books_Authors" FromRole="Books" ToRole="Author" />
           <NavigationProperty Name="Category" Relationship="VirtualLibraryModel.Books_Categories" FromRole="Books" ToRole="Category" />
-          <Property Name="views" Type="Int32" />
         </EntityType>
         <Association Name="FK_Books_Availability_Books">
           <End Type="VirtualLibraryModel.Books" Role="Books" Multiplicity="1" />
@@ -902,7 +902,7 @@
           <End Type="VirtualLibraryModel.Books" Role="Books" Multiplicity="*" />
           <End Type="VirtualLibraryModel.Category" Role="Category" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1111,7 +1111,7 @@
               <ScalarProperty Name="id" ColumnName="Books_id" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

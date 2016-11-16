@@ -28,13 +28,13 @@ namespace VirtualLibrary.Models
             public int id { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+            [StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
             [DataType(DataType.Text)]
             [Display(Name = "Book Title")]
             public string title { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "Please enter a descrption of the book.", MinimumLength = 5)]
+            [StringLength(int.MaxValue, ErrorMessage = "Please enter a descrption of the book.", MinimumLength = 50)]
             [DataType(DataType.Text)]
             [Display(Name = "Description")]
 
@@ -46,7 +46,7 @@ namespace VirtualLibrary.Models
             [Display(Name = "ISBN")]
             public string isbn { get; set; }
 
-            [StringLength(60, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
             [Display(Name = "Publisher")]
             public string publisher { get; set; }
 

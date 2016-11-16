@@ -30,7 +30,7 @@ namespace VirtualLibrary.Models
         public byte[] image { get; set; }
         public string isbn { get; set; }
         public string publisher { get; set; }
-        public Nullable<int> views { get; set; }
+        public int views { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Books_Availability> Books_Availability { get; set; }
