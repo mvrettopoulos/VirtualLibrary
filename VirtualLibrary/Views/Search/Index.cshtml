@@ -1,89 +1,68 @@
-﻿@model IEnumerable<VirtualLibrary.Models.Books>
+﻿@model VirtualLibrary.Models.filterViewModel
 
 @{
     ViewBag.Title = "Search View";
 }
 <div class="row rowHomePage">
-    <div class="col-md-12">
-        <div class="input-group" id="adv-search">
-            <input type="text" class="form-control form-search" placeholder="Search for Books" />
-            <div class="input-group-btn">
-                <div class="btn-group" role="group">
-                    <div class="dropdown dropdown-lg">
-                        <button type="button" class="btn  btn-search btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                        <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="filter">Filter by</label>
-                                    <select class="form-control">
-                                        <option value="0" selected>All Snippets</option>
-                                        <option value="1">Featured</option>
-                                        <option value="2">Most popular</option>
-                                        <option value="3">Top rated</option>
-                                        <option value="4">Most commented</option>
-                                    </select>
+    @using (Ajax.BeginForm("SearchBooks", "Search", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultArea" }))
+    {
+        <div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                @Html.EditorFor(model => model.search, new { htmlAttributes = new { @class = "form-control form-search", placeholder = "Search for Books" } })
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn  btn-search btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <div class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="contain">Category</label>
+                                        <div class="col-md-10">
+                                            @Html.ListBoxFor(model => model.category, ViewBag.Categories as MultiSelectList,  new { @class = "form-control chosen-select", style = "width:100%;" })
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for="contain">Author</label>
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.author, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4" for="contain">Contains the words</label>
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.words, new { htmlAttributes = new { @class = "form-control" } })
+                                        </div>
+                                    </div>
+                                    <button type="submit" name="command" value="AdvancedSearch" class="input-block-level form-control btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="contain">Author</label>
-                                    <input class="form-control" type="text" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="contain">Contains the words</label>
-                                    <input class="form-control" type="text" />
-                                </div>
-                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </form>
+                            </div>
                         </div>
+                        <button type="submit" name="command" value="Search" class="btn btn-primary  btn-search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     </div>
-                    <button type="button" class="btn btn-primary  btn-search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </div>
             </div>
         </div>
-    </div>
+    }
 
-    <div class="col-lg-12 ">
-
-
-        <section id="pinBoot">
-
-            @foreach (var item in Model)
-            {
-                <article class="white-panel">
-                    @if (@item.image == null)
-                {
-                        <img src="~/Content/images/no_available_image.png" alt="">
-                    }
-                    else
-                    {
-                        <img src="@item.image" alt="">
-                    }
-                    <h2>@Html.ActionLink(item.title, "GetBook", "Search", new { id = item.id }, null)</h2>
-                    <h3 id="by_authors">
-                        By
-                        @foreach (var author in item.Author)
-                {
-                    var last = item.Author.Last();
-                    if (author.Equals(last))
-                    {
-                                @Html.DisplayFor(modelItem => author.author_name)
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => author.author_name) @(", ")
-                            }
-
-                        }
-                    </h3>
-
-                </article>
-            }
-
-        </section>
-
-
-
+    <div class="col-lg-10 col-lg-offset-1 " id="resultArea">
+        @Html.Action("Search")
     </div>
 </div>
+<script> 
+
+    $(document).on('click', 'div .dropdown-menu', function (e) {
+        e.stopPropagation();
+    })
+
+    $(".chosen-select").chosen({
+        placeholder_text_multiple: "Select Category",
+        disable_search_threshold: 10,
+        no_results_text: "Oops, nothing found!",
+        width: "100%"
+    });
+    
+    </script>
 <script src="@Url.Content("~/Scripts/js/home.view.js")"></script>
 <script src="@Url.Content("~/bower_components/morrisjs/morris.min.js")"></script>
 <script src="@Url.Content("~/Scripts/morris-data.js")"></script>

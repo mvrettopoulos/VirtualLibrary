@@ -304,5 +304,13 @@ stylize any heading tags withing white-panel below
 .img-search-book {
     max-height: 100%;
     max-width: 100%;
-    width: auto;
+    width: 100%;
 }​
+
+ .user_name{
+    font-size:14px;
+    font-weight: bold;
+}
+.comments-list .media{
+    border-bottom: 1px dotted #ccc;
+}

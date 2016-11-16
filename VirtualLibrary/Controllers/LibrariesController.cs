@@ -159,12 +159,15 @@ namespace VirtualLibrary.Controllers
                 is_librarian.Libraries = LibraryLibrarian;
                 db.Librarians.Where(c => c.library_id == id).Delete();
                 db.SaveChanges();
-                foreach (int librarian_id in model.ThisLibrarian)
+                if (model.ThisLibrarian != null)
                 {
-                    Users UserLibrarian = db.Users.Where(c => c.id == librarian_id).Single();
-                    is_librarian.Users = UserLibrarian;
-                    db.Librarians.Add(is_librarian);
-                    db.SaveChanges();
+                    foreach (int librarian_id in model.ThisLibrarian)
+                    {
+                        Users UserLibrarian = db.Users.Where(c => c.id == librarian_id).Single();
+                        is_librarian.Users = UserLibrarian;
+                        db.Librarians.Add(is_librarian);
+                        db.SaveChanges();
+                    }
                 }
                 return Json(new { success = true });
             }

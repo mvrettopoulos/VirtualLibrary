@@ -19,6 +19,7 @@ namespace VirtualLibrary.Models
         public Nullable<int> rating { get; set; }
         public Nullable<int> user_id { get; set; }
         public string comment { get; set; }
+        public string timestamp { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual Books Books { get; set; }

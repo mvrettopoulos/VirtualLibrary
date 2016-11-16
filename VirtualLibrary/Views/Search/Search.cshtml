@@ -1,0 +1,51 @@
+﻿@model IEnumerable<VirtualLibrary.Models.Books>
+
+
+@if (ViewBag.StatusMessage != null)
+{
+    <div class="row text-center">
+        <p class="alert alert-danger">@ViewBag.StatusMessage</p>
+    </div>
+}
+
+
+
+<section id="pinBoot">
+
+    @foreach (var item in Model)
+            {
+        <article class="white-panel">
+
+            @if (item.image == null)
+            {
+                <img src="~/Content/images/no_available_image.png" alt="">
+            }
+            else
+            {
+                string imageBase64 = Convert.ToBase64String(item.image);
+                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                <img src="@imageSrc" />
+            }
+
+            <h2>@Html.ActionLink(item.title, "GetBook", "Search", new { id = item.id }, null)</h2>
+            <h3 id="by_authors">
+                By
+                @foreach (var author in item.Author)
+                {
+                    var last = item.Author.Last();
+                    if (author.Equals(last))
+                    {
+                        @Html.DisplayFor(modelItem => author.author_name)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => author.author_name) @(", ")
+                    }
+                }
+            </h3>
+
+        </article>
+    }
+
+</section>
+<script src="@Url.Content("~/Scripts/js/home.view.js")"></script>

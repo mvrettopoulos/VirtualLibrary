@@ -7,14 +7,16 @@
 
 
 <div class="row">
-    <div class="col-lg-4 img-search-book">
+    <div class="col-lg-2 col-lg-offset-1">
         @if (Model.image == null)
-        {
+            {
             <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">
         }
         else
         {
-            <img class="img-search-book" src="@Model.image" alt="">
+            string imageBase64 = Convert.ToBase64String(Model.image);
+            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+            <img class="img-search-book" src="@imageSrc" />
         }
         <script>
 
@@ -27,81 +29,112 @@
         </script>
 
     </div>
-    <div class="col-lg-7">
-        <h2>@Html.DisplayFor(model => model.title)</h2>
-        <div class="form-group">
-            @Html.LabelFor(m => m.description, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DisplayFor(m => m.description)
+    <div class="col-lg-8">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row"><h2>@Html.DisplayFor(model => model.title)</h2> </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.isbn, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DisplayFor(m => m.isbn)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.views, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DisplayFor(m => m.views)
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.description, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-10">
+                            @Html.DisplayFor(m => m.description)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.isbn, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-10">
+                            @Html.DisplayFor(m => m.isbn)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.views, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-10">
+                            @Html.DisplayFor(m => m.views)
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="row">
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.IsInRole("User"))
+            {
+        <div class="col-lg-4 col-lg-offset-7">
+            <div class="btn-group pull-right">
+                <button class="btn btn-default" id="comment_button" data-toggle="tooltip" title="Comment/Rate">
+                    <i class="fa fa-comment-o fa-lg">
+                    </i>
+                    <strong>Comment/Rate</strong>
+                </button>
+                <button class="btn btn-default" id="reserve_button" data-toggle="tooltip" title="Reserve Book">
+                    <i class="fa fa-plus fa-lg"></i>
+                    <strong>Reserve Book</strong>
+                </button>
+            </div>
+        </div>
+    }
 
-@* <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                      @Html.DisplayNameFor(model => model.title)
-            </dt>
+</div>
 
-            <dd>
 
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.description)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.description)
-            </dd>
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="page-header">
+            <h1><small class="pull-right">@Model.Books_Ratings.Count comments</small> Comments </h1>
+        </div>
+        <div class="comments-list">
 
-            <dt>
-                @Html.DisplayNameFor(model => model.image)
-            </dt>
+            @foreach (var comment in Model.Books_Ratings)
+            {
+                <div class="media">
+                    <p class="pull-right"><small>@comment.timestamp</small></p>
+                    <div class="media-left">
+                        @if (comment.Users.image == null)
+                        {
+                            <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">
+                        }
+                        else
+                        {
+                            string imageBase64 = Convert.ToBase64String(comment.Users.image);
+                            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                            <img class="img-search-book" src="@imageSrc" />
+                        }
+                    </div>
+                    <div class="media-body">
 
-            <dd>
-                @Html.DisplayFor(model => model.image)
-            </dd>
+                        <h4 class="media-heading user_name">@comment.Users.username</h4>
+                        @comment.comment
 
-            <dt>
-                @Html.DisplayNameFor(model => model.isbn)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.isbn)
-            </dd>
+                    </div>
+                </div>
+            }
 
-            <dt>
-                @Html.DisplayNameFor(model => model.publisher)
-            </dt>
+            <div class="media">
+                <p class="pull-right"><small>5 days ago</small></p>
+                <a class="media-left" href="#">
+                    <img src="http://lorempixel.com/40/40/people/2/">
+                </a>
+                <div class="media-body">
 
-            <dd>
-                @Html.DisplayFor(model => model.publisher)
-            </dd>
+                    <h4 class="media-heading user_name">Baltej Singh</h4>
+                    Wow! this is really great.
 
-            <dt>
-                @Html.DisplayNameFor(model => model.views)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.views)
-            </dd>
-
-        </dl>
+                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                </div>
+            </div>
+        </div>
     </div>
-*@
-
+</div>
