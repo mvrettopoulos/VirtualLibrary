@@ -139,7 +139,7 @@ namespace VirtualLibrary.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime? Date_of_Birth { get; set; }
+        public string Date_of_Birth { get; set; }
 
 
         [Required(ErrorMessage ="Email is required.")]

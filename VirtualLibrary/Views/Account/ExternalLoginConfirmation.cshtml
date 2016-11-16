@@ -1,89 +1,188 @@
-﻿@model VirtualLibrary.Models.ExternalLoginConfirmationViewModel
-@{
-    ViewBag.Title = "Register";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>Associate your @ViewBag.LoginProvider account.</h3>
+﻿<div class="container">
 
-@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
+    @model VirtualLibrary.Models.ExternalLoginConfirmationViewModel
+    @{
+        ViewBag.Title = "Register";
+    }
 
-    <h4>Association Form</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <p class="text-info">
-        You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
-        Please enter a user name for this site below and click the Register button to finish
-        logging in.
-    </p>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+
+    <script type="text/javascript">
+        $(function () {
+            $('.button-checkbox').each(function () {
+
+                // Settings
+                var $widget = $(this),
+                    $button = $widget.find('button'),
+                    $checkbox = $widget.find('input:checkbox'),
+                    color = $button.data('color'),
+                    settings = {
+                        on: {
+                            icon: 'glyphicon glyphicon-check'
+                        },
+                        off: {
+                            icon: 'glyphicon glyphicon-unchecked'
+                        }
+                    };
+
+                // Event Handlers
+                $button.on('click', function () {
+                    $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    $checkbox.triggerHandler('change');
+                    updateDisplay();
+                });
+                $checkbox.on('change', function () {
+                    updateDisplay();
+                });
+
+                // Actions
+                function updateDisplay() {
+                    var isChecked = $checkbox.is(':checked');
+
+                    // Set the button's state
+                    $button.data('state', (isChecked) ? "on" : "off");
+
+                    // Set the button's icon
+                    $button.find('.state-icon')
+                        .removeClass()
+                        .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+                    // Update the button's color
+                    if (isChecked) {
+                        $button
+                            .removeClass('btn-default')
+                            .addClass('btn-' + color + ' active');
+                    }
+                    else {
+                        $button
+                            .removeClass('btn-' + color + ' active')
+                            .addClass('btn-default');
+                    }
+                }
+
+                // Initialization
+                function init() {
+
+                    updateDisplay();
+
+                    // Inject the icon if applicable
+                    if ($button.find('.state-icon').length == 0) {
+                        $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i>');
+                    }
+                }
+                init();
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        .colorgraph {
+            height: 5px;
+            border-top: 0;
+            background: #c4e17f;
+            border-radius: 5px;
+            background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+            background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+            background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+            background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        }
+    </style>
+
+
+
+    @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <form role="form">
+                    @Html.AntiForgeryToken()
+                    <h2>Associate your @ViewBag.LoginProvider account.</h2>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <p class="text-info">
+                        You've successfully authenticated with <strong>@ViewBag.LoginProvider</strong>.
+                        Please enter a your personal info for this site below and click the Register button to finish
+                        logging in.
+                    </p>
+                    <hr class="colorgraph">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.firstName)
+                            @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+                            @Html.TextBoxFor(m => m.firstName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.firstName)
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.lastName)
+                            @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+                            @Html.TextBoxFor(m => m.lastName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.lastName)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Username)
+                        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Username)
+                   </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.membership_id_string)
+                        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+
+                        @Html.TextBoxFor(m => m.membership_id_string, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.membership_id_string)
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email)
+                        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Email)
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Date_of_Birth)
+                        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
+                        @Html.TextBoxFor(m => m.Date_of_Birth, new { @class = "form-control", id = "datepicker" })
+                        @Html.ValidationMessageFor(model => model.Date_of_Birth)
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-3 col-md-3">
+                            <span class="button-checkbox">
+                                <button type="button" class="btn" data-color="info" tabindex="7">I Agree</button>
+                                <input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
+                            </span>
+                        </div>
+                        <div class="col-xs-8 col-sm-9 col-md-9">
+                            By clicking <strong class="label label-primary">Register</strong>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
+                        </div>
+                    </div>
+                    <hr class="colorgraph">
+                    <div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                </form>
+            </div>
         </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.firstName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.firstName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.firstName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.lastName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.lastName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.lastName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.membership_id_string, new { @class = "col-md-2 control-label" })
-        @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.membership_id_string, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.membership_id_string)
-        </div>
-    </div>
+      }
 
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Date_of_Birth, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Date_of_Birth, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Date_of_Birth, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
+ @section Scripts {
+     @Scripts.Render("~/bundles/jqueryval")
+   }
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
-
-<script>
-    $("#Date_of_Birth").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "1930:2010"
-    });
-
-</script>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    <script type="text/javascript">
+        $("#datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "1930:2010"
+        });
+    </script>
+            </div>
