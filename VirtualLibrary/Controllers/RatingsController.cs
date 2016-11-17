@@ -31,6 +31,7 @@ namespace VirtualLibrary.Controllers
 
         [Authorize(Roles = "Admin, Moderator, User")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection form)
         {
             string rating = form["rating"];
@@ -43,8 +44,7 @@ namespace VirtualLibrary.Controllers
             bookRating.book_id = Convert.ToInt32(bookID);
             bookRating.comment = comment;
             bookRating.rating = Convert.ToInt32(rating);
-            DateTime today = DateTime.Today;
-            bookRating.timestamp = Convert.ToString(today);
+            bookRating.timestamp = DateTime.Now.ToString("dd/mm/yyyy HH:mm:ss"); ;
             bookRating.user_id = model.id;
             db.Books_Ratings.Add(bookRating);
             db.SaveChanges();

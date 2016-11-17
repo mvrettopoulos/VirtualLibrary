@@ -4,23 +4,12 @@
             {
     <div class="media">
         <p class="pull-right"><small>@review.timestamp</small></p>
-        <div class="media-left">
-            @if (review.Users.image == null)
-            {
-                <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">
-            }
-            else
-            {
-                string imageBase64 = Convert.ToBase64String(review.Users.image);
-                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                <img class="img-search-book" src="@imageSrc" />
-            }
-        </div>
         <div class="media-body">
 
             <h4 class="media-heading user_name">@review.Users.username</h4>
-            @review.comment
-
+            <div class="row">
+                <p class="text-justify text-wrap">@review.comment</p>
+            </div>
 
         </div>
     </div>

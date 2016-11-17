@@ -30,8 +30,8 @@ $(function () {
         });
         closeReviewBtn.hide();
     });
+
     reviewButton.click(function (e) {
-        e.preventDefault();
         reviewBox.slideUp(300, function () {
             newReview.focus();
         //    openReviewBtn.fadeIn(200);

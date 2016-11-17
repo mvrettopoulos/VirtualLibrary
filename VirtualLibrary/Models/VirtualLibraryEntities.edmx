@@ -121,7 +121,7 @@
           <Property Name="rating" Type="int" />
           <Property Name="user_id" Type="int" />
           <Property Name="comment" Type="nvarchar(max)" />
-          <Property Name="timestamp" Type="varchar" MaxLength="50" StoreGeneratedPattern="Computed" />
+          <Property Name="timestamp" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -553,19 +553,6 @@
           <Property Name="author_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Books" Relationship="VirtualLibraryModel.Books_Authors" FromRole="Author" ToRole="Books" />
         </EntityType>
-        <EntityType Name="Books_Ratings">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="book_id" Type="Int32" Nullable="false" />
-          <Property Name="rating" Type="Int32" />
-          <Property Name="user_id" Type="Int32" />
-          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Books_Ratings_Users" FromRole="Books_Ratings" ToRole="Users" />
-          <Property Name="timestamp" annotation:StoreGeneratedPattern="Computed" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Books" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books_Ratings" ToRole="Books" />
-        </EntityType>
         <EntityType Name="C__MigrationHistory1">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -630,7 +617,6 @@
           <Property Name="date_of_registration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="membership_id" Type="Int64" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Books_Ratings" Relationship="Self.FK_Books_Ratings_Users" FromRole="Users" ToRole="Books_Ratings" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Users" FromRole="Users" ToRole="Reservations" />
           <Property Name="aspnet_user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="active" Type="Boolean" Nullable="false" />
@@ -639,6 +625,7 @@
           <NavigationProperty Name="Librarians" Relationship="VirtualLibraryModel.FK_Librarians_Users" FromRole="Users" ToRole="Librarians" />
           <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Books_Ratings" Relationship="VirtualLibraryModel.FK_Books_Ratings_Users" FromRole="Users" ToRole="Books_Ratings" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -668,18 +655,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Books_Ratings_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="Books_Ratings" Type="Self.Books_Ratings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Books_Ratings">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Reservations_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
@@ -703,7 +678,6 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
           <EntitySet Name="Author" EntityType="Self.Author" />
-          <EntitySet Name="Books_Ratings" EntityType="Self.Books_Ratings" />
           <EntitySet Name="C__MigrationHistory1" EntityType="Self.C__MigrationHistory1" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Libraries" EntityType="Self.Libraries" />
@@ -717,10 +691,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Books_Ratings_Users" Association="Self.FK_Books_Ratings_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Books_Ratings" EntitySet="Books_Ratings" />
           </AssociationSet>
           <AssociationSet Name="FK_Reservations_Users" Association="Self.FK_Reservations_Users">
             <End Role="Users" EntitySet="Users" />
@@ -744,10 +714,6 @@
             <End Role="Librarians" EntitySet="Librarians" />
           </AssociationSet>
           <EntitySet Name="Books" EntityType="VirtualLibraryModel.Books" />
-          <AssociationSet Name="FK_Books_Ratings_Books" Association="VirtualLibraryModel.FK_Books_Ratings_Books">
-            <End Role="Books" EntitySet="Books" />
-            <End Role="Books_Ratings" EntitySet="Books_Ratings" />
-          </AssociationSet>
           <AssociationSet Name="FK_Reservations_Books" Association="VirtualLibraryModel.FK_Reservations_Books">
             <End Role="Books" EntitySet="Books" />
             <End Role="Reservations" EntitySet="Reservations" />
@@ -768,6 +734,15 @@
           <AssociationSet Name="FK_Books_Availability_Libraries" Association="VirtualLibraryModel.FK_Books_Availability_Libraries">
             <End Role="Libraries" EntitySet="Libraries" />
             <End Role="Books_Availability" EntitySet="Books_Availability" />
+          </AssociationSet>
+          <EntitySet Name="Books_Ratings" EntityType="VirtualLibraryModel.Books_Ratings" />
+          <AssociationSet Name="FK_Books_Ratings_Books" Association="VirtualLibraryModel.FK_Books_Ratings_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Books_Ratings" EntitySet="Books_Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Books_Ratings_Users" Association="VirtualLibraryModel.FK_Books_Ratings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Books_Ratings" EntitySet="Books_Ratings" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Librarians">
@@ -827,24 +802,12 @@
           <Property Name="isbn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="views" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Books_Ratings" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books" ToRole="Books_Ratings" />
           <NavigationProperty Name="Reservations" Relationship="VirtualLibraryModel.FK_Reservations_Books" FromRole="Books" ToRole="Reservations" />
           <NavigationProperty Name="Author" Relationship="VirtualLibraryModel.Books_Authors" FromRole="Books" ToRole="Author" />
           <NavigationProperty Name="Category" Relationship="VirtualLibraryModel.Books_Categories" FromRole="Books" ToRole="Category" />
           <NavigationProperty Name="Books_Availability" Relationship="VirtualLibraryModel.FK_Books_Availability_Books" FromRole="Books" ToRole="Books_Availability" />
+          <NavigationProperty Name="Books_Ratings" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books" ToRole="Books_Ratings" />
         </EntityType>
-        <Association Name="FK_Books_Ratings_Books">
-          <End Type="VirtualLibraryModel.Books" Role="Books" Multiplicity="1" />
-          <End Type="VirtualLibraryModel.Books_Ratings" Role="Books_Ratings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Books">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Books_Ratings">
-              <PropertyRef Name="book_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Reservations_Books">
           <End Type="VirtualLibraryModel.Books" Role="Books" Multiplicity="0..1" />
           <End Type="VirtualLibraryModel.Reservations" Role="Reservations" Multiplicity="*" />
@@ -899,6 +862,43 @@
             </Principal>
             <Dependent Role="Books_Availability">
               <PropertyRef Name="library_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Books_Ratings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="book_id" Type="Int32" Nullable="false" />
+          <Property Name="rating" Type="Int32" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="timestamp" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Books" Relationship="VirtualLibraryModel.FK_Books_Ratings_Books" FromRole="Books_Ratings" ToRole="Books" />
+          <NavigationProperty Name="Users" Relationship="VirtualLibraryModel.FK_Books_Ratings_Users" FromRole="Books_Ratings" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Books_Ratings_Books">
+          <End Type="VirtualLibraryModel.Books" Role="Books" Multiplicity="1" />
+          <End Type="VirtualLibraryModel.Books_Ratings" Role="Books_Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Books_Ratings">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Books_Ratings_Users">
+          <End Type="VirtualLibraryModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="VirtualLibraryModel.Books_Ratings" Role="Books_Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Books_Ratings">
+              <PropertyRef Name="user_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -968,18 +968,6 @@
               <MappingFragment StoreEntitySet="Author">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="author_name" ColumnName="author_name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Books_Ratings">
-            <EntityTypeMapping TypeName="VirtualLibraryModel.Books_Ratings">
-              <MappingFragment StoreEntitySet="Books_Ratings">
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="book_id" ColumnName="book_id" />
-                <ScalarProperty Name="rating" ColumnName="rating" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1106,6 +1094,18 @@
                 <ScalarProperty Name="reserved" ColumnName="reserved" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="library_id" ColumnName="library_id" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books_Ratings">
+            <EntityTypeMapping TypeName="VirtualLibraryModel.Books_Ratings">
+              <MappingFragment StoreEntitySet="Books_Ratings">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
                 <ScalarProperty Name="book_id" ColumnName="book_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

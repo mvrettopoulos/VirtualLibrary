@@ -353,3 +353,7 @@ stylize any heading tags withing white-panel below
     font-size: 24px;
     color: #d17581;
 }
+
+.text-wrap{
+    word-wrap:break-word; 
+}

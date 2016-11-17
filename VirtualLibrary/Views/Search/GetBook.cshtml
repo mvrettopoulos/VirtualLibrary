@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-lg-2 col-lg-offset-1">
         @if (Model.image == null)
-            {
+        {
             <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">
         }
         else
@@ -53,6 +53,65 @@
                     </div>
                 </div>
 
+
+
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.publisher, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-10">
+                            @Html.DisplayFor(m => m.publisher)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Author, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-10">
+                            @foreach (var author in Model.Author)
+                            {
+
+                                var last = Model.Author.Last();
+                                if (author.Equals(last))
+                                {
+                                    @Html.DisplayFor(model => author.author_name)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => author.author_name) @(", ")
+                                }
+
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Category, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-10">
+                            @foreach (var category in Model.Category)
+                            {
+
+                                var last = Model.Category.Last();
+                                if (category.Equals(last))
+                                {
+                                    @Html.DisplayFor(model => category.Description)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(model => category.Description) @(", ")
+                                }
+
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="form-group">
                         @Html.LabelFor(m => m.views, new { @class = "col-lg-2 control-label" })
@@ -61,6 +120,24 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        @Html.Label("Rating", new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-10">
+                            @{
+                                var sum = 0;
+                                foreach (var review in Model.Books_Ratings)
+                                {
+                                    sum += Convert.ToInt32(review.rating);
+                                }
+                                var average = Math.Round((Double) sum / Model.Books_Ratings.Count, 2); 
+                                @Html.DisplayFor(m => average)
+                            }
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -91,14 +168,15 @@
         <div class="panel-heading">
             <h1><small class="pull-right">@Model.Books_Ratings.Count review</small> Reviews </h1>
         </div>
-            <div class="row" id="post-review-box" style="display:none;">
+        <div class="row" id="post-review-box" style="display:none;">
 
-                <div class="col-lg-12">
-                    @using (Ajax.BeginForm("Create", "Ratings", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "review-list" }))
-                    {
-                        <input id="ratings-hidden" name="rating" type="hidden">
-                        <input id="bookid-hidden" name="bookID" type="hidden" value="@Model.id">
-                        <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+            <div class="col-lg-12">
+                @using (Ajax.BeginForm("Create", "Ratings", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "review-list" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input id="ratings-hidden" name="rating" type="hidden">
+                    <input id="bookid-hidden" name="bookID" type="hidden" value="@Model.id">
+                    <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
 
                         <div class="text-right">
                             <div class="stars starrr" data-rating="0"></div>
@@ -107,9 +185,9 @@
                             </a>
                             <button id="save-review" class="btn btn-success btn-lg" type="submit">Save</button>
                         </div>
-                    }
-                </div>
+                }
             </div>
+        </div>
 
         <div id="review-list" class="panel-body review-list">
             @Html.Action("GetRatings")
