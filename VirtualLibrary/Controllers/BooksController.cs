@@ -45,7 +45,7 @@ namespace VirtualLibrary.Controllers
             
             ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null);
             ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null);
-            var model = new BooksViewModel { ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories, title = null, description = null, isbn = null, publisher = null };
+            var model = new BooksViewModel { ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories };
             return PartialView(model);
         }
 
@@ -60,12 +60,12 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
 
-                Books book = new Books();
+                VirtualLibrary.Models.Books book = new Books();
                 //map obj BooksViewModel to ModelDataBase book
-                model.description = book.description;
-                model.title = book.title;
-                model.isbn = book.isbn;
-                model.publisher = book.publisher;
+                book.title = model.title;
+                book.description = model.description;
+                book.isbn = model.isbn;
+                book.publisher = model.publisher;
                 if ( model.ThisAuthor != null)
                 {
                     foreach ( var author in model.ThisAuthor )
