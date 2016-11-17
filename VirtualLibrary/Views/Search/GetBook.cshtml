@@ -4,8 +4,6 @@
     ViewBag.Title = "GetBook";
 }
 
-
-
 <div class="row">
     <div class="col-lg-2 col-lg-offset-1">
         @if (Model.image == null)
@@ -147,7 +145,10 @@
     @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.IsInRole("User"))
             {
         <div class="col-lg-4 col-lg-offset-7">
+
             <div class="btn-group pull-right">
+            <!--    <div class="fb-share-button" data-href="https://localhost:44358/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44358%2F&amp;src=sdkpreparse">Κοινοποιήστε</a></div>-->
+
                 <button class="btn btn-success" href="#reviews-anchor" id="open-review-box" data-toggle="tooltip" title="Review/Rate">
                     <i class="fa fa-comment-o fa-lg">
                     </i>

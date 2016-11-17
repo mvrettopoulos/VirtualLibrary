@@ -357,3 +357,7 @@ stylize any heading tags withing white-panel below
 .text-wrap{
     word-wrap:break-word; 
 }
+
+.top-margin{
+    margin-top:10px;
+}

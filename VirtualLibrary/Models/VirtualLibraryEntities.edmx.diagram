@@ -14,19 +14,16 @@
         <EntityTypeShape EntityType="VirtualLibraryModel.C__MigrationHistory1" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.Category" Width="1.5" PointX="6" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.Libraries" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VirtualLibraryModel.Reservations" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VirtualLibraryModel.Users" Width="1.5" PointX="2.625" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="VirtualLibraryModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Users" ManuallyRouted="false" />
         <AssociationConnector Association="VirtualLibraryModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="VirtualLibraryModel.Librarians" Width="1.5" PointX="11.25" PointY="7.25" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Users_Users" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Librarians_Libraries" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Librarians_Users" />
         <EntityTypeShape EntityType="VirtualLibraryModel.Books" Width="1.5" PointX="3" PointY="13.625" />
-        <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Books" />
         <AssociationConnector Association="VirtualLibraryModel.Books_Authors" />
         <AssociationConnector Association="VirtualLibraryModel.Books_Categories" />
         <EntityTypeShape EntityType="VirtualLibraryModel.Books_Availability" Width="1.5" PointX="5.25" PointY="9.375" />
@@ -35,6 +32,10 @@
         <EntityTypeShape EntityType="VirtualLibraryModel.Books_Ratings" Width="1.5" PointX="5.25" PointY="5.875" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Books_Ratings_Books" />
         <AssociationConnector Association="VirtualLibraryModel.FK_Books_Ratings_Users" />
+        <EntityTypeShape EntityType="VirtualLibraryModel.Reservations" Width="1.5" PointX="8.25" PointY="5.5" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Books" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Libraries" />
+        <AssociationConnector Association="VirtualLibraryModel.FK_Reservations_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

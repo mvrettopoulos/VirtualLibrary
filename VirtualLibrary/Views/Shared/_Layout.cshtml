@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+
+
+    <meta property="og:url" content="https://localhost:44358" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Virtual Library" />
+    <meta property="og:description" content="Virtual Library" />
+    <meta property="og:image" content="@Url.Content("~/Content/images/no_available_image.png")" />
+
     <title>Virtual Library</title>
     @Styles.Render("~/Content/css")
     <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
@@ -32,6 +40,15 @@
     @RenderSection("scripts", required: false)
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=1846888758928745";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
     <div id="wrapper">
         <!-- Navigation -->
         @Html.Action("Index", "Navbar")
