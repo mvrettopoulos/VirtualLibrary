@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EntityFramework.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -103,12 +104,16 @@ namespace VirtualLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null);
+            ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null);
             Books books = db.Books.Find(id);
             if (books == null)
             {
                 return HttpNotFound();
             }
-            return PartialView(books);
+            var model = new BooksViewModel { id = books.id, description = books.description, isbn = books.isbn, title = books.title, publisher = books.publisher, ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories };
+  
+            return PartialView(model);
         }
 
         // POST: Books/Edit/5
@@ -117,17 +122,45 @@ namespace VirtualLibrary.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Edit(VirtualLibrary.Models.Books books)
+        public ActionResult Edit(BooksViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(books).State = EntityState.Modified;
-                ViewBag.authorColumns = new SelectList(db.Author, "id", "author_name");
-                ViewBag.categoryColumns = new SelectList(db.Category, "id", "Description");
+               
+                Books bookToUpdate = db.Books.Where(c => c.id == model.id).Single();
+                bookToUpdate.title = model.title;
+                bookToUpdate.description = model.description;
+                bookToUpdate.isbn = model.isbn;
+                bookToUpdate.publisher = model.publisher;
+                foreach (var preAuthor in bookToUpdate.Author.ToList())
+                {
+                    bookToUpdate.Author.Remove(preAuthor);
+                }
+                foreach (var preCategory in bookToUpdate.Category.ToList())
+                {
+                    bookToUpdate.Category.Remove(preCategory);
+                }
+                db.Books.Where(c => c.id == model.id).Delete();
+                if (model.ThisAuthor != null)
+                {
+                    foreach (var author in model.ThisAuthor)
+                    {
+                        bookToUpdate.Author.Add(db.Author.Find(author));
+                    }
+                }
+                if (model.ThisCategory != null)
+                {
+                    foreach (var category in model.ThisCategory)
+                    {
+                        bookToUpdate.Category.Add(db.Category.Find(category));
+                    }
+                }
+                db.Books.Add(bookToUpdate);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return Json(new { success = true });
             }
-            return View(books);
+            return View(model);
         }
 
         // GET: Books/Delete/5
