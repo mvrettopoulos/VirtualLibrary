@@ -1,74 +1,67 @@
 ﻿@model VirtualLibrary.Models.Reservations
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Reservations</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.reserved_date)
-        </dt>
+@using (Html.BeginForm("Delete", "Reservations", FormMethod.Post, new { @id = "delete_reservation_form" }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <h3>Are you sure you want to delete this?</h3>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.reserved_date)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.reserved_date)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.reserved_date)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.return_date)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.return_date)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.return_date)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.return_date)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.check_in)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.check_in)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.check_in)
-        </dd>
+            <dd>
+                @(Convert.ToBoolean(Model.check_in) ? "Yes" : "No")
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.renewTimes)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.renewTimes)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.renewTimes)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.renewTimes)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.check_out)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.check_out)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.check_out)
-        </dd>
+            <dd>
+                @(Convert.ToBoolean(Model.check_out) ? "Yes" : "No")
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Users.username)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Users.username)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Users.username)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Users.username)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Books.title)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Books.title)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Books.title)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Books.title)
+            </dd>
 
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
-</div>
+        </dl>
+    </div>
+}
