@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Author, "authorColumns", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Author, "authors", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @foreach (var author in Model.Author)
                 {
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Category, "categoryColumns", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Category, "categories", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @foreach (var category in Model.Category)
                 {

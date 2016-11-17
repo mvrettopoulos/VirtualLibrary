@@ -40,19 +40,13 @@ namespace VirtualLibrary.Controllers
         // GET: Books/Create
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
-        public ActionResult Create(int[] AuthorId, int[] CategoryId)
+        public ActionResult Create()
         {
-            var authors = db.Author.Select(c => new {
-                AuthorID = c.id,
-                AuthorName = c.author_name
-            }).ToList();
-            var categories = db.Category.Select(c => new {
-                CategoryID = c.id,
-                CategoryDescription = c.Description
-            }).ToList();
-            ViewBag.Author = new MultiSelectList(authors, "AuthorID", "AuthorName");
-            ViewBag.Category = new MultiSelectList(categories, "CategoryID", "CategoryDescription");
-            return PartialView("Create");
+            
+            ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null);
+            ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null);
+            var model = new BooksViewModel { ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories };
+            return PartialView(model);
         }
 
         // POST: Books/Create
@@ -61,16 +55,43 @@ namespace VirtualLibrary.Controllers
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Create(VirtualLibrary.Models.Books books)
+        public ActionResult Create(BooksViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Books.Add(books);
+
+                VirtualLibrary.Models.Books book = new Books();
+                //map obj BooksViewModel to ModelDataBase book
+                book.title = model.title;
+                book.description = model.description;
+                book.isbn = model.isbn;
+                book.publisher = model.publisher;
+                if ( model.ThisAuthor != null)
+                {
+                    foreach ( var author in model.ThisAuthor )
+                    {
+                        book.Author.Add(db.Author.Find(author));
+                    }
+                }
+                if (model.ThisCategory != null)
+                {
+                    foreach (var category in model.ThisCategory)
+                    {
+                        book.Category.Add(db.Category.Find(category));
+                    }
+                }
+
+
+                //assign values at new book
+                book.views = 0;
+                db.Books.Add(book);
                 db.SaveChanges();
+
+                
                 return Json(new { success = true });
             }
 
-            return PartialView(books);
+            return PartialView(model);
         }
 
         // GET: Books/Edit/5
@@ -96,7 +117,7 @@ namespace VirtualLibrary.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Edit([Bind(Include = "id,title,author_id,description,category_id,image,isbn,publisher")] Books books)
+        public ActionResult Edit(VirtualLibrary.Models.Books books)
         {
             if (ModelState.IsValid)
             {

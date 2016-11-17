@@ -16,12 +16,12 @@ namespace VirtualLibrary.Models
     {
         public int id { get; set; }
         public int book_id { get; set; }
-        public Nullable<int> library_id { get; set; }
+        public int library_id { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<int> reserved { get; set; }
         public Nullable<int> available { get; set; }
     
-        public virtual Libraries Libraries { get; set; }
         public virtual Books Books { get; set; }
+        public virtual Libraries Libraries { get; set; }
     }
 }

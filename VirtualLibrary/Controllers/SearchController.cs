@@ -155,5 +155,10 @@ namespace VirtualLibrary.Controllers
             }
             return View(book);
         }
+
+        public ActionResult GetRatings()
+        {
+            return PartialView("Reviews",db.Books_Ratings.ToList());
+        }
     }
 }

@@ -71,10 +71,10 @@
             {
         <div class="col-lg-4 col-lg-offset-7">
             <div class="btn-group pull-right">
-                <button class="btn btn-default" id="comment_button" data-toggle="tooltip" title="Comment/Rate">
+                <button class="btn btn-success" href="#reviews-anchor" id="open-review-box" data-toggle="tooltip" title="Review/Rate">
                     <i class="fa fa-comment-o fa-lg">
                     </i>
-                    <strong>Comment/Rate</strong>
+                    <strong>Leave a Review</strong>
                 </button>
                 <button class="btn btn-default" id="reserve_button" data-toggle="tooltip" title="Reserve Book">
                     <i class="fa fa-plus fa-lg"></i>
@@ -86,55 +86,35 @@
 
 </div>
 
-
-
-
 <div class="row">
-    <div class="col-lg-10 col-lg-offset-1">
-        <div class="page-header">
-            <h1><small class="pull-right">@Model.Books_Ratings.Count comments</small> Comments </h1>
+    <div class="panel col-lg-10 col-lg-offset-1">
+        <div class="panel-heading">
+            <h1><small class="pull-right">@Model.Books_Ratings.Count review</small> Reviews </h1>
         </div>
-        <div class="comments-list">
+            <div class="row" id="post-review-box" style="display:none;">
 
-            @foreach (var comment in Model.Books_Ratings)
-            {
-                <div class="media">
-                    <p class="pull-right"><small>@comment.timestamp</small></p>
-                    <div class="media-left">
-                        @if (comment.Users.image == null)
-                        {
-                            <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">
-                        }
-                        else
-                        {
-                            string imageBase64 = Convert.ToBase64String(comment.Users.image);
-                            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                            <img class="img-search-book" src="@imageSrc" />
-                        }
-                    </div>
-                    <div class="media-body">
+                <div class="col-lg-12">
+                    @using (Ajax.BeginForm("Create", "Ratings", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "review-list" }))
+                    {
+                        <input id="ratings-hidden" name="rating" type="hidden">
+                        <input id="bookid-hidden" name="bookID" type="hidden" value="@Model.id">
+                        <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
 
-                        <h4 class="media-heading user_name">@comment.Users.username</h4>
-                        @comment.comment
-
-
-                    </div>
-                </div>
-            }
-
-            <div class="media">
-                <p class="pull-right"><small>5 days ago</small></p>
-                <a class="media-left" href="#">
-                    <img src="http://lorempixel.com/40/40/people/2/">
-                </a>
-                <div class="media-body">
-
-                    <h4 class="media-heading user_name">Baltej Singh</h4>
-                    Wow! this is really great.
-
-                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                        <div class="text-right">
+                            <div class="stars starrr" data-rating="0"></div>
+                            <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                                <span class="glyphicon glyphicon-remove"></span>Cancel
+                            </a>
+                            <button id="save-review" class="btn btn-success btn-lg" type="submit">Save</button>
+                        </div>
+                    }
                 </div>
             </div>
+
+        <div id="review-list" class="panel-body review-list">
+            @Html.Action("GetRatings")
         </div>
     </div>
 </div>
+
+<script src="@Url.Content("~/Scripts/js/review.view.js")"></script>

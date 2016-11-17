@@ -201,6 +201,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\Books_AvailabilityController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibrarianDashboardController.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Models\Books.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BooksViewModel.cs" />
     <Compile Include="Models\Books_Availability.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
@@ -656,6 +658,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\availability.view.js" />
     <Content Include="Scripts\js\authors.view.js" />
     <Content Include="Scripts\js\books.view.js" />
     <Content Include="Scripts\js\categories.view.js" />
@@ -663,6 +666,7 @@
     <Content Include="Scripts\js\login.view.js" />
     <Content Include="Scripts\js\navbar.js" />
     <Content Include="Scripts\js\ratings.view.js" />
+    <Content Include="Scripts\js\review.view.js" />
     <Content Include="Scripts\js\roles.view.js" />
     <Content Include="Scripts\js\libraries.view.js" />
     <Content Include="Scripts\js\upload.view.js" />
@@ -731,7 +735,6 @@
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Libraries\Create.cshtml" />
-    <Content Include="Views\Libraries\Details.cshtml" />
     <Content Include="Views\Libraries\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\GetBook.cshtml" />
@@ -750,6 +753,13 @@
     <Content Include="Views\Ratings\Index.cshtml" />
     <Content Include="Views\Ratings\_Delete.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
+    <Content Include="Views\Books_Availability\Create.cshtml" />
+    <Content Include="Views\Books_Availability\Delete.cshtml" />
+    <Content Include="Views\Books_Availability\Edit.cshtml" />
+    <Content Include="Views\Books_Availability\Index.cshtml" />
+    <Content Include="Views\Libraries\Details.cshtml" />
+    <Content Include="Views\Ratings\Reviews.cshtml" />
+    <Content Include="Views\Search\Reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
