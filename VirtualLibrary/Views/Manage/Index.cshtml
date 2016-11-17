@@ -11,60 +11,101 @@
     </div>
 </div>
 
-<h2>@ViewBag.Title.</h2>
+    <div class="row">
+        <div class="page-main-layout col-lg-12">
+            <div class="col-lg-12">
+                <h1 class="page-header">Profile</h1>
+                <h4>View and change profile</h4>
+                <div><p class="text-success">@ViewBag.StatusMessage</p></div>
+            </div>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h1 class="panel-title" align="center"><strong>Profile Info</strong></h1>
+                    </div>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center" style="padding-top: 10px; padding-bottom: 10px">
+
+                                @if (Model.image == null)
+                                {
+                                    <img alt="User Pic" src="~/Content/images/no_available_image.png" class="img-circle img-responsive" style="width: 150px; height: 150px; border: 2px">
+                                }
+                                else
+                                {
+                                    string imageBase64 = Convert.ToBase64String(Model.image);
+                                    string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                                    <img alt="User Pic" src="@imageSrc" class="img-rounded img-responsive" style="width: 150px; height: 150px; border: 2px" />
+                                }
 
 
-        <dd>
-            @if (Model.image == null)
-            {
-                <img src="~/Content/images/no_available_image.png" alt="">
-            }
-            else
-            {
-                string imageBase64 = Convert.ToBase64String(Model.image);
-                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                <img src="@imageSrc" width="100" height="100" />
-            }
+                                <button id='upload' class="btn btn-default"><i class="fa fa-camera" aria-hidden="true"></i> Change profile picture</button>
+
+                            </div>
+
+                            <div class="col-md-9 col-lg-9">
+                                <table class="table table-user-information" align="center" >
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>First Name:</strong></td>
+                                            <td>@Html.DisplayFor(model => model.first_name)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Last Name:</strong></td>
+                                            <td>@Html.DisplayFor(model => model.last_name)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Date of Birth:</strong></td>
+                                            <td>@Html.DisplayFor(model => model.date_of_birth)</td>
+                                        </tr>
+
+                                        <tr>
+                                        <tr>
+                                            <td><strong>UserName:</strong></td>
+                                            <td>@Html.DisplayFor(model => model.username)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Id:</strong></td>
+                                            <td>@Html.DisplayFor(model => model.id)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Date of Registration:</strong></td>
+                                            <td>@Html.DisplayFor(model => model.date_of_registration)</td>
+                                        </tr>
+                                    <td><strong>Membership ID:</strong></td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.membership_id)
+                                    </td>
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-primary">Change Password</a>
+                                <a href="#" class="btn btn-primary">Edit Profile</a>
+                            </div>
+                        </div>
+                    </div>
 
 
-            <button id='upload'>Upload profile picture</button>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-12 text-right">
+                                <a href="@Url.Action("Index", "Home")" class="btn btn-primary" id="back-button" data-toggle="tooltip" title="Return to Home Page">
+                                    <i class="fa fa-mail-reply fa-lg"></i>
+                                    <strong>Back</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 
-        </dd>
-        <dt>First Name: </dt>
-        <dd>
-            @Html.DisplayFor(model => model.first_name)
-        </dd>
-        <dt>Last Name: </dt>
-        <dd>
-            @Html.DisplayFor(model => model.last_name)
-        </dd>
-        <dt>UserName:</dt>
-        <dd>
-            @Html.DisplayFor(model => model.username)
-        </dd>
-        <dt>Id: </dt>
-        <dd>
-            @Html.DisplayFor(model => model.id)
-        </dd>
-        <dt>Date of Birth: </dt>
-        <dd>
-            @Html.DisplayFor(model => model.date_of_birth)
-        </dd>
-        <dt>Date of Registration: </dt>
-        <dd>
-            @Html.DisplayFor(model => model.date_of_registration)
-        </dd>
-        <dt>Membership ID: </dt>
-        <dd>
-            @Html.DisplayFor(model => model.membership_id)
-        </dd>
-        <dd>
+
+    <div class="panel-footer">    </div>
+    @*<dd>
 
             @Html.ActionLink("Change your password", "ChangePassword")
 
@@ -73,80 +114,80 @@
         <dt>Reservations: </dt>
         <dd>
             @Html.DisplayFor(model => model.Reservations)
+        </dd>*@
+
+
+    @*    <dt>Password:</dt>
+         <dd>
+             [
+             @if (Model.HasPassword)
+             {
+                 @Html.ActionLink("Change your password", "ChangePassword")
+             }
+             else
+             {
+                 @Html.ActionLink("Create", "SetPassword")
+             }
+             ]
+         </dd>
+        @* <dt>External Logins:</dt>
+         <dd>
+             @Model.Logins.Count [
+             @Html.ActionLink("Manage", "ManageLogins") ]
+         </dd>
+
+             Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+
+              See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                 for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+
+              Uncomment the following block after you have set up two-factor authentication
+    *@
+    @*
+        <dt>Phone Number:</dt>
+        <dd>
+            @(Model.PhoneNumber ?? "None") [
+            @if (Model.PhoneNumber != null)
+            {
+                @Html.ActionLink("Change", "AddPhoneNumber")
+                @: &nbsp;|&nbsp;
+                @Html.ActionLink("Remove", "RemovePhoneNumber")
+            }
+            else
+            {
+                @Html.ActionLink("Add", "AddPhoneNumber")
+            }
+            ]
         </dd>
-
-
-        @*    <dt>Password:</dt>
-             <dd>
-                 [
-                 @if (Model.HasPassword)
-                 {
-                     @Html.ActionLink("Change your password", "ChangePassword")
-                 }
-                 else
-                 {
-                     @Html.ActionLink("Create", "SetPassword")
-                 }
-                 ]
-             </dd>
-            @* <dt>External Logins:</dt>
-             <dd>
-                 @Model.Logins.Count [
-                 @Html.ActionLink("Manage", "ManageLogins") ]
-             </dd>
-
-                 Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-
-                  See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                     for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-
-                  Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None") [
-                @if (Model.PhoneNumber != null)
+    *@
+    @*  <dt>Two-Factor Authentication:</dt>
+        <dd>
+            <p>
+                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support two-factor authentication.
+            </p>
+            @if (Model.TwoFactor)
                 {
-                    @Html.ActionLink("Change", "AddPhoneNumber")
-                    @: &nbsp;|&nbsp;
-                    @Html.ActionLink("Remove", "RemovePhoneNumber")
+                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <text>Enabled
+                        <input type="submit" value="Disable" class="btn btn-link" />
+                        </text>
+                    }
                 }
                 else
                 {
-                    @Html.ActionLink("Add", "AddPhoneNumber")
+                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <text>Disabled
+                        <input type="submit" value="Enable" class="btn btn-link" />
+                        </text>
+                    }
                 }
-                ]
-            </dd>
-        *@
-        @*  <dt>Two-Factor Authentication:</dt>
-            <dd>
-                <p>
-                    There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                    for details on setting up this ASP.NET application to support two-factor authentication.
-                </p>
-                @if (Model.TwoFactor)
-                    {
-                        using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <text>Enabled
-                            <input type="submit" value="Disable" class="btn btn-link" />
-                            </text>
-                        }
-                    }
-                    else
-                    {
-                        using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <text>Disabled
-                            <input type="submit" value="Enable" class="btn btn-link" />
-                            </text>
-                        }
-                    }
-            </dd>*@
+        </dd>*@
     </dl>
 </div>
 
-<script src="@Url.Content("~/Scripts/js/upload.js")"></script>
+<script src="@Url.Content("~/Scripts/js/upload.view.js")"></script>

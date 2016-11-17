@@ -424,16 +424,11 @@ namespace VirtualLibrary.Controllers
                         }
                         catch (DataException e)
                         {
+                            ms.Close();
                             log.Error("Database error:", e);
                         }
                         log.Info("Image updated.");
-                        /* user = new Users { id = user.id, image = array };
-                         db.Entry(user).CurrentValues.SetValues(array);
-                         //db.Users.Attach(user);
-                         //db.Entry(user).State = EntityState.Added;
-                         //db.Entry(user).Property(x => x.image).IsModified = true;
-                         db.SaveChanges();*/
-
+                         ms.Close();
 
                     }
                     message = ManageMessageId.FileUploadSuccess;

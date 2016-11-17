@@ -669,7 +669,7 @@
     <Content Include="Scripts\js\review.view.js" />
     <Content Include="Scripts\js\roles.view.js" />
     <Content Include="Scripts\js\libraries.view.js" />
-    <Content Include="Scripts\js\Upload.js" />
+    <Content Include="Scripts\js\upload.view.js" />
     <Content Include="Scripts\js\users.view.js" />
     <Content Include="Scripts\leaflet-0.7.3.js" />
     <Content Include="Scripts\leaflet-0.7.3.min.js" />
