@@ -86,13 +86,6 @@
 
 </div>
 
-
-
-
-
-
-
-
 <div class="row">
     <div class="panel col-lg-10 col-lg-offset-1">
         <div class="panel-heading">
@@ -104,6 +97,7 @@
                     @using (Ajax.BeginForm("Create", "Ratings", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "review-list" }))
                     {
                         <input id="ratings-hidden" name="rating" type="hidden">
+                        <input id="bookid-hidden" name="bookID" type="hidden" value="@Model.id">
                         <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
 
                         <div class="text-right">
@@ -111,7 +105,7 @@
                             <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
                                 <span class="glyphicon glyphicon-remove"></span>Cancel
                             </a>
-                            <button class="btn btn-success btn-lg" type="submit">Save</button>
+                            <button id="save-review" class="btn btn-success btn-lg" type="submit">Save</button>
                         </div>
                     }
                 </div>
@@ -119,21 +113,6 @@
 
         <div id="review-list" class="panel-body review-list">
             @Html.Action("GetRatings")
-
-
-           <!-- <div class="media">
-                <p class="pull-right"><small>5 days ago</small></p>
-                <a class="media-left" href="#">
-                    <img src="http://lorempixel.com/40/40/people/2/">
-                </a>
-                <div class="media-body">
-
-                    <h4 class="media-heading user_name">Baltej Singh</h4>
-                    Wow! this is really great.
-
-                    <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>

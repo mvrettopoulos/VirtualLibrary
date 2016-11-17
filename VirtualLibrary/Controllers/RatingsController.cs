@@ -35,9 +35,20 @@ namespace VirtualLibrary.Controllers
         {
             string rating = form["rating"];
             string comment = form["comment"];
-            log.Info(rating);
-            log.Info(comment);
+            string bookID = form["bookID"];
+            var userName = User.Identity.Name;
+            var model = db.Users.SingleOrDefault(s => s.username == userName);
 
+            var bookRating = new Books_Ratings();
+            bookRating.book_id = Convert.ToInt32(bookID);
+            bookRating.comment = comment;
+            bookRating.rating = Convert.ToInt32(rating);
+            DateTime today = DateTime.Today;
+            bookRating.timestamp = Convert.ToString(today);
+            bookRating.user_id = model.id;
+            db.Books_Ratings.Add(bookRating);
+            db.SaveChanges();
+            log.Info("Review created.");
             return PartialView("Reviews", db.Books_Ratings.ToList());
         }
 

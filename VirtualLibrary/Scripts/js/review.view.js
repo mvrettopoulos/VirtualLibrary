@@ -11,6 +11,7 @@ $(function () {
     var openReviewBtn = $('#open-review-box');
     var closeReviewBtn = $('#close-review-box');
     var ratingsField = $('#ratings-hidden');
+    var reviewButton = $('#save-review');
 
     openReviewBtn.click(function (e) {
         reviewBox.slideDown(400, function () {
@@ -28,7 +29,14 @@ $(function () {
         //    openReviewBtn.fadeIn(200);
         });
         closeReviewBtn.hide();
-
+    });
+    reviewButton.click(function (e) {
+        e.preventDefault();
+        reviewBox.slideUp(300, function () {
+            newReview.focus();
+        //    openReviewBtn.fadeIn(200);
+        });
+        closeReviewBtn.hide();
     });
 
     $('.starrr').on('starrr:change', function (e, value) {
