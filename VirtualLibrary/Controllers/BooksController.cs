@@ -104,13 +104,28 @@ namespace VirtualLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null);
-            ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null);
             Books books = db.Books.Find(id);
             if (books == null)
             {
                 return HttpNotFound();
             }
+            int[] currentAuthorsIdAsArray = new int[books.Author.Count()];
+            var x = 0;
+            var y = 0;
+            foreach( var author2 in books.Author.ToList() )
+            {
+                currentAuthorsIdAsArray[x] = author2.id;
+                x++;
+            }
+            
+            int[] currentCategoriesIdAsArray = new int[books.Category.Count()];
+            foreach (var category2 in books.Category.ToList())
+            {
+                currentCategoriesIdAsArray[y] = category2.id;
+                y++;
+            }
+            ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null, currentAuthorsIdAsArray);
+            ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null, currentCategoriesIdAsArray);
             var model = new BooksViewModel { id = books.id, description = books.description, isbn = books.isbn, title = books.title, publisher = books.publisher, ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories };
   
             return PartialView(model);
