@@ -39,17 +39,16 @@
 </div>
 
 <div class="row">
+    @Html.Partial("_SideNavBar")
+    <div class="page-main-layout col-lg-10">
     <div class="col-lg-12">
+    	<div class="notifications" id="books_view_notification"></div>
         <h1 class="page-header">Books</h1>
     </div>
     <!-- /.col-lg-12 -->
-</div>
-
-<div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-books">
-            <div class="panel-heading panel-heading-books">
-                <div class="btn-group pull-right">
+        <div class="panel panel-red">
+            <div class="panel-heading">
                     <div class="btn-group pull-right">
                         <button class="btn btn-default" id="insert_book_button" data-toggle="tooltip" title="Insert new book">
                             <i class="fa fa-plus fa-lg"></i>
@@ -64,7 +63,6 @@
                             <strong>Edit</strong>
                         </button>
                     </div>
-                </div>
                 <h4>Overview</h4>
             </div>
             <div class="panel-body">
@@ -139,7 +137,6 @@
         </div>
     </div>
 </div>
-<div class="notifications" id="books_view_notification"></div>
 
 <script src="@Url.Content("~/Scripts/js/books.view.js")"></script>
 

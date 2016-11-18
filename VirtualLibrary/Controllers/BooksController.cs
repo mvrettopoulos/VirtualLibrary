@@ -15,6 +15,8 @@ namespace VirtualLibrary.Controllers
     public class BooksController : Controller
     {
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+            (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Books
         [AllowAnonymous]
@@ -171,7 +173,7 @@ namespace VirtualLibrary.Controllers
                 }
                 catch (DataException e)
                 {
-                    
+                    log.Error("Error");
                 }
                 db.SaveChanges();
 
