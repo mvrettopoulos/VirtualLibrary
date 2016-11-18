@@ -129,7 +129,7 @@
                                 {
                                     sum += Convert.ToInt32(review.rating);
                                 }
-                                var average = Math.Round((Double) sum / Model.Books_Ratings.Count, 2); 
+                                var average = Math.Round((Double)sum / Model.Books_Ratings.Count, 2);
                                 @Html.DisplayFor(m => average)
                             }
                         </div>
@@ -143,23 +143,23 @@
 
 <div class="row">
     @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.IsInRole("User"))
-            {
+    {
         <div class="col-lg-4 col-lg-offset-7">
 
             <div class="btn-group pull-right">
-            <!--    <div class="fb-share-button" data-href="https://localhost:44358/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44358%2F&amp;src=sdkpreparse">Κοινοποιήστε</a></div>-->
-
                 <button class="btn btn-success" href="#reviews-anchor" id="open-review-box" data-toggle="tooltip" title="Review/Rate">
                     <i class="fa fa-comment-o fa-lg">
                     </i>
                     <strong>Leave a Review</strong>
                 </button>
-                <button class="btn btn-default" id="reserve_button" data-toggle="tooltip" title="Reserve Book">
+
+                <a class="btn btn-default" href="@Url.Action("Reserve", "Reservations",new {id = Model.id})" id="reserve_button" data-toggle="tooltip" title="Reserve Book">
                     <i class="fa fa-plus fa-lg"></i>
                     <strong>Reserve Book</strong>
-                </button>
+                </a>
             </div>
         </div>
+
     }
 
 </div>
@@ -179,13 +179,13 @@
                     <input id="bookid-hidden" name="bookID" type="hidden" value="@Model.id">
                     <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
 
-                        <div class="text-right">
-                            <div class="stars starrr" data-rating="0"></div>
-                            <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
-                                <span class="glyphicon glyphicon-remove"></span>Cancel
-                            </a>
-                            <button id="save-review" class="btn btn-success btn-lg" type="submit">Save</button>
-                        </div>
+                                <div class="text-right">
+                                    <div class="stars starrr" data-rating="0"></div>
+                                    <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                                        <span class="glyphicon glyphicon-remove"></span>Cancel
+                                    </a>
+                                    <button id="save-review" class="btn btn-success btn-lg" type="submit">Save</button>
+                                </div>
                 }
             </div>
         </div>

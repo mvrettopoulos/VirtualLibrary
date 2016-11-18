@@ -1,0 +1,106 @@
+﻿@model VirtualLibrary.Models.ReservationsViewModel
+
+
+@{
+    ViewBag.Title = "Reserve";
+}
+
+@using (Html.BeginForm("Reserve","Reservations"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="page-main-layout col-lg-6 col-lg-offset-3">
+            <div class="col-lg-12  top-padding">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <h4>Reserve a book</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.book, "title", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => model.book, "title", new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(model => model.book)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.username, "username", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DisplayFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(model => model.username)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.reserved_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.reserved_date, new { htmlAttributes = new { @class = "form-control", id = "datepickerReserve" } })
+                                    @Html.ValidationMessageFor(model => model.reserved_date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.return_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.return_date, new { htmlAttributes = new { @class = "form-control", id = "datepickerReturn" } })
+                                    @Html.ValidationMessageFor(model => model.return_date, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.library, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.library, new SelectList(ViewBag.Libraries, "id", "Building"), "Select a Library")
+                                    @Html.ValidationMessageFor(model => model.library, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
+                                <a href="@Url.Action("Index", "Search")" class="btn btn-danger button-default">
+                                    <i class="fa fa-close fa-lg"></i>
+                                    <strong>Cancel</strong>
+                                </a>
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fa fa-check fa-lg"></i>
+                                    <strong>Reserve</strong>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $("#datepickerReserve").datepicker({
+        dateFormat: "dd-MM-yy",
+        minDate: 0,
+        onSelect: function (date) {
+            var date2 = $('#datepickerReserve').datepicker('getDate');
+            date2.setDate(date2.getDate() + 1);
+            $('#datepickerReturn').datepicker('setDate', date2);
+            //sets minDate to dt1 date + 1
+            $('#datepickerReturn').datepicker('option', 'minDate', date2);
+            $('#datepickerReturn').datepicker('option', 'maxDate', date2.getDate()-11);
+        }
+    });
+    $('#datepickerReturn').datepicker({
+        dateFormat: "dd-MM-yy",
+        onClose: function () {
+            var dt1 = $('#datepickerReserve').datepicker('getDate');
+            console.log(dt1);
+            var dt2 = $('#datepickerReturn').datepicker('getDate');
+            if (dt2 <= dt1) {
+                var minDate = $('#datepickerReturn').datepicker('option', 'minDate');
+                $('#datepickerReturn').datepicker('setDate', minDate);
+            }
+        }
+    });
+</script>

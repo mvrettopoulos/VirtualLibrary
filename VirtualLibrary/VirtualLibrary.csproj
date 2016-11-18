@@ -764,9 +764,9 @@
     <Content Include="Views\Ratings\Reviews.cshtml" />
     <Content Include="Views\Search\Reviews.cshtml" />
     <Content Include="Views\Reservations\Index.cshtml" />
-    <Content Include="Views\Reservations\Create.cshtml" />
-    <Content Include="Views\Reservations\Edit.cshtml" />
     <Content Include="Views\Reservations\Delete.cshtml" />
+    <Content Include="Views\Reservations\Reserve.cshtml" />
+    <Content Include="Views\Reservations\SuccessReserve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
