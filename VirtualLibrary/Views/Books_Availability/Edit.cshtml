@@ -18,7 +18,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.id)
 
-            <div class="form-group">
+            <div class="form-group" hidden="hidden">
                 @Html.LabelFor(model => model.book_id, "book_id", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("book_id", null, htmlAttributes: new { @class = "form-control" })
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" hidden="hidden">
                 @Html.LabelFor(model => model.library_id, "library_id", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("library_id", null, htmlAttributes: new { @class = "form-control" })
