@@ -66,9 +66,11 @@ namespace VirtualLibrary.Models
             [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
             public Nullable<int> quantity { get; set; }
 
+            [Required]
             [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
             public Nullable<int> reserved { get; set; }
 
+            [Required]
             [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
             public Nullable<int> available { get; set; }
 

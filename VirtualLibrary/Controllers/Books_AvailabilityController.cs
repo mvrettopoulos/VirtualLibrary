@@ -55,6 +55,10 @@ namespace VirtualLibrary.Controllers
             {
                 ModelState.AddModelError("", "Reserved and Available MUST be equal to Quantity");
             }
+            if (db.Books_Availability.Any(ba => ba.book_id == books_Availability.book_id && ba.library_id == books_Availability.library_id))
+            {
+                ModelState.AddModelError("", "Book already exists in this library");
+            }
             if (ModelState.IsValid)
             {
                 db.Books_Availability.Add(books_Availability);
