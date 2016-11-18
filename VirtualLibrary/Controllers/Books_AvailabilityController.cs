@@ -51,6 +51,10 @@ namespace VirtualLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Books_Availability books_Availability)
         {
+            if (books_Availability.quantity != books_Availability.reserved + books_Availability.available)
+            {
+                ModelState.AddModelError("", "Reserved and Available MUST be equal to Quantity");
+            }
             if (ModelState.IsValid)
             {
                 db.Books_Availability.Add(books_Availability);
@@ -90,6 +94,10 @@ namespace VirtualLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Books_Availability books_Availability)
         {
+            if (books_Availability.quantity != books_Availability.reserved + books_Availability.available)
+            {
+                ModelState.AddModelError("", "Reserved and Available MUST be equal to Quantity");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(books_Availability).State = EntityState.Modified;

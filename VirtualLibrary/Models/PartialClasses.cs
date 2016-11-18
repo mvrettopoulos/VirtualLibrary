@@ -17,5 +17,10 @@ namespace VirtualLibrary.Models
     }
 
 
+    [MetadataType(typeof(MetaData.Books_AvailabilityMetaData))]
+    public partial class Books_Availability
+    {
+    }
+
 
 }
