@@ -6,6 +6,12 @@
 
 @{
     ViewBag.Title = "Books Index";
+    var vvalue = "disabled";
+    if( User.IsInRole("Admin") )
+    {
+        vvalue = "enabled";
+    }
+
 }
 
 <div id="insert_book_modal" class="modal" role="dialog" aria-hidden="true">
@@ -53,8 +59,8 @@
                         <button class="btn btn-default" id="insert_book_button" data-toggle="tooltip" title="Insert new book">
                             <i class="fa fa-plus fa-lg"></i>
                             <strong>Insert</strong>
-                        </button>
-                        <button class="btn btn-default" id="delete_book_button" data-toggle="tooltip" title="Delete existing book">
+                        </button> 
+                        <button class="btn btn-default" id="delete_book_button" data-toggle="tooltip" title="Delete existing book" @vvalue>
                             <i class="fa fa-trash fa-lg"></i>
                             <strong>Delete</strong>
                         </button>

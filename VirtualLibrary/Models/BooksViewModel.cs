@@ -26,10 +26,12 @@ namespace VirtualLibrary.Models
         [Display(Name = "Image")]
         public byte[] image { get; set; }
 
+        [Required]
         [StringLength(60, ErrorMessage = "The ISBN should be at least 5 characters", MinimumLength = 5)]
         [Display(Name = "ISBN")]
         public string isbn { get; set; }
 
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [Display(Name = "Publisher")]
         public string publisher { get; set; }
@@ -37,6 +39,7 @@ namespace VirtualLibrary.Models
         public int views { get; set; }
 
         public IEnumerable<SelectListItem> AllAuthors { get; set; }
+
         public int[] ThisAuthor { get; set; }
         public Books book { get; set; }
 
