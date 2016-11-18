@@ -760,7 +760,6 @@
     <Content Include="Views\Books_Availability\Delete.cshtml" />
     <Content Include="Views\Books_Availability\Edit.cshtml" />
     <Content Include="Views\Books_Availability\Index.cshtml" />
-    <Content Include="Views\Libraries\Details.cshtml" />
     <Content Include="Views\Ratings\Reviews.cshtml" />
     <Content Include="Views\Search\Reviews.cshtml" />
     <Content Include="Views\Reservations\Index.cshtml" />
