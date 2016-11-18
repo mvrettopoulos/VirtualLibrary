@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -19,7 +20,12 @@ namespace VirtualLibrary.Controllers
         // GET: Books_Availability
         public ActionResult Index()
         {
-            var books_Availability = db.Books_Availability.Include(b => b.Libraries).Include(b => b.Books);
+            var user_id = User.Identity.GetUserId();
+            var librarian = db.Users.Where(u => u.aspnet_user_id == user_id).Single();
+            var libraries_ids = librarian.Librarians.Select(x => x.library_id);
+            
+            var books_Availability = db.Books_Availability.Include(b => b.Libraries).Include(b => b.Books).Where(ba => libraries_ids.Contains(ba.library_id));
+
             return View(books_Availability.ToList());
         }
 
@@ -28,7 +34,11 @@ namespace VirtualLibrary.Controllers
         // GET: Books_Availability/Create
         public ActionResult Create()
         {
-            ViewBag.library_id = new SelectList(db.Libraries, "id", "University_Name");
+            var user_id = User.Identity.GetUserId();
+            var librarian = db.Users.Where(u => u.aspnet_user_id == user_id).Single();
+            var libraries_ids = librarian.Librarians.Select(x => x.library_id);
+
+            ViewBag.library_id = new SelectList(db.Libraries.Where(ba => libraries_ids.Contains(ba.id)), "id", "University_Name");
             ViewBag.book_id = new SelectList(db.Books, "id", "title");
             return PartialView("Create");
         }
