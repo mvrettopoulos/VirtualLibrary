@@ -26,7 +26,7 @@ namespace VirtualLibrary.Models
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]
         [Display(Name = "Date of Birth")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}")]
         public string Date_of_Birth { get; set; }
 
 
@@ -138,7 +138,7 @@ namespace VirtualLibrary.Models
         [MinimumAge(18)]
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}")]
         public string Date_of_Birth { get; set; }
 
 
