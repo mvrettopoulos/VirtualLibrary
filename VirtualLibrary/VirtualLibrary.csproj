@@ -774,6 +774,7 @@
     <Content Include="Views\Reservations\SuccessReserve.cshtml" />
     <Content Include="Views\UsersForDashboard\Activate.cshtml" />
     <Content Include="Views\UsersForDashboard\Index.cshtml" />
+    <Content Include="Views\UsersForDashboard\Switch_State.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

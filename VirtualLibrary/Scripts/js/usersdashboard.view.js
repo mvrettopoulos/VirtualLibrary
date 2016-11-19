@@ -109,3 +109,40 @@ $('#activate_usersdashboard_modal_submit_button').on('click', function () {
 
     $('#activate_users_form').submit();
 });
+
+
+$('#switchstate_user_button').on('click', function (e) {
+    if (usersdashboardView.table.rows('.selected').data().length == 0) {
+
+        $('#switchstate_user_button').prop('disabled', true);
+
+        $('#usersdashboard_view_notification').notify({
+
+            message: { text: 'No user has been selected' },
+            fadeOut: { enabled: true, delay: 2000 },
+            closable: false,
+            type: 'blackgloss',
+            onClose: function () {
+
+                $('#switchstate_user_button').prop('disabled', false);
+            }
+
+        }).show();
+    }
+    else {
+
+        var url = $('#switch_usersdashboard_modal').data('url') + '/' + usersdashboardView.table_row_data.id;
+
+        $.get(url, function (data) {
+
+            $('#switch_usersdashboard_modal_body').html(data);
+            $('#switch_usersdashboard_modal').modal('show');
+
+        });
+    }
+});
+
+$('#switch_usersdashboard_modal_submit_button').on('click', function () {
+
+    $('#switch_users_form').submit();
+});

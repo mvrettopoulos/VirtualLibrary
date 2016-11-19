@@ -51,6 +51,34 @@ namespace VirtualLibrary.Controllers
             return RedirectToAction("Index");
         }
 
+
+        // GET: UsersForDashboard/Switch_State/5
+        public ActionResult Switch_State(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Users users = db.Users.Find(id);
+            if (users == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(users);
+        }
+
+        // POST: UsersForDashboard/Switch_State/5
+        [HttpPost, ActionName("Switch_State")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Switch_StateConfirmed(int id)
+        {
+            Users users = db.Users.Find(id);
+            users.bad_user = !users.bad_user;
+            db.Entry(users).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,0 +1,42 @@
+﻿@model VirtualLibrary.Models.Users
+
+<h3>Are you sure you want to switch the users state?</h3>
+<div>
+
+    @using (Html.BeginForm("Switch_State", "UsersForDashboard", FormMethod.Post, new { @id = "switch_users_form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.username)
+            </dd>
+
+            <dt>
+                Current State
+            </dt>
+
+            @if ((bool)Model.bad_user)
+            {
+                <dd>Good</dd>
+            }
+            else
+            {
+                <dd>Bad</dd>
+            }
+
+            <dt>
+                @Html.DisplayNameFor(model => model.membership_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.membership_id)
+            </dd>
+
+        </dl>
+    }
+</div>

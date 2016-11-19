@@ -23,8 +23,33 @@
     </div>
 </div>
 
+<div id="switch_usersdashboard_modal" class="modal" data-url="@Url.Action("Switch_State")" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="switch_usersdashboard_modalContent">
+            <div class="modal-header">
+                <h4 class="modal-title">Switch State</h4>
+            </div>
+            <div class="modal-body" id="switch_usersdashboard_modal_body">
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-danger" id="switch_usersdashboard_modal_close_button">
+                    <i class="fa fa-close fa-lg"></i>
+                    <strong>Cancel</strong>
+                </a>
+                <button data-dismiss="modal" class="btn btn-success" id="switch_usersdashboard_modal_submit_button">
+                    <i class="fa fa-check fa-lg"></i>
+                    <strong>Apply</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="row">
-    <div class="page-main-layout col-lg-12">
+    @Html.Partial("_SideNavBar")
+    <div class="page-main-layout col-lg-10">
         <div class="col-lg-12">
             <h1 class="page-header">Users</h1>
         </div>
@@ -36,7 +61,7 @@
                     <div class="btn-group pull-right">
                         <div class="btn-group pull-right">
                             <button class="btn btn-default" id="activate_user_button" data-toggle="tooltip" title="Activate User">
-                                <i class="fa fa-plus fa-lg"></i>
+                                <i class="fa fa-check-square fa-lg"></i>
                                 <strong>Activate</strong>
                             </button>
                         </div>
@@ -57,19 +82,19 @@
                                     @Html.DisplayNameFor(model => model.username)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.date_of_registration)
+                                    Registratio Date
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.membership_id)
+                                    Membership Id
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.first_name)
+                                    First Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.last_name)
+                                    Last Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+                                    Email
                                 </th>
                             </tr>
 
@@ -108,11 +133,13 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="panel panel-usersdashboard">
                 <div class="panel-heading panel-heading-usersdashboard">
                     <div class="btn-group pull-right">
                         <div class="btn-group pull-right">
                             <button class="btn btn-default" id="switchstate_user_button" data-toggle="tooltip" title="Switch User State">
-                                <i class="fa fa-plus fa-lg"></i>
+                                <i class="fa fa-flag  fa-lg"></i>
                                 <strong>Switch State</strong>
                             </button>
                         </div>
@@ -124,60 +151,65 @@
 
                         <table class="table table-striped table-bordered table-hover select" id="usersdashboard_overview_table">
                             <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.id)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.username)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.membership_id)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.bad_user)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.first_name)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.last_name)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-                                </th>
-                            </tr>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.id)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.username)
+                                    </th>
+                                    <th>
+                                        Membership ID
+                                    </th>
+                                    <th>
+                                        Bad / Good
+                                    </th>
+                                    <th>
+                                        First Name
+                                    </th>
+                                    <th>
+                                        Last Name
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                </tr>
                             </thead>
-                            
+
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>
-                                            @item.id
-                                        </td>
-                                        <td>
-                                            @item.username
-                                        </td>
-                                        <td>
-                                            @item.membership_id
-                                        </td>
-                                        <td>
-                                            @item.bad_user
-                                        </td>
-                                        <td>
-                                            @item.first_name
-                                        </td>
-                                        <td>
-                                            @item.last_name
-                                        </td>
-                                        <td>
-                                            @item.AspNetUsers.Email
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        @item.id
+                                    </td>
+                                    <td>
+                                        @item.username
+                                    </td>
+                                    <td>
+                                        @item.membership_id
+                                    </td>
+                                    @if ((bool)item.bad_user)
+                                        {
+                                        <td>Bad</td>
+                                        }
+                                        else
+                                        {
+                                        <td>Good</td>
+                                        }
+                                    <td>
+                                        @item.first_name
+                                    </td>
+                                    <td>
+                                        @item.last_name
+                                    </td>
+                                    <td>
+                                        @item.AspNetUsers.Email
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
-                            
+
 
                         </table>
 
