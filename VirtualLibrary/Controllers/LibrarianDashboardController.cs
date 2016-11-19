@@ -94,6 +94,11 @@ namespace VirtualLibrary.Controllers
         public ActionResult CheckoutConfirmed(int id)
         {
             var reservation = db.Reservations.Find(id);
+            if (reservation.check_in == false)
+            {
+                log.Info("Cannot checkout before checkin");
+                return RedirectToAction("Index");
+            }
             reservation.check_out = true;
             CultureInfo culture = new CultureInfo("ISO");
             string today = DateTime.Now.ToString("yyyy-MMMM-dd", culture);
