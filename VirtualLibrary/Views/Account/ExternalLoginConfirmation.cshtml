@@ -5,91 +5,6 @@
         ViewBag.Title = "Register";
     }
 
-
-
-    <script type="text/javascript">
-        $(function () {
-            $('.button-checkbox').each(function () {
-
-                // Settings
-                var $widget = $(this),
-                    $button = $widget.find('button'),
-                    $checkbox = $widget.find('input:checkbox'),
-                    color = $button.data('color'),
-                    settings = {
-                        on: {
-                            icon: 'glyphicon glyphicon-check'
-                        },
-                        off: {
-                            icon: 'glyphicon glyphicon-unchecked'
-                        }
-                    };
-
-                // Event Handlers
-                $button.on('click', function () {
-                    $checkbox.prop('checked', !$checkbox.is(':checked'));
-                    $checkbox.triggerHandler('change');
-                    updateDisplay();
-                });
-                $checkbox.on('change', function () {
-                    updateDisplay();
-                });
-
-                // Actions
-                function updateDisplay() {
-                    var isChecked = $checkbox.is(':checked');
-
-                    // Set the button's state
-                    $button.data('state', (isChecked) ? "on" : "off");
-
-                    // Set the button's icon
-                    $button.find('.state-icon')
-                        .removeClass()
-                        .addClass('state-icon ' + settings[$button.data('state')].icon);
-
-                    // Update the button's color
-                    if (isChecked) {
-                        $button
-                            .removeClass('btn-default')
-                            .addClass('btn-' + color + ' active');
-                    }
-                    else {
-                        $button
-                            .removeClass('btn-' + color + ' active')
-                            .addClass('btn-default');
-                    }
-                }
-
-                // Initialization
-                function init() {
-
-                    updateDisplay();
-
-                    // Inject the icon if applicable
-                    if ($button.find('.state-icon').length == 0) {
-                        $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i>');
-                    }
-                }
-                init();
-            });
-        });
-    </script>
-
-    <style type="text/css">
-        .colorgraph {
-            height: 5px;
-            border-top: 0;
-            background: #c4e17f;
-            border-radius: 5px;
-            background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-            background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-            background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-            background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-        }
-    </style>
-
-
-
     @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         <div class="row">
@@ -177,12 +92,5 @@
  @section Scripts {
      @Scripts.Render("~/bundles/jqueryval")
    }
-
-    <script type="text/javascript">
-        $("#datepicker").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "1930:2010"
-        });
-    </script>
+    <script src="@Url.Content("~/Scripts/js/register.view.js")"></script>
             </div>
