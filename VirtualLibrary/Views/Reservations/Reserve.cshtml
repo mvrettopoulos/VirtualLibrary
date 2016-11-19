@@ -80,7 +80,7 @@
 <script type="text/javascript">
 
     $("#datepickerReserve").datepicker({
-        dateFormat: "dd-MM-yy",
+        dateFormat: "dd-mm-yy",
         minDate: 0,
         onSelect: function (date) {
             var date2 = $('#datepickerReserve').datepicker('getDate');
@@ -92,7 +92,7 @@
         }
     });
     $('#datepickerReturn').datepicker({
-        dateFormat: "dd-MM-yy",
+        dateFormat: "dd-mm-yy",
         onClose: function () {
             var dt1 = $('#datepickerReserve').datepicker('getDate');
             console.log(dt1);
