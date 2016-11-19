@@ -82,7 +82,7 @@
                         <table class="table table-striped table-bordered table-hover select" id="reservations_overview_table">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th style="display:none;">Id</th>
                                     <th>Book title</th>
                                     <th>User Membership ID</th>
                                     <th>Library</th>
@@ -97,7 +97,7 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>
+                                        <td style="display:none;">
                                             @Html.DisplayFor(modelItem => item.id)
                                         </td>
                                         <td>
