@@ -72,6 +72,7 @@ namespace VirtualLibrary.Controllers
                 : message == ManageMessageId.FileUploadSuccess ? "Your image has been changed."
                 : message == ManageMessageId.FileUploadError ? "You have not selected an image."
                 : message == ManageMessageId.FileTypeError ? "You need to upload a .png file"
+                : message == ManageMessageId.EditProfile ? "Your profile's infos has been changed"
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -428,7 +429,7 @@ namespace VirtualLibrary.Controllers
                             log.Error("Database error:", e);
                         }
                         log.Info("Image updated.");
-                         ms.Close();
+                        ms.Close();
 
                     }
                     message = ManageMessageId.FileUploadSuccess;
@@ -447,6 +448,53 @@ namespace VirtualLibrary.Controllers
             // after successfully uploading redirect the user
             return RedirectToAction("Index", new { Message = message });
         }
+
+        //GET:EditProfile
+        [HttpGet]
+        public ActionResult GetEditProfile()
+        {
+            string username = User.Identity.Name;
+
+            // Fetch the userprofile
+            Users user = db.Users.FirstOrDefault(u => u.username.Equals(username));
+
+            // Construct the viewmodel
+            UserProfileEdit model = new UserProfileEdit();
+            model.firstName = user.first_name;
+            model.lastName = user.last_name;
+            model.Date_of_Birth = user.date_of_birth;
+
+            return PartialView("EditProfile");
+        }
+        //POST:EditProfile
+        [HttpPost]
+        public ActionResult EditProfile(UserProfileEdit userprofile)
+        {
+            if (!ModelState.IsValid)
+            {
+                ManageMessageId? message;
+                string username = User.Identity.Name;
+                // Get the userprofile
+                Users user = db.Users.FirstOrDefault(u => u.username.Equals(username));
+
+                // Update fields
+                user.first_name = userprofile.firstName;
+                user.last_name = userprofile.lastName;
+                user.date_of_birth = userprofile.Date_of_Birth;
+
+                db.Entry(user).State = EntityState.Modified;
+
+                db.SaveChanges();
+                message = ManageMessageId.EditProfile;
+
+                return RedirectToAction("Index", new { Message = message }); // or whatever
+            }
+            return View(userprofile);
+        }
+
+
+
+
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
@@ -499,6 +547,7 @@ namespace VirtualLibrary.Controllers
             FileUploadSuccess,
             FileUploadError,
             FileTypeError,
+            EditProfile,
             Error
 
         }

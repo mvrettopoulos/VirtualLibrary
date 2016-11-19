@@ -61,6 +61,7 @@
 /// <reference path="js/libraries.view.js" />
 /// <reference path="js/login.view.js" />
 /// <reference path="js/navbar.js" />
+/// <reference path="js/profile.view.js" />
 /// <reference path="js/ratings.view.js" />
 /// <reference path="js/register.view.js" />
 /// <reference path="js/reservations.view.js" />
