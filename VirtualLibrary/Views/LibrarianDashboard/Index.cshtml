@@ -1,24 +1,149 @@
-﻿@model IEnumerable<VirtualLibrary.Models.Books>
+﻿@model IEnumerable<VirtualLibrary.Models.Reservations>
 
 @{
-    ViewBag.Title = "Home View";
+    ViewBag.Title = "Dashboard";
 }
+
+<div id="checkin_modal" class="modal" data-url="@Url.Action("Checkin")">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Check in</h4>
+            </div>
+            <div class="modal-body" id="checkin_modal_body">
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-danger" id="checkin_modal_close_button">
+                    <i class="fa fa-close fa-lg"></i>
+                    <strong>Cancel</strong>
+                </a>
+                <button data-dismiss="modal" class="btn btn-success" id="checkin_modal_submit_button">
+                    <i class="fa fa-check fa-lg"></i>
+                    <strong>Apply</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="checkout_modal" class="modal" data-url="@Url.Action("Checkout")">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Check out</h4>
+            </div>
+            <div class="modal-body" id="checkout_modal_body">
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-danger" id="checkout_modal_close_button">
+                    <i class="fa fa-close fa-lg"></i>
+                    <strong>Cancel</strong>
+                </a>
+                <button data-dismiss="modal" class="btn btn-success" id="checkout_modal_submit_button">
+                    <i class="fa fa-check fa-lg"></i>
+                    <strong>Apply</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="row">
     @Html.Partial("_SideNavBar")
-
-
     <div class="page-main-layout col-lg-10">
-        <h1 class="page-header">Notifications</h1>
+        <div class="col-lg-12">
+            <div class="notifications" id="reservations_view_notification"></div>
+            <h1 class="page-header">Active Registrations</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+        <div class="col-lg-12">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" id="checkout_button" data-toggle="tooltip" title="Check out">
+                            <i class="fa fa-share fa-lg"></i>
+                            <strong>Check Out</strong>
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" id="checkin_button" data-toggle="tooltip" title="Check in">
+                            <i class="fa fa-briefcase fa-lg"></i>
+                            <strong>Check In</strong>
+                        </button>
+                    </div>
+                    <h4>Overview</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="dataTables_wrapper">
+                        <table class="table table-striped table-bordered table-hover select" id="reservations_overview_table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Book title</th>
+                                    <th>UserName</th>
+                                    <th>Library</th>
+                                    <th>Reserved Date</th>
+                                    <th>Return Date</th>
+                                    <th>Check In</th>
+                                    <th>Check Out</th>
+                                    <th>Available renew times</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Books.title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Users.username)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Libraries.University_Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.reserved_date)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.return_date)
+                                        </td>
+                                        <td>
+                                            @(Convert.ToBoolean(item.check_in) ? "Yes" : "No")
+                                        </td>
+                                        <td>
+                                            @(Convert.ToBoolean(item.check_out) ? "Yes" : "No")
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.renewTimes)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <a href="@Url.Action("Index", "LibrarianDashboard")" class="btn btn-primary" id="back-button" data-toggle="tooltip" title="Return to Dashboard">
+                                <i class="fa fa-mail-reply fa-lg"></i>
+                                <strong>Back</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-
-    <!-- /.col-lg-12 -->
 </div>
-
-
-<script src="@Url.Content("~/Scripts/js/home.view.js")"></script>
+<script src="@Url.Content("~/Scripts/js/dashboard.view.js")"></script>
 <script src="@Url.Content("~/bower_components/morrisjs/morris.min.js")"></script>
 <script src="@Url.Content("~/Scripts/morris-data.js")"></script>

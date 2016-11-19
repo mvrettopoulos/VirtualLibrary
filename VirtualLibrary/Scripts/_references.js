@@ -57,6 +57,7 @@
 /// <reference path="js/availability.view.js" />
 /// <reference path="js/books.view.js" />
 /// <reference path="js/categories.view.js" />
+/// <reference path="js/dashboard.view.js" />
 /// <reference path="js/home.view.js" />
 /// <reference path="js/libraries.view.js" />
 /// <reference path="js/login.view.js" />

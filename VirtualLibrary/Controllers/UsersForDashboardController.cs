@@ -14,6 +14,8 @@ namespace VirtualLibrary.Controllers
     {
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
 
+        [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         // GET: UsersForDashboard
         public ActionResult Index()
         {
@@ -23,7 +25,8 @@ namespace VirtualLibrary.Controllers
         }
 
 
-
+        [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         // GET: UsersForDashboard/Activate/5
         public ActionResult Activate(int? id)
         {
@@ -41,6 +44,7 @@ namespace VirtualLibrary.Controllers
 
         // POST: UsersForDashboard/Activate/5
         [HttpPost, ActionName("Activate")]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         public ActionResult ActivateConfirmed(int id)
         {
@@ -51,7 +55,8 @@ namespace VirtualLibrary.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         // GET: UsersForDashboard/Switch_State/5
         public ActionResult Switch_State(int? id)
         {
@@ -69,6 +74,7 @@ namespace VirtualLibrary.Controllers
 
         // POST: UsersForDashboard/Switch_State/5
         [HttpPost, ActionName("Switch_State")]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         public ActionResult Switch_StateConfirmed(int id)
         {

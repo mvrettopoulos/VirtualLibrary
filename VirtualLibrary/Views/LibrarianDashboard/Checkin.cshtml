@@ -1,0 +1,27 @@
+﻿@model VirtualLibrary.Models.Reservations
+
+@using (Html.BeginForm("Checkin", "LibrarianDashboard", FormMethod.Post, new { @id = "checkin_form" }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <h3>Confirm user checkin</h3>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Users.username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Users.username)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Books.title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Books.title)
+            </dd>
+
+        </dl>
+    </div>
+}

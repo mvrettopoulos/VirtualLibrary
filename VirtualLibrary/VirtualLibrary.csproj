@@ -664,6 +664,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\dashboard.view.js" />
     <Content Include="Scripts\js\usersdashboard.view.js" />
     <Content Include="Scripts\js\availability.view.js" />
     <Content Include="Scripts\js\authors.view.js" />
@@ -775,6 +776,8 @@
     <Content Include="Views\UsersForDashboard\Activate.cshtml" />
     <Content Include="Views\UsersForDashboard\Index.cshtml" />
     <Content Include="Views\UsersForDashboard\Switch_State.cshtml" />
+    <Content Include="Views\LibrarianDashboard\Checkin.cshtml" />
+    <Content Include="Views\LibrarianDashboard\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
