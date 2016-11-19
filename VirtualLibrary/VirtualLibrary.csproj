@@ -211,6 +211,7 @@
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\UsersForDashboardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -660,6 +661,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\usersdashboard.view.js" />
     <Content Include="Scripts\js\availability.view.js" />
     <Content Include="Scripts\js\authors.view.js" />
     <Content Include="Scripts\js\books.view.js" />
@@ -766,6 +768,8 @@
     <Content Include="Views\Reservations\Delete.cshtml" />
     <Content Include="Views\Reservations\Reserve.cshtml" />
     <Content Include="Views\Reservations\SuccessReserve.cshtml" />
+    <Content Include="Views\UsersForDashboard\Activate.cshtml" />
+    <Content Include="Views\UsersForDashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

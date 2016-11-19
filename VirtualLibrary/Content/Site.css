@@ -163,6 +163,36 @@
     border-bottom-color:#635192;
 }
 
+
+
+.panel-usersdashboard {
+
+    border-color: #635192;
+}
+
+.panel-usersdashboard > .panel-heading-usersdashboard {
+
+  color: #fff;
+  background-color: #635192;
+  border-color:  #635192;
+}
+
+.panel-usersdashboard > .panel-heading-usersdashboard + .panel-collapse > .panel-body {
+
+  border-top-color: #635192;
+}
+
+.panel-usersdashboard > .panel-heading-usersdashboard .badge {
+
+  color: #635192;
+  background-color: #fff;
+}
+
+.panel-usersdashboard > .panel-footer + .panel-collapse > .panel-body {
+
+    border-bottom-color:#635192;
+}
+
 .navbar-inverse {
 
   background-image: -webkit-linear-gradient(top, #3c3c3c 0, #222 100%);

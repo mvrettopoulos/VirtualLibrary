@@ -67,6 +67,7 @@
 /// <reference path="js/roles.view.js" />
 /// <reference path="js/upload.view.js" />
 /// <reference path="js/users.view.js" />
+/// <reference path="js/usersdashboard.view.js" />
 /// <reference path="leaflet-0.7.3.min.js" />
 /// <reference path="modernizr-2.8.3.js" />
 /// <reference path="respond.matchmedia.addlistener.min.js" />
