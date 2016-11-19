@@ -94,6 +94,15 @@ namespace VirtualLibrary.Controllers
             }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            using (var db = new ApplicationDbContext())
+            {
+                model.EmailOrUserName = (db.Users.Any(p => p.UserName == model.EmailOrUserName)) ?
+                model.EmailOrUserName :
+                (db.Users.Any(p => p.Email == model.EmailOrUserName)) ?
+                db.Users.SingleOrDefault(p => p.Email == model.EmailOrUserName).UserName :
+                model.EmailOrUserName;
+            }
+
             var result = await SignInManager.PasswordSignInAsync(model.EmailOrUserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
