@@ -61,8 +61,15 @@
 
                 </div>
 
-                <div class="fb-share-button" data-href="https://localhost:44358/" data-layout="button" data-size="small" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Flocalhost%3A44358%2F&amp;src=sdkpreparse">Share</a></div>
-
+                <div class="fb-share-button" 
+                     data-href='@string.Format("https://127.0.0.1:44358/Search/GetBook/{0}", Model.book_id)' 
+                     data-layout="button" data-size="large" data-mobile-iframe="false">
+                    <a class="fb-xfbml-parse-ignore" target="_blank" 
+                       href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F127.0.0.1%3A44358%2FSearch%2FGetBook%2F1&amp;src=sdkpreparse">
+                    Share</a>
+                </div>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
             }
             <div class="row">

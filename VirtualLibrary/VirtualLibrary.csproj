@@ -460,6 +460,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\externalLoginConfirmation.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\layers-2x.png" />
@@ -470,6 +471,8 @@
     <Content Include="Content\images\marker-shadow.png" />
     <Content Include="Content\images\no_available_image.png" />
     <Content Include="Content\leaflet.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\register.css" />
     <Content Include="Content\sb-admin-2.css" />
     <Content Include="Content\styles\alert-bangtidy.css" />
     <Content Include="Content\styles\alert-blackgloss.css" />
@@ -670,6 +673,7 @@
     <Content Include="Scripts\js\login.view.js" />
     <Content Include="Scripts\js\navbar.js" />
     <Content Include="Scripts\js\ratings.view.js" />
+    <Content Include="Scripts\js\register.view.js" />
     <Content Include="Scripts\js\reservations.view.js" />
     <Content Include="Scripts\js\review.view.js" />
     <Content Include="Scripts\js\roles.view.js" />
