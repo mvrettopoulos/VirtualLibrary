@@ -72,6 +72,18 @@ $('#checkout_button').on('click', function () {
             }
         }).show();
     }
+    else if (reservationsView.table_row_data.Check_In == 'No'){
+        $('#checkout_button').prop('disabled', true);
+        $('#reservations_view_notification').notify({
+            message: { text: 'Cannot checkout before checkin' },
+            fadeOut: { enabled: true, delay: 2000 },
+            closable: false,
+            type: 'blackgloss',
+            onClose: function () {
+                $('#checkout_button').prop('disabled', false);
+            }
+        }).show();
+    }
     else {
         var url = $('#checkout_modal').data('url') + '/' + reservationsView.table_row_data.id;
         $.get(url, function (data) {

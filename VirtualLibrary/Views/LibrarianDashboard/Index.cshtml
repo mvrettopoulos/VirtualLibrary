@@ -57,7 +57,7 @@
     <div class="page-main-layout col-lg-10">
         <div class="col-lg-12">
             <div class="notifications" id="reservations_view_notification"></div>
-            <h1 class="page-header">Active Registrations</h1>
+            <h1 class="page-header">Active Reservations</h1>
         </div>
         <!-- /.col-lg-12 -->
         <div class="col-lg-12">
@@ -84,7 +84,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Book title</th>
-                                    <th>UserName</th>
+                                    <th>User Membership ID</th>
                                     <th>Library</th>
                                     <th>Reserved Date</th>
                                     <th>Return Date</th>
@@ -104,7 +104,7 @@
                                             @Html.DisplayFor(modelItem => item.Books.title)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Users.username)
+                                            @Html.DisplayFor(modelItem => item.Users.membership_id)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Libraries.University_Name)
