@@ -1,4 +1,5 @@
 ﻿using EntityFramework.Extensions;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,6 +15,8 @@ namespace VirtualLibrary.Controllers
     public class BooksController : Controller
     {
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+            (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Books
         [AllowAnonymous]
@@ -147,15 +150,8 @@ namespace VirtualLibrary.Controllers
                 bookToUpdate.description = model.description;
                 bookToUpdate.isbn = model.isbn;
                 bookToUpdate.publisher = model.publisher;
-                foreach (var preAuthor in bookToUpdate.Author.ToList())
-                {
-                    bookToUpdate.Author.Remove(preAuthor);
-                }
-                foreach (var preCategory in bookToUpdate.Category.ToList())
-                {
-                    bookToUpdate.Category.Remove(preCategory);
-                }
-                db.Books.Where(c => c.id == model.id).Delete();
+                bookToUpdate.Author.Clear();
+                bookToUpdate.Category.Clear();
                 if (model.ThisAuthor != null)
                 {
                     foreach (var author in model.ThisAuthor)
@@ -170,7 +166,15 @@ namespace VirtualLibrary.Controllers
                         bookToUpdate.Category.Add(db.Category.Find(category));
                     }
                 }
-                db.Books.Add(bookToUpdate);
+                try
+                {
+                    db.Entry(bookToUpdate).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (DataException e)
+                {
+                    log.Error("Error");
+                }
                 db.SaveChanges();
 
                 return Json(new { success = true });
@@ -179,7 +183,7 @@ namespace VirtualLibrary.Controllers
         }
 
         // GET: Books/Delete/5
-        [Authorize(Roles = "Admin, Moderator")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -197,10 +201,13 @@ namespace VirtualLibrary.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(int id)
         {
             Books books = db.Books.Find(id);
+            db.Books_Availability.Where(c => c.book_id == books.id).Delete();
+            db.Books_Ratings.Where(c => c.book_id == books.id).Delete();
+            db.Reservations.Where(c => c.book_id == books.id).Delete();
             db.Books.Remove(books);
             db.SaveChanges();
             return RedirectToAction("Index");

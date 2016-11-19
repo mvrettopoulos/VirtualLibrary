@@ -20,65 +20,7 @@ namespace VirtualLibrary.Controllers
         {
             return View(db.Reservations.ToList());
         }
-
-
-        // GET: Reservations/Edit/5
-        [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Reservations reservation = db.Reservations.Find(id);
-
-            if (reservation == null)
-            {
-                return HttpNotFound();
-            }
-            var model = new ReservationsViewModel();
-            model.book = reservation.Books.title;
-            model.check_in = Convert.ToBoolean(reservation.check_in);
-            model.check_out = Convert.ToBoolean(reservation.check_out);
-            model.library = reservation.Libraries.University_Name;
-            model.renewTimes = Convert.ToInt32(reservation.renewTimes);
-            model.reserved_date = reservation.reserved_date;
-            model.return_date = reservation.return_date;
-            model.username = reservation.Users.username;
-            model.id = reservation.id;
-
-
-            return PartialView("_Edit", model);
-        }
-        // POST: Reservations/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Moderator")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(ReservationsViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                Reservations reservation = new Reservations();
-                reservation.id = Convert.ToInt32(model.id);
-                reservation.check_in = model.check_in;
-                reservation.check_out = model.check_out;
-
-                try
-                {
-                    db.Entry(reservation).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                catch (DataException e)
-                {
-                    log.Error("Database error:", e);
-                }
-                log.Info("Author updated.");
-                return Json(new { success = true });
-            }
-            return PartialView("_Edit", model);
-        }
+      
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
         public ActionResult Delete(int? id)
@@ -100,8 +42,8 @@ namespace VirtualLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var reservation = db.Author.Find(id);
-            db.Author.Remove(reservation);
+            var reservation = db.Reservations.Find(id);
+            db.Reservations.Remove(reservation);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -114,7 +56,82 @@ namespace VirtualLibrary.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize(Roles = "User,Admin, Moderator")]
+        [HttpGet]
+        public ActionResult Reserve(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Books book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            ReservationsViewModel reservation = new ReservationsViewModel();
+            reservation.book = book.title;
+            List<Books_Availability> bookAvailable = db.Books_Availability.Where(x => x.available > 0 && x.book_id == id).ToList();
+            var librariesList = new List<Libraries>();
+            foreach (var available in bookAvailable)
+            {
+                librariesList.Add(available.Libraries);
+            }
+            if (librariesList.Count == 0)
+            {
+                ViewBag.StatusMessage = "Book is not available anymore!!";
+                return View("SuccessReserve");
+            }
+            var userName = User.Identity.Name;
+            var user = db.Users.SingleOrDefault(s => s.username == userName);
+            reservation.username = user.username;
+            ViewBag.Libraries = librariesList;
+            return View("Reserve", reservation);
+        }
 
+        [Authorize(Roles = "User, Admin, Moderator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reserve(ReservationsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var book = db.Books.Single(x => x.title == model.book);
+                Reservations reservation = new Reservations();
+                var library_id = Convert.ToInt32(model.library);
+                reservation.Books = book;
+                reservation.check_in = false;
+                reservation.check_out = false;
+                reservation.Libraries = db.Libraries.Single(x => x.id == library_id);
+                reservation.reserved_date = model.reserved_date;
+                reservation.return_date = model.return_date;
+                reservation.renewTimes = 3;
+                reservation.Users = db.Users.Single(x => x.username == model.username);
+
+                var bookAvailable = db.Books_Availability.Single(x => x.book_id == book.id && x.library_id == library_id);
+                if (bookAvailable.available == 0)
+                {
+                    ViewBag.StatusMessage = "Book is not available anymore!!";
+                    return View("SuccessReserve", reservation);
+                }
+                bookAvailable.quantity = --bookAvailable.available;
+                bookAvailable.reserved = ++bookAvailable.reserved;
+                try
+                {
+                    db.Entry(bookAvailable).State = EntityState.Modified;
+                    db.Reservations.Add(reservation);
+                    db.SaveChanges();
+                }
+                catch (DataException e)
+                {
+                    log.Error("Database error:", e);
+                }
+                log.Info("Reservation created.");
+                ViewBag.StatusSuccessMessage = "Book reserved!!";
+                return View("SuccessReserve", reservation);
+            }
+            return View("Reserve", model);
+        }
 
     }
 }

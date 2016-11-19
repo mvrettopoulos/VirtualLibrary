@@ -196,5 +196,24 @@ namespace VirtualLibrary.Controllers
         }
 
 
+        private IEnumerable<SelectListItem> GetAuthors(int authorid)
+        {
+            var selected = db.Books.Where(c => c.Author.Any(x=>x.id == authorid)).ToList();
+            var all_authors = db.Author.ToList().Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.id.ToString(),
+                                    Text = x.author_name,
+                                }); ;
+            //var all_librarians = db.Users.Select(x =>
+            //                    new SelectListItem
+            //                    {
+            //                        Value = x.id.ToString(),
+            //                        Text = x.username,
+            //                    });
+
+            return new MultiSelectList(all_authors, "Value", "Text", selected);
+        }
+
     }
 }

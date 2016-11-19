@@ -473,7 +473,6 @@
     <Content Include="Content\login.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\sb-admin-2.css" />
-    <Content Include="Content\booksStyles.css" />
     <Content Include="Content\styles\alert-bangtidy.css" />
     <Content Include="Content\styles\alert-blackgloss.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -765,13 +764,12 @@
     <Content Include="Views\Books_Availability\Delete.cshtml" />
     <Content Include="Views\Books_Availability\Edit.cshtml" />
     <Content Include="Views\Books_Availability\Index.cshtml" />
-    <Content Include="Views\Libraries\Details.cshtml" />
     <Content Include="Views\Ratings\Reviews.cshtml" />
     <Content Include="Views\Search\Reviews.cshtml" />
     <Content Include="Views\Reservations\Index.cshtml" />
-    <Content Include="Views\Reservations\Create.cshtml" />
-    <Content Include="Views\Reservations\Edit.cshtml" />
     <Content Include="Views\Reservations\Delete.cshtml" />
+    <Content Include="Views\Reservations\Reserve.cshtml" />
+    <Content Include="Views\Reservations\SuccessReserve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -118,10 +118,8 @@
                                         <td>
                                             @foreach (var librarian in library.Librarians)
                                             {
-                                                @Html.DisplayFor(model => librarian.Users.first_name)
-                                                @Html.Raw(" ")
-                                                @Html.DisplayFor(model => librarian.Users.last_name)
-                                                @Html.Raw("  ")
+                                                @Html.DisplayFor(model => librarian.Users.username)
+                                                @Html.Raw("\t")
                                             }
                                         </td>
                                     </tr>

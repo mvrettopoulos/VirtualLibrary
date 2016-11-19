@@ -1,73 +1,55 @@
 ﻿@model VirtualLibrary.Models.Books
 
+@{
+    var x = 0;
+    var ins = " and ";
+}
+
 @using (Html.BeginForm("Delete", "Books", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <h3>Are you sure you want to delete this?</h3>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.title)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.title)
-            </dd>
-            <hr>
-            <dt>
-                @Html.DisplayNameFor(model => model.Author)
-            </dt>
-
-            <dd>
+    <div class="col-sm-12 col-md-12">
+        <div class="card">
+            <div class="card-block col-md-4">
+                @if (Model.image == null)
+                {
+                    <img alt="Book Pic" src="~/Content/images/no_available_image.png" class="img-thumbnail img-responsive" style="width: 225px" />
+                }
+                else
+                {
+                    string imageBase64 = Convert.ToBase64String(Model.image);
+                    string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                    <img alt="Book Pic" src="@imageSrc" class="img-thumbnail img-responsive" style="width: 225px; height: 225px" />
+                }
+            </div>
+            <div class="card-block col-md-8">
+                <h3 class="card-title">
+                        @Html.DisplayFor(model => model.title)
+                </h3>
+                <h4>by </h4>
                 @foreach (var author in Model.Author)
                 {
                     @Html.DisplayFor(modelItem => author.author_name)
-                }
-            </dd>
-            <hr>
-            <dt>
-                @Html.DisplayNameFor(model => model.description)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.description)
-            </dd>
-            <hr>
-            <dt>
-                @Html.DisplayNameFor(model => model.Category)
-            </dt>
-
-            <dd>
-                @foreach (var category in Model.Category)
-                {
-                    @Html.DisplayFor(modelItem => category.Description)
-                }
-            </dd>
-            <hr>
-            <dt>
-                @Html.DisplayNameFor(model => model.image)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.image)
-            </dd>
-            <hr>
-            <dt>
-                @Html.DisplayNameFor(model => model.isbn)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.isbn)
-            </dd>
-            <hr>
-            <dt>
-                @Html.DisplayNameFor(model => model.publisher)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.publisher)
-            </dd>
-            
-        </dl>
+                    if ( Model.Author.Count()-1 == x )
+                    {
+                        ins = "";
+                    }
+                    x++;
+                    @ins
+                 }
+            </div>
+        </div>
+    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <i class="fa fa-close fa-lg"></i>
+                <strong>Cancel</strong>
+            </button>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check fa-lg"></i>
+                <strong>Delete</strong>
+            </button>
+        </div>
 
 }
 

@@ -361,3 +361,11 @@ stylize any heading tags withing white-panel below
 .top-margin{
     margin-top:10px;
 }
+
+.button-default {
+    color :#fff !important;
+}
+
+.top-padding{
+    padding-top:20px;
+}
