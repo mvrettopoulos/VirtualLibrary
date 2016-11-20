@@ -781,6 +781,7 @@
     <Content Include="Views\Manage\EditProfile.cshtml" />
     <Content Include="Views\LibrarianDashboard\Checkin.cshtml" />
     <Content Include="Views\LibrarianDashboard\Checkout.cshtml" />
+    <Content Include="Views\Books\FileUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

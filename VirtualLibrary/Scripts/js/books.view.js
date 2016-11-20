@@ -173,3 +173,16 @@ $('#delete_book_modal_submit_button').on('click', function () {
 
     $('#delete_book_form').submit();
 });
+
+
+$(document).ready(function () {
+    $('#upload').click(function () {
+        var url = $('#insert_book_modal').data('url');
+
+        $.get(url, function (data) {
+
+
+            $('#insert_book_modal').modal('show');
+        });
+    });
+});

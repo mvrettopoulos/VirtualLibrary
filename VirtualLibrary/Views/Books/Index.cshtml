@@ -44,6 +44,14 @@
     </div>
 </div>
 
+<div id="add_book_image_modal" class="modal" data-url="@Url.Action("FileUpload")" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="edit_book_modalContent">
+
+        </div>
+    </div>
+</div>
+
 <div class="row">
     @Html.Partial("_SideNavBar")
     <div class="page-main-layout col-lg-10">
@@ -67,6 +75,10 @@
                         <button class="btn btn-default" id="edit_book_button" data-toggle="tooltip" title="Edit existing book">
                             <i class="fa fa-pencil fa-lg"></i>
                             <strong>Edit</strong>
+                        </button>
+                        <button id="upload" class="btn btn-default" id="add_book_image_modal" data-toggle="tooltip" title="Edit  picture of existing book">
+                            <i class="fa fa-pencil fa-lg"></i>
+                            <strong>Add/Edit Image</strong>
                         </button>
                     </div>
                 <h4>Overview</h4>
@@ -143,9 +155,11 @@
         </div>
     </div>
 </div>
+</div>
 
 <script src="@Url.Content("~/Scripts/js/books.view.js")"></script>
 
 <script src="@Url.Content("~/Scripts/chosen.jquery.js")" type="text/javascript"></script>
 <link href="@Url.Content("~/Content/chosen.css")" rel="stylesheet" type="text/css" />
+
 

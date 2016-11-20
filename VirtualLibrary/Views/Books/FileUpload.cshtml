@@ -1,0 +1,43 @@
+﻿@model VirtualLibrary.Models.BooksViewModel
+@{
+    ViewBag.Title = "FileUpload";
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">Upload image</h4>
+</div>
+@using (Html.BeginForm("FileUpload", "Books", FormMethod.Post,
+                                                                 new { enctype = "multipart/form-data" }))
+{
+    <div class="modal-body" id="insert_upload_modal_body">
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    <input type="file" name="file" id="file" style="width: 100%;" />
+                </div>
+            </div>
+            <!--<label for="file">Upload Image:</label>
+            <input type="file" name="file" id="file" style="width: 100%;" />-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="fa fa-close fa-lg"></i>
+            <strong>Cancel</strong>
+        </button>
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check fa-lg"></i>
+            <strong>Apply</strong>
+        </button>
+    </div>
+}
+
+
+

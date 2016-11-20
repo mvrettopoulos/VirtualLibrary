@@ -98,6 +98,13 @@ namespace VirtualLibrary.Controllers
             return PartialView(model);
         }
 
+        // POST:Upload Profile Picture
+        [HttpPost]
+        public ActionResult FileUpload(HttpPostedFileBase file)
+        {
+            return PartialView(file);
+        }
+
         // GET: Books/Edit/5
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
