@@ -11,7 +11,9 @@
     {
         vvalue = "enabled";
     }
-
+    var ins = ", ";
+    var x = 1;
+    var y = 1;
 }
 
 <div id="insert_book_modal" class="modal" role="dialog" aria-hidden="true">
@@ -133,12 +135,28 @@
                                         @foreach (var author in book.Author)
                                         {
                                             @Html.DisplayFor(modelItem => author.author_name)
+                                            if (book.Author.Count() == x)
+                                            {
+                                                ins = "";
+                                                x = 0;
+                                            }
+                                            @ins
+                                            x++;
+                                            ins = ", ";
                                         }
                                     </td>
                                     <td>
                                         @foreach (var category in book.Category)
                                         {
                                             @Html.DisplayFor(modelItem => category.Description)
+                                            if (book.Category.Count() == y)
+                                            {
+                                                ins = "";
+                                                y = 0;
+                                            }
+                                            @ins
+                                            y++;
+                                            ins = ", ";
                                         }
                                     </td>
                                 </tr>
