@@ -40,12 +40,10 @@ namespace VirtualLibrary.Models
 
         public IEnumerable<SelectListItem> AllAuthors { get; set; }
 
-        [Required]
         public int[] ThisAuthor { get; set; }
         public Books book { get; set; }
 
         public IEnumerable<SelectListItem> AllCategories { get; set; }
-        [Required]
         public int[] ThisCategory { get; set; }
        
 
