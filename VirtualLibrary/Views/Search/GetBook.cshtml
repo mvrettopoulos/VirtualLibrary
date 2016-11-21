@@ -5,7 +5,17 @@
 }
 
 <div class="row">
+
     <div class="col-lg-2 col-lg-offset-1">
+
+        @if (ViewBag.StatusMessage != null)
+            {
+            <div class="text-center top-padding">
+                <h1 class="alert alert-danger">@ViewBag.StatusMessage</h1>
+            </div>
+        }
+
+
         @if (Model.image == null)
         {
             <img class="img-search-book" src="~/Content/images/no_available_image.png" alt="">

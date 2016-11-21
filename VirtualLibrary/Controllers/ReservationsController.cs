@@ -71,7 +71,7 @@ namespace VirtualLibrary.Controllers
             }
             ReservationsViewModel reservation = new ReservationsViewModel();
             reservation.book = book.title;
-            List<Books_Availability> bookAvailable = db.Books_Availability.Where(x => x.available > 0 && x.book_id == id).ToList();
+            List<Books_Availability> bookAvailable = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == id).ToList();
             var librariesList = new List<Libraries>();
             foreach (var available in bookAvailable)
             {
@@ -79,13 +79,16 @@ namespace VirtualLibrary.Controllers
             }
             if (librariesList.Count == 0)
             {
-                ViewBag.StatusMessage = "Book is not available anymore!!";
-                return View("SuccessReserve");
+                ViewBag.StatusMessage = "Book is not available yet!!";
+                return View("../Search/GetBook", book);
             }
             var userName = User.Identity.Name;
             var user = db.Users.SingleOrDefault(s => s.username == userName);
             reservation.username = user.username;
             ViewBag.Libraries = librariesList;
+            ViewBag.AvailableDate = "";
+
+
             return View("Reserve", reservation);
         }
 
@@ -111,8 +114,8 @@ namespace VirtualLibrary.Controllers
                 var bookAvailable = db.Books_Availability.Single(x => x.book_id == book.id && x.library_id == library_id);
                 if (bookAvailable.available == 0)
                 {
-                    ViewBag.StatusMessage = "Book is not available anymore!!";
-                    return View("SuccessReserve", reservation);
+                    ViewBag.StatusMessage = "Book is not available yet!!";
+                    return View("../Search/GetBook", book);
                 }
                 bookAvailable.quantity = --bookAvailable.available;
                 bookAvailable.reserved = ++bookAvailable.reserved;
