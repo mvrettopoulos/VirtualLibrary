@@ -457,14 +457,16 @@ namespace VirtualLibrary.Controllers
 
             // Fetch the userprofile
             Users user = db.Users.FirstOrDefault(u => u.username.Equals(username));
+            AspNetUsers aspNetUser = db.AspNetUsers.FirstOrDefault(m => m.UserName.Equals(username));
 
             // Construct the viewmodel
             UserProfileEdit model = new UserProfileEdit();
             model.firstName = user.first_name;
             model.lastName = user.last_name;
             model.Date_of_Birth = user.date_of_birth;
+            model.Email = aspNetUser.Email;
 
-            return PartialView("EditProfile");
+            return PartialView("EditProfile",model);
         }
         //POST:EditProfile
         [HttpPost]
@@ -476,11 +478,15 @@ namespace VirtualLibrary.Controllers
                 string username = User.Identity.Name;
                 // Get the userprofile
                 Users user = db.Users.FirstOrDefault(u => u.username.Equals(username));
+                AspNetUsers aspNetUser = db.AspNetUsers.FirstOrDefault(m => m.UserName.Equals(username));
 
                 // Update fields
                 user.first_name = userprofile.firstName;
                 user.last_name = userprofile.lastName;
                 user.date_of_birth = userprofile.Date_of_Birth;
+                aspNetUser.Email = userprofile.Email;
+                
+                
 
                 db.Entry(user).State = EntityState.Modified;
 

@@ -1,4 +1,5 @@
-﻿@model VirtualLibrary.Models.UserProfileEdit
+﻿@using System.Web.UI.WebControls
+@model VirtualLibrary.Models.UserProfileEdit
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -6,48 +7,64 @@
 </div>
 <br />
 @using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post,
-                new { @class = "form-horizontal", role = "form" }))
+    new {@class = "form-horizontal", role = "form"}))
 {
-    @Html.AntiForgeryToken()
+    <div class="modal-body" id="insert_upload_modal_body">
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.firstName, "First Name", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.firstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.lastName, "Last Name", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.lastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date_of_Birth, "Date of Birth", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Date_of_Birth, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date_of_Birth, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                @Html.LabelFor(model => model.firstName, "First Name", htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.firstName, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.firstName)}})
+                    @Html.ValidationMessageFor(model => model.firstName, "", new {@class = "text-danger"})
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                @Html.LabelFor(model => model.lastName, "Last Name", htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.lastName, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.lastName)}})
+                    @Html.ValidationMessageFor(model => model.lastName, "", new {@class = "text-danger"})
+                </div>
             </div>
+
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.Email)}})
+                    @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+          @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                @Html.LabelFor(model => model.Date_of_Birth, "Date of Birth", htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Date_of_Birth, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.Date_of_Birth), id = "datepicker"}})
+                    @Html.ValidationMessageFor(model => model.Date_of_Birth, "", new {@class = "text-danger"}) 
+                </div>
+            </div>*
         </div>
     </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="fa fa-close fa-lg"></i>
+            <strong>Cancel</strong>
+        </button>
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check fa-lg"></i>
+            <strong>Apply</strong>
+        </button>
+
+    </div>
 }
-<div class="modal-footer">
-    <button type="button" class="btn btn-danger" data-dismiss="modal">
-        <i class="fa fa-close fa-lg"></i>
-        <strong>Cancel</strong>
-    </button>
-</div>
-        }
+
+       
+<script src="@Url.Content("~/Scripts/js/register.view.js")"></script>
