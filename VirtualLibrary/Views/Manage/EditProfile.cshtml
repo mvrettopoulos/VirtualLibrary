@@ -19,7 +19,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.firstName, "First Name", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.firstName, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.firstName)}})
+                    @Html.EditorFor(model => model.firstName, new {htmlAttributes = new {@class = "form-control"}})
                     @Html.ValidationMessageFor(model => model.firstName, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -28,7 +28,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.lastName, "Last Name", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.lastName, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.lastName)}})
+                    @Html.EditorFor(model => model.lastName, new {htmlAttributes = new {@class = "form-control"}})
                     @Html.ValidationMessageFor(model => model.lastName, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.Email)}})
+                    @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control"}})
                     @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
                 </div>
             </div>
@@ -46,10 +46,10 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Date_of_Birth, "Date of Birth", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Date_of_Birth, new {htmlAttributes = new {@class = "form-control", PlaceHolder = @Html.DisplayFor(n => n.Date_of_Birth), id = "datepicker"}})
+                    @Html.EditorFor(model => model.Date_of_Birth, new {htmlAttributes = new {@class = "form-control", id = "datepicker"}})
                     @Html.ValidationMessageFor(model => model.Date_of_Birth, "", new {@class = "text-danger"}) 
                 </div>
-            </div>*
+            </div>
         </div>
     </div>
 
@@ -67,4 +67,12 @@
 }
 
        
-<script src="@Url.Content("~/Scripts/js/register.view.js")"></script>
+<script >
+    $("#datepicker").datepicker({
+        dateFormat: "dd-mm-yy",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1930:2010"
+    });
+
+</script>

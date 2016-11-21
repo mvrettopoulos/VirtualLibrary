@@ -25,12 +25,9 @@ namespace VirtualLibrary.Models
         [Display(Name = "Last Name")]
         public string lastName { get; set; }
 
-
-
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]
         [Display(Name = "Date of Birth")]
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}")]
         public string Date_of_Birth { get; set; }
 
@@ -38,25 +35,6 @@ namespace VirtualLibrary.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
-
-        public class MinimumAgeAttribute : ValidationAttribute
-        {
-            int _minimumAge;
-            public MinimumAgeAttribute(int minimumAge)
-            {
-                _minimumAge = minimumAge;
-            }
-            public override bool IsValid(object value)
-            {
-                DateTime date;
-                if (DateTime.TryParse(value.ToString(), out date))
-                {
-                    return date.AddYears(_minimumAge) < DateTime.Now;
-                }
-
-                return false;
-            }
-        }
+       
     }
 }

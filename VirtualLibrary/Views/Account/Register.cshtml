@@ -7,7 +7,6 @@
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
      @Html.AntiForgeryToken()
-     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <form role="form">
@@ -27,34 +26,34 @@
                             @Html.LabelFor(m => m.lastName)
                             @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
                             @Html.TextBoxFor(m => m.lastName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.lastName)
+                            @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Date_of_Birth)
                         @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
                         @Html.TextBoxFor(m => m.Date_of_Birth, new { @class = "form-control", id = "datepicker" })
-                        @Html.ValidationMessageFor(model => model.Date_of_Birth)
+                        @Html.ValidationMessageFor(model => model.Date_of_Birth ,"", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.membership_id_string)
                         @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
 
                         @Html.TextBoxFor(m => m.membership_id_string, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.membership_id_string)
+                        @Html.ValidationMessageFor(model => model.membership_id_string, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Username)
                         @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
 
                         @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Username)
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Email)
                         @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                     </div>
                     <div class="row">
@@ -63,7 +62,7 @@
                                 @Html.LabelFor(m => m.Password)
                                 @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Password)
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">
@@ -71,7 +70,7 @@
                                 @Html.LabelFor(m => m.ConfirmPassword)
                                 @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
                                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
 
                             </div>
                         </div>
