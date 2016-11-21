@@ -24,7 +24,7 @@ namespace VirtualLibrary.Models
 
         public string description { get; set; }
         [Display(Name = "Image")]
-        public byte[] image { get; set; }
+        public HttpPostedFileBase image { get; set; }
 
         [Required]
         [StringLength(60, ErrorMessage = "The ISBN should be at least 5 characters", MinimumLength = 5)]
@@ -40,10 +40,12 @@ namespace VirtualLibrary.Models
 
         public IEnumerable<SelectListItem> AllAuthors { get; set; }
 
+        [Required]
         public int[] ThisAuthor { get; set; }
         public Books book { get; set; }
 
         public IEnumerable<SelectListItem> AllCategories { get; set; }
+        [Required]
         public int[] ThisCategory { get; set; }
        
 

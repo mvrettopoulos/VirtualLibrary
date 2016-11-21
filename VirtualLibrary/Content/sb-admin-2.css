@@ -353,5 +353,10 @@ table.dataTable thead .sorting_desc_disabled {
 .page-main-layout{
      border-left: 1px solid #e7e7e7;
      background-color: #fff;
-     height:100vh;
+}
+
+.paginate_button {
+    padding:0px !important;
+    margin:0px !important;
+
 }

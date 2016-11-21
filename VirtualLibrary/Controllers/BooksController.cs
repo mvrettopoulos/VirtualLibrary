@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -59,20 +60,19 @@ namespace VirtualLibrary.Controllers
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Create(BooksViewModel model)
+        public ActionResult Create(BooksViewModel model,HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-
                 VirtualLibrary.Models.Books book = new Books();
                 //map obj BooksViewModel to ModelDataBase book
                 book.title = model.title;
                 book.description = model.description;
                 book.isbn = model.isbn;
                 book.publisher = model.publisher;
-                if ( model.ThisAuthor != null)
+                if (model.ThisAuthor != null)
                 {
-                    foreach ( var author in model.ThisAuthor )
+                    foreach (var author in model.ThisAuthor)
                     {
                         book.Author.Add(db.Author.Find(author));
                     }
@@ -85,13 +85,36 @@ namespace VirtualLibrary.Controllers
                     }
                 }
 
+                if (file != null)
+                {
+                    var supportedTypes = new[] { "jpg", "jpeg", "png" };
 
-                //assign values at new book
+                    var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+                    if (supportedTypes.Contains(fileExt))
+                    {
+                        //file.FileName.Contains(".png")
+                        // save the image path path to the database or you can send image
+                        // directly to database
+                        // in-case if you want to store byte[] ie. for DB
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(ms);
+                            byte[] array = ms.GetBuffer();
+                            book.image = array;
+                          
+                            log.Info("Image updated.");
+                            ms.Close();
+                        }
+                    }
+                }
+
+
+                ////assign values at new book
                 book.views = 0;
                 db.Books.Add(book);
                 db.SaveChanges();
 
-                
+
                 return Json(new { success = true });
             }
 
@@ -147,7 +170,7 @@ namespace VirtualLibrary.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult Edit(BooksViewModel model)
+        public ActionResult Edit(BooksViewModel model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -173,6 +196,31 @@ namespace VirtualLibrary.Controllers
                         bookToUpdate.Category.Add(db.Category.Find(category));
                     }
                 }
+
+                if (file != null)
+                {
+                    var supportedTypes = new[] { "jpg", "jpeg", "png" };
+
+                    var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
+                    if (supportedTypes.Contains(fileExt))
+                    {
+                        //file.FileName.Contains(".png")
+                        // save the image path path to the database or you can send image
+                        // directly to database
+                        // in-case if you want to store byte[] ie. for DB
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(ms);
+                            byte[] array = ms.GetBuffer();
+                            bookToUpdate.image = array;
+
+                            log.Info("Image updated.");
+                            ms.Close();
+                        }
+                    }
+                }
+
+
                 try
                 {
                     db.Entry(bookToUpdate).State = EntityState.Modified;

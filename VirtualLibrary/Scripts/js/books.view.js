@@ -60,11 +60,15 @@ function bindFormInsert(dialog) {
         if (!$(this).valid()) {
             return false;
         }
-
+        var formData = new FormData($(this)[0]);
+        
         $.ajax({
             url: this.action,
             type: this.method,
-            data: $(this).serialize()
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
         }).done(function (result) {
             if (result.success) {
 
@@ -149,11 +153,15 @@ function bindFormEdit(dialog) {
         if (!$(this).valid()) {
             return false;
         }
+        var formData = new FormData($(this)[0]);
 
         $.ajax({
             url: this.action,
             type: this.method,
-            data: $(this).serialize()
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
         }).done(function (result) {
             if (result.success) {
 
@@ -174,15 +182,3 @@ $('#delete_book_modal_submit_button').on('click', function () {
     $('#delete_book_form').submit();
 });
 
-
-$(document).ready(function () {
-    $('#upload').click(function () {
-        var url = $('#insert_book_modal').data('url');
-
-        $.get(url, function (data) {
-
-
-            $('#insert_book_modal').modal('show');
-        });
-    });
-});

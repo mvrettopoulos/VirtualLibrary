@@ -5,7 +5,7 @@
     <h4 class="modal-title">Insert book</h4>
 </div>
 
-@using (Html.BeginForm("Create", "Books", FormMethod.Post))
+@using (Html.BeginForm("Create", "Books", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="modal-body" id="insert_user_modal_body">
         @Html.AntiForgeryToken()
@@ -59,6 +59,13 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                @Html.LabelFor(model => model.image, "Image", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="file" id="file" style="width: 100%;" />
+                </div>
+            </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
                     <i class="fa fa-close fa-lg"></i>
@@ -78,11 +85,6 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
-
-
-    $(document).on('click', 'div .dropdown-menu', function (e) {
-        e.stopPropagation();
-    })
 
     $(".chosen-select").chosen({
         placeholder_text_multiple: "Select",
