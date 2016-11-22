@@ -20,7 +20,7 @@ namespace VirtualLibrary.Controllers
         {
             return View(db.Reservations.ToList());
         }
-      
+
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
         public ActionResult Delete(int? id)
@@ -82,6 +82,9 @@ namespace VirtualLibrary.Controllers
                 ViewBag.StatusMessage = "Book is not available yet!!";
                 return View("../Search/GetBook", book);
             }
+
+            reservation.reservationDatesLibraries = getDateLibraries(librariesList, book.id);
+
             var userName = User.Identity.Name;
             var user = db.Users.SingleOrDefault(s => s.username == userName);
             reservation.username = user.username;
@@ -134,6 +137,29 @@ namespace VirtualLibrary.Controllers
                 return View("SuccessReserve", reservation);
             }
             return View("Reserve", model);
+        }
+
+        private List<ReservationDatesLibraries> getDateLibraries(List<Libraries> librariesList, int bookid)
+        {
+            List<ReservationDatesLibraries> reservationDatesLibrariesList = new List<ReservationDatesLibraries>();
+            foreach (var library in librariesList)
+            {
+                ReservationDatesLibraries reservationDatesLibraries = new ReservationDatesLibraries();
+                reservationDatesLibraries.library = library.id;
+                List<Reservations> reservationsList = db.Reservations.Where(x => x.library_id == library.id && x.book_id == bookid).ToList();
+                List<ReservationDatesRange> dates = new List<ReservationDatesRange>();
+                foreach (var reservation in reservationsList)
+                {
+                    ReservationDatesRange range = new ReservationDatesRange();
+                    range.startDate = reservation.reserved_date;
+                    range.endDate = reservation.return_date;
+                    dates.Add(range);
+                }
+                reservationDatesLibraries.datesRange = dates;
+                reservationDatesLibrariesList.Add(reservationDatesLibraries);
+            }
+            return reservationDatesLibrariesList;
+
         }
 
     }

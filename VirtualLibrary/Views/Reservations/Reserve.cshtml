@@ -35,7 +35,19 @@
                                 </div>
                             </div>
 
+                            
+
                             <div class="form-group">
+                                @Html.LabelFor(model => model.library, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.library, new SelectList(ViewBag.Libraries, "id", "Building"), "Select a Library",
+                                   new { id = "librarySelect" })
+                                    @Html.ValidationMessageFor(model => model.library, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div id="dateReserve" class="form-group hidden">
                                 @Html.LabelFor(model => model.reserved_date, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.reserved_date, new { htmlAttributes = new { @class = "form-control", id = "datepickerReserve" } })
@@ -43,7 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div id="dateReturn" class="form-group hidden">
                                 @Html.LabelFor(model => model.return_date, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.return_date, new { htmlAttributes = new { @class = "form-control", id = "datepickerReturn" } })
@@ -51,13 +63,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.library, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.library, new SelectList(ViewBag.Libraries, "id", "Building"), "Select a Library")
-                                    @Html.ValidationMessageFor(model => model.library, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
 
                             <div class="form-group text-right">
                                 <a href="@Url.Action("Index", "Search")" class="btn btn-danger button-default">
@@ -77,30 +82,8 @@
     </div>
 }
 
-<script type="text/javascript">
+<script>
+    var reservationDatesLibraries =  @Html.Raw(Json.Encode(Model.reservationDatesLibraries));;
 
-    $("#datepickerReserve").datepicker({
-        dateFormat: "dd-mm-yy",
-        minDate: 0,
-        onSelect: function (date) {
-            var date2 = $('#datepickerReserve').datepicker('getDate');
-            date2.setDate(date2.getDate() + 1);
-            $('#datepickerReturn').datepicker('setDate', date2);
-            //sets minDate to dt1 date + 1
-            $('#datepickerReturn').datepicker('option', 'minDate', date2);
-            $('#datepickerReturn').datepicker('option', 'maxDate', date2.getDate()-11);
-        }
-    });
-    $('#datepickerReturn').datepicker({
-        dateFormat: "dd-mm-yy",
-        onClose: function () {
-            var dt1 = $('#datepickerReserve').datepicker('getDate');
-            console.log(dt1);
-            var dt2 = $('#datepickerReturn').datepicker('getDate');
-            if (dt2 <= dt1) {
-                var minDate = $('#datepickerReturn').datepicker('option', 'minDate');
-                $('#datepickerReturn').datepicker('setDate', minDate);
-            }
-        }
-    });
 </script>
+<script src="@Url.Content("~/Scripts/js/reserve.book.view.js")"></script>

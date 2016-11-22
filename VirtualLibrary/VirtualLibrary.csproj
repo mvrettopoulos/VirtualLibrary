@@ -667,6 +667,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\js\profile.view.js" />
     <Content Include="Scripts\js\dashboard.view.js" />
+    <Content Include="Scripts\js\reserve.book.view.js" />
     <Content Include="Scripts\js\usersdashboard.view.js" />
     <Content Include="Scripts\js\availability.view.js" />
     <Content Include="Scripts\js\authors.view.js" />
