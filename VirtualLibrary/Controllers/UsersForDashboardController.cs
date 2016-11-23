@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using VirtualLibrary.App_Start;
 using VirtualLibrary.Models;
 
 namespace VirtualLibrary.Controllers
@@ -13,6 +16,19 @@ namespace VirtualLibrary.Controllers
     public class UsersForDashboardController : Controller
     {
         private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         [HttpGet]
         [Authorize(Roles = "Admin, Moderator")]
@@ -50,13 +66,11 @@ namespace VirtualLibrary.Controllers
         {
             Users users = db.Users.Find(id);
             users.active = true;
-            var user_roles = users.AspNetUsers.AspNetRoles.ToList();
-            var guest_obj = db.AspNetRoles.Where(x => x.Name == "Guest").Single();
-            var user_obj = db.AspNetRoles.Where(x => x.Name == "User").Single();
-            user_roles.Remove(guest_obj);
-            user_roles.Add(user_obj);
-            users.AspNetUsers.AspNetRoles = user_roles;
             db.Entry(users).State = EntityState.Modified;
+
+            var currentUser = UserManager.FindByName(users.username);
+            UserManager.RemoveFromRole(currentUser.Id, "Guest");
+            UserManager.AddToRole(currentUser.Id, "User");
             db.SaveChanges();
             return RedirectToAction("Index");
         }
