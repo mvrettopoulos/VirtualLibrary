@@ -24,22 +24,7 @@ namespace VirtualLibrary.Models
         [Display(Name = "Library Building")]
         public string library { get; set; }
 
-        public List<ReservationDatesLibraries> reservationDatesLibraries;
-
     }
-    public class ReservationDatesRange
-    {
-        public string startDate;
-        public string endDate;
-
-    }
-
-
-    public class ReservationDatesLibraries
-    {
-        public int library;
-        public List<ReservationDatesRange> datesRange = new List<ReservationDatesRange>();
-
-    }
+  
 
 }

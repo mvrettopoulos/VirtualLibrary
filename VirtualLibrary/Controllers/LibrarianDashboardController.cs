@@ -105,7 +105,7 @@ namespace VirtualLibrary.Controllers
             }
             reservation.check_out = true;
             CultureInfo culture = new CultureInfo("ISO");
-            string today = DateTime.Now.ToString("yyyy-MMMM-dd", culture);
+            DateTime today = DateTime.Now;
             reservation.return_date = today;
             var bookAvailable = db.Books_Availability.Single(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id);
             bookAvailable.reserved = bookAvailable.reserved - 1;

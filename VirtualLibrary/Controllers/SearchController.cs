@@ -156,9 +156,9 @@ namespace VirtualLibrary.Controllers
             return View(book);
         }
 
-        public ActionResult GetRatings()
+        public ActionResult GetRatings(int? id)
         {
-            return PartialView("Reviews",db.Books_Ratings.ToList());
+            return PartialView("Reviews",db.Books_Ratings.Where(x=>x.book_id == id).ToList());
         }
     }
 }

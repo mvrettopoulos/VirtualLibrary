@@ -17,8 +17,8 @@ namespace VirtualLibrary.Models
         public int id { get; set; }
         public Nullable<int> book_id { get; set; }
         public Nullable<int> username_id { get; set; }
-        public string reserved_date { get; set; }
-        public string return_date { get; set; }
+        public Nullable<System.DateTime> reserved_date { get; set; }
+        public Nullable<System.DateTime> return_date { get; set; }
         public Nullable<bool> check_in { get; set; }
         public Nullable<bool> check_out { get; set; }
         public Nullable<int> renewTimes { get; set; }

@@ -83,13 +83,10 @@ namespace VirtualLibrary.Controllers
                 return View("../Search/GetBook", book);
             }
 
-            reservation.reservationDatesLibraries = getDateLibraries(librariesList, book.id);
-
             var userName = User.Identity.Name;
             var user = db.Users.SingleOrDefault(s => s.username == userName);
             reservation.username = user.username;
             ViewBag.Libraries = librariesList;
-            ViewBag.AvailableDate = "";
 
 
             return View("Reserve", reservation);
@@ -109,22 +106,26 @@ namespace VirtualLibrary.Controllers
                 reservation.check_in = false;
                 reservation.check_out = false;
                 reservation.Libraries = db.Libraries.Single(x => x.id == library_id);
-                reservation.reserved_date = model.reserved_date;
-                reservation.return_date = model.return_date;
+                reservation.reserved_date = Convert.ToDateTime(model.reserved_date);
+                reservation.return_date = Convert.ToDateTime(model.return_date);
                 reservation.renewTimes = 3;
                 reservation.Users = db.Users.Single(x => x.username == model.username);
 
                 var bookAvailable = db.Books_Availability.Single(x => x.book_id == book.id && x.library_id == library_id);
-                if (bookAvailable.available == 0)
+                if (!checkIfAvailable(book.id,library_id,bookAvailable.quantity, Convert.ToDateTime(model.reserved_date), Convert.ToDateTime(model.return_date)))
                 {
-                    ViewBag.StatusMessage = "Book is not available yet!!";
-                    return View("../Search/GetBook", book);
+                    ViewBag.StatusMessage = "Book is not available the dates you selected!!!";
+                    List<Books_Availability> bookAvailability = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == book.id).ToList();
+                    var librariesList = new List<Libraries>();
+                    foreach (var available in bookAvailability)
+                    {
+                        librariesList.Add(available.Libraries);
+                    }
+                    ViewBag.Libraries = librariesList;
+                    return View("Reserve", model);
                 }
-                bookAvailable.quantity = --bookAvailable.available;
-                bookAvailable.reserved = ++bookAvailable.reserved;
                 try
                 {
-                    db.Entry(bookAvailable).State = EntityState.Modified;
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
@@ -134,33 +135,22 @@ namespace VirtualLibrary.Controllers
                 }
                 log.Info("Reservation created.");
                 ViewBag.StatusSuccessMessage = "Book reserved!!";
-                return View("SuccessReserve", reservation);
+                return View("../Search/GetBook", book);
             }
             return View("Reserve", model);
         }
 
-        private List<ReservationDatesLibraries> getDateLibraries(List<Libraries> librariesList, int bookid)
+       
+        private bool checkIfAvailable(int bookId,int libraryId,int? quantity, DateTime reservedDate, DateTime returnDate)
         {
-            List<ReservationDatesLibraries> reservationDatesLibrariesList = new List<ReservationDatesLibraries>();
-            foreach (var library in librariesList)
+            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == bookId && x.library_id == libraryId && (reservedDate >= x.reserved_date && reservedDate <= x.return_date) || (returnDate >= x.reserved_date && returnDate <= x.return_date)).ToList();
+
+            if(reservationsList.Count< quantity)
             {
-                ReservationDatesLibraries reservationDatesLibraries = new ReservationDatesLibraries();
-                reservationDatesLibraries.library = library.id;
-                List<Reservations> reservationsList = db.Reservations.Where(x => x.library_id == library.id && x.book_id == bookid).ToList();
-                List<ReservationDatesRange> dates = new List<ReservationDatesRange>();
-                foreach (var reservation in reservationsList)
-                {
-                    ReservationDatesRange range = new ReservationDatesRange();
-                    range.startDate = reservation.reserved_date;
-                    range.endDate = reservation.return_date;
-                    dates.Add(range);
-                }
-                reservationDatesLibraries.datesRange = dates;
-                reservationDatesLibrariesList.Add(reservationDatesLibraries);
+                return true;
             }
-            return reservationDatesLibrariesList;
 
+            return false;
         }
-
     }
 }

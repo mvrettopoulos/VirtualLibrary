@@ -164,8 +164,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="book_id" Type="int" />
           <Property Name="username_id" Type="int" />
-          <Property Name="reserved_date" Type="varchar" MaxLength="50" />
-          <Property Name="return_date" Type="varchar" MaxLength="50" />
+          <Property Name="reserved_date" Type="datetime" />
+          <Property Name="return_date" Type="datetime" />
           <Property Name="check_in" Type="bit" />
           <Property Name="check_out" Type="bit" />
           <Property Name="renewTimes" Type="int" />
@@ -226,7 +226,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Books_Availability_Books">
-          <End Role="Books" Type="Self.Books" Multiplicity="1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Books_Availability" Type="Self.Books_Availability" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Books">
@@ -238,7 +240,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Books_Availability_Libraries">
-          <End Role="Libraries" Type="Self.Libraries" Multiplicity="1" />
+          <End Role="Libraries" Type="Self.Libraries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Books_Availability" Type="Self.Books_Availability" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Libraries">
@@ -278,7 +282,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Books_Ratings_Books">
-          <End Role="Books" Type="Self.Books" Multiplicity="1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Books_Ratings" Type="Self.Books_Ratings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Books">
@@ -290,7 +296,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Books_Ratings_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Books_Ratings" Type="Self.Books_Ratings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -900,8 +908,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="book_id" Type="Int32" />
           <Property Name="username_id" Type="Int32" />
-          <Property Name="reserved_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="return_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="reserved_date" Type="DateTime" Precision="3" />
+          <Property Name="return_date" Type="DateTime" Precision="3" />
           <Property Name="check_in" Type="Boolean" />
           <Property Name="check_out" Type="Boolean" />
           <Property Name="renewTimes" Type="Int32" />

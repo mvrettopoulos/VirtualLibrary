@@ -10,6 +10,15 @@
     @Html.AntiForgeryToken()
 
     <div class="row">
+
+        @if (ViewBag.StatusMessage != null)
+        {
+            <div class="col-lg-6 col-lg-offset-3">
+                <div class="text-center">
+                    <h1 class="alert alert-danger">@ViewBag.StatusMessage</h1>
+                </div>
+            </div>
+        }
         <div class="page-main-layout col-lg-6 col-lg-offset-3">
             <div class="col-lg-12  top-padding">
                 <div class="panel panel-green">
@@ -47,7 +56,7 @@
                             </div>
 
 
-                            <div id="dateReserve" class="form-group hidden">
+                            <div class="form-group">
                                 @Html.LabelFor(model => model.reserved_date, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.reserved_date, new { htmlAttributes = new { @class = "form-control", id = "datepickerReserve" } })
@@ -55,7 +64,7 @@
                                 </div>
                             </div>
 
-                            <div id="dateReturn" class="form-group hidden">
+                            <div class="form-group">
                                 @Html.LabelFor(model => model.return_date, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.EditorFor(model => model.return_date, new { htmlAttributes = new { @class = "form-control", id = "datepickerReturn" } })
@@ -82,8 +91,4 @@
     </div>
 }
 
-<script>
-    var reservationDatesLibraries =  @Html.Raw(Json.Encode(Model.reservationDatesLibraries));;
-
-</script>
 <script src="@Url.Content("~/Scripts/js/reserve.book.view.js")"></script>
