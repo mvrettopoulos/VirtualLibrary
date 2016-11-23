@@ -11,6 +11,7 @@ using VirtualLibrary.App_Start;
 using System.IO;
 using System.Data.Entity;
 using System.Data;
+using System.Collections.Generic;
 
 namespace VirtualLibrary.Controllers
 {
@@ -71,8 +72,8 @@ namespace VirtualLibrary.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : message == ManageMessageId.FileUploadSuccess ? "Your image has been changed."
                 : message == ManageMessageId.FileUploadError ? "You have not selected an image."
-                : message == ManageMessageId.FileTypeError ? "You need to upload a .png file"
-                : message == ManageMessageId.EditProfile ? "Your profile's infos has been changed"
+                : message == ManageMessageId.FileTypeError ? "You need to upload a .png file."
+                : message == ManageMessageId.EditProfile ? "Your profile's infos has been changed."
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -489,6 +490,7 @@ namespace VirtualLibrary.Controllers
                 
 
                 db.Entry(user).State = EntityState.Modified;
+                db.Entry(aspNetUser).State = EntityState.Modified;
 
                 db.SaveChanges();
                 message = ManageMessageId.EditProfile;
@@ -499,8 +501,32 @@ namespace VirtualLibrary.Controllers
         }
 
 
+        //GET: Extend Loan
+        [HttpGet]
+        public ActionResult GetExtendLoan(int id)
+        {
+            Reservations reservation = db.Reservations.FirstOrDefault(m => m.id==(id));
+            DateTime returnDate = Convert.ToDateTime(reservation.return_date);
+            Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id==reservation.book_id && b.library_id==reservation.library_id);
+            List<Reservations> reservationList =
+                db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && Convert.ToDateTime(x.reserved_date) > returnDate && Convert.ToDateTime(x.reserved_date)<=returnDate.AddDays(7))
+                    .OrderBy(x=>x.reserved_date).ToList();
+
+            if (reservationList.Count < availableBook.available)
+            {
+                //imerominia max_reservation_date kai id_reservation 
+            }
+            else
+            {
+                var reservedDate=reservationList.Last().reserved_date;
+                //imerominia max_reservation_date kai id_reservation  apla reservedDate-1
+            }
+
+            return PartialView("ExtendLoan");
+        }
 
 
+        
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

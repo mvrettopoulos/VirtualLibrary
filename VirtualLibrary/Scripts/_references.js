@@ -60,6 +60,7 @@
 /// <reference path="js/dashboard.view.js" />
 /// <reference path="js/home.view.js" />
 /// <reference path="js/libraries.view.js" />
+/// <reference path="js/loan.view.js" />
 /// <reference path="js/login.view.js" />
 /// <reference path="js/navbar.js" />
 /// <reference path="js/profile.view.js" />
