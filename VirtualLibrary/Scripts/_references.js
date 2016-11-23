@@ -67,6 +67,7 @@
 /// <reference path="js/ratings.view.js" />
 /// <reference path="js/register.view.js" />
 /// <reference path="js/reservations.view.js" />
+/// <reference path="js/reserve.book.view.js" />
 /// <reference path="js/review.view.js" />
 /// <reference path="js/roles.view.js" />
 /// <reference path="js/upload.view.js" />

@@ -56,9 +56,13 @@ namespace VirtualLibrary.Controllers
         {
             var reservation = db.Reservations.Find(id);
             reservation.check_in = true;
+            var bookAvailable = db.Books_Availability.Single(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id);
+            bookAvailable.reserved++;
+            bookAvailable.available = bookAvailable.available - 1;
             try
             {
                 db.Entry(reservation).State = EntityState.Modified;
+                db.Entry(bookAvailable).State = EntityState.Modified;
                 db.SaveChanges();
             }
             catch (DataException e)

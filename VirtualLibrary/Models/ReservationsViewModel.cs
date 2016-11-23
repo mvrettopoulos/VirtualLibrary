@@ -20,11 +20,26 @@ namespace VirtualLibrary.Models
         [Display(Name = "Reservation Date Expiration")]
         public string return_date { get; set; }
 
-        public bool check_in { get; set; }
-        public bool check_out { get; set; }
-        public int renewTimes { get; set; }
         [Required]
         [Display(Name = "Library Building")]
         public string library { get; set; }
+
+        public List<ReservationDatesLibraries> reservationDatesLibraries;
+
     }
+    public class ReservationDatesRange
+    {
+        public string startDate;
+        public string endDate;
+
+    }
+
+
+    public class ReservationDatesLibraries
+    {
+        public int library;
+        public List<ReservationDatesRange> datesRange = new List<ReservationDatesRange>();
+
+    }
+
 }

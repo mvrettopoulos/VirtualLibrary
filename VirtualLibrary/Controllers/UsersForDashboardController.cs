@@ -50,6 +50,12 @@ namespace VirtualLibrary.Controllers
         {
             Users users = db.Users.Find(id);
             users.active = true;
+            var user_roles = users.AspNetUsers.AspNetRoles.ToList();
+            var guest_obj = db.AspNetRoles.Where(x => x.Name == "Guest").Single();
+            var user_obj = db.AspNetRoles.Where(x => x.Name == "User").Single();
+            user_roles.Remove(guest_obj);
+            user_roles.Add(user_obj);
+            users.AspNetUsers.AspNetRoles = user_roles;
             db.Entry(users).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
