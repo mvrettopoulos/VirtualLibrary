@@ -26,9 +26,7 @@ namespace VirtualLibrary.Controllers
         // GET: Search/Books
         public ActionResult Search()
         {
-            var booksListByView = db.Books.OrderByDescending(s => s.views).ToList();
-            
-            return PartialView("Search", booksListByView);
+            return PartialView("Search", db.Books.OrderByDescending(s => s.views).ToList());
 
         }
 

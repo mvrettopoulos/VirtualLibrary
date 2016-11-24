@@ -201,7 +201,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
-    <Compile Include="Controllers\Books_AvailabilityController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibrarianDashboardController.cs" />
@@ -271,7 +270,6 @@
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReservationsViewModel.cs" />
-    <Compile Include="Models\SearchBooksFilter.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
