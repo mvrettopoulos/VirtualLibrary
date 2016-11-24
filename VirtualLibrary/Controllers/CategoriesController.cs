@@ -12,7 +12,7 @@ namespace VirtualLibrary.Controllers
     [Authorize]
     public class CategoriesController : Controller
     {
-        private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [Authorize(Roles = "Admin, Moderator")]

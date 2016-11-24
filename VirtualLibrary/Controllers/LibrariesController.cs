@@ -11,7 +11,7 @@ namespace VirtualLibrary.Controllers
 {
     public class LibrariesController : Controller
     {
-        private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         [HttpGet]
@@ -185,12 +185,6 @@ namespace VirtualLibrary.Controllers
                                     Value = x.id.ToString(),
                                     Text = x.username,
                                 }); ;
-            //var all_librarians = db.Users.Select(x =>
-            //                    new SelectListItem
-            //                    {
-            //                        Value = x.id.ToString(),
-            //                        Text = x.username,
-            //                    });
 
             return new MultiSelectList(all_librarians, "Value", "Text", selected);
         }
@@ -205,12 +199,6 @@ namespace VirtualLibrary.Controllers
                                     Value = x.id.ToString(),
                                     Text = x.author_name,
                                 }); ;
-            //var all_librarians = db.Users.Select(x =>
-            //                    new SelectListItem
-            //                    {
-            //                        Value = x.id.ToString(),
-            //                        Text = x.username,
-            //                    });
 
             return new MultiSelectList(all_authors, "Value", "Text", selected);
         }

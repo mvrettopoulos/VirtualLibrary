@@ -11,9 +11,9 @@ using VirtualLibrary.Models;
 
 namespace VirtualLibrary.Controllers
 {
-    public class Books_AvailabilityController : Controller
+    public class BooksAvailabilityController : Controller
     {
-        private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
 
         [HttpGet]
         [Authorize(Roles = "Admin, Moderator")]

@@ -254,6 +254,7 @@
     <Compile Include="Models\C__MigrationHistory1.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExtendLoanView.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Librarians.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
@@ -572,6 +573,8 @@
       <DependentUpon>VirtualLibraryEntities.edmx</DependentUpon>
     </Content>
     <Content Include="fonts\fontawesome-webfont.woff2" />
+    <None Include="Properties\PublishProfiles\virtual-library - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\virtual-library-dev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
@@ -666,6 +669,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\datepicker.js" />
+    <Content Include="Scripts\js\loan.js" />
     <Content Include="Scripts\js\profile.view.js" />
     <Content Include="Scripts\js\dashboard.view.js" />
     <Content Include="Scripts\js\reserve.book.view.js" />
@@ -785,6 +790,7 @@
     <Content Include="Views\LibrarianDashboard\Checkin.cshtml" />
     <Content Include="Views\LibrarianDashboard\Checkout.cshtml" />
     <Content Include="Views\Books\FileUpload.cshtml" />
+    <Content Include="Views\Manage\Loan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

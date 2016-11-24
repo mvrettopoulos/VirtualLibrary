@@ -22,7 +22,7 @@ namespace VirtualLibrary.Controllers
   (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
 
         public ManageController()
         {
@@ -82,18 +82,9 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            //new IndexViewModel
-            //{
-            //   HasPassword = HasPassword(),
-            //    PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-            //    TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-            //    Logins = await UserManager.GetLoginsAsync(userId),
-            //    BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            //};
             return View(model);
         }
 
-        //
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -508,21 +499,34 @@ namespace VirtualLibrary.Controllers
             Reservations reservation = db.Reservations.FirstOrDefault(m => m.id==(id));
             DateTime returnDate = Convert.ToDateTime(reservation.return_date);
             Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id==reservation.book_id && b.library_id==reservation.library_id);
-            List<Reservations> reservationList =
-                db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && Convert.ToDateTime(x.reserved_date) > returnDate && Convert.ToDateTime(x.reserved_date)<=returnDate.AddDays(7))
-                    .OrderBy(x=>x.reserved_date).ToList();
 
+
+            List<Reservations> reservationList = db.Reservations.ToList().Where(x => x.book_id == reservation.book_id 
+            && x.library_id == reservation.library_id 
+            && x.reserved_date > returnDate && x.reserved_date <= returnDate.AddDays(7))
+                               .OrderBy(x => x.reserved_date).ToList();
+            ExtendLoanView model = new ExtendLoanView();
+            model.id = reservation.id;
             if (reservationList.Count < availableBook.available)
             {
+                model.minDate = returnDate.AddDays(1);
+                model.maxDate = returnDate.AddDays(7);
+                //model.returnDate = reservation.return_date;
+
                 //imerominia max_reservation_date kai id_reservation 
             }
             else
             {
                 var reservedDate=reservationList.Last().reserved_date;
+                model.minDate = returnDate.AddDays(1);
+                model.maxDate = Convert.ToDateTime(reservedDate).AddDays(-1);
+                //model.returnDate = reservation.return_date;
+
+
                 //imerominia max_reservation_date kai id_reservation  apla reservedDate-1
             }
 
-            return PartialView("ExtendLoan");
+            return PartialView("Loan",model);
         }
 
 
