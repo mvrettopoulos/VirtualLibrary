@@ -41,5 +41,7 @@ namespace VirtualLibrary.Models
         public virtual DbSet<Books_Availability> Books_Availability { get; set; }
         public virtual DbSet<Books_Ratings> Books_Ratings { get; set; }
         public virtual DbSet<Reservations> Reservations { get; set; }
+
+        public System.Data.Entity.DbSet<VirtualLibrary.Models.ExtendLoanView> ExtendLoanViews { get; set; }
     }
 }
