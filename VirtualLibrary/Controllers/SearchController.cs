@@ -26,7 +26,29 @@ namespace VirtualLibrary.Controllers
         // GET: Search/Books
         public ActionResult Search()
         {
-            return PartialView("Search", db.Books.OrderByDescending(s => s.views).ToList());
+            var booksListByView = db.Books.OrderByDescending(s => s.views).ToList();
+            SearchBooksFilter[] dataSource = new SearchBooksFilter[booksListByView.Count()];
+            var i = 0;
+            var sAuthors = "";
+            foreach (var item1 in booksListByView)
+            {
+                VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
+                sBook.itemNum = i;
+                sBook.id = item1.id;
+                sBook.title = item1.title;
+                foreach (var author in item1.Author)
+                {
+                    sAuthors += author.author_name + ", ";
+                }
+                sBook.authors = sAuthors;
+                sBook.image = item1.image;
+                dataSource[i] = sBook;
+                i++;
+                sAuthors = "";
+            }
+            ViewBag.dataSource = dataSource;
+            return PartialView("Search", booksListByView);
+
         }
 
         // GET: Search/Books
@@ -49,6 +71,51 @@ namespace VirtualLibrary.Controllers
                 if (books.Count == 0)
                 {
                     ViewBag.StatusMessage = "No Books found!!!";
+                    books = db.Books.OrderByDescending(s => s.views).ToList();
+                    SearchBooksFilter[] dataSource = new SearchBooksFilter[books.Count()];
+                    var i = 0;
+                    var sAuthors = "";
+                    foreach (var item1 in books)
+                    {
+                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
+                        sBook.itemNum = i;
+                        sBook.id = item1.id;
+                        sBook.title = item1.title;
+                        foreach (var author in item1.Author)
+                        {
+                            sAuthors += author.author_name + ", ";
+                        }
+                        sBook.authors = sAuthors;
+                        sBook.image = item1.image;
+                        dataSource[i] = sBook;
+                        i++;
+                        sAuthors = "";
+                    }
+                    ViewBag.dataSource = dataSource;
+                }
+                else
+                {
+
+                    SearchBooksFilter[] dataSource = new SearchBooksFilter[books.Count()];
+                    var i = 0;
+                    var sAuthors = "";
+                    foreach (var item1 in books)
+                    {
+                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
+                        sBook.itemNum = i;
+                        sBook.id = item1.id;
+                        sBook.title = item1.title;
+                        foreach (var author in item1.Author)
+                        {
+                            sAuthors += author.author_name + ", ";
+                        }
+                        sBook.authors = sAuthors;
+                        sBook.image = item1.image;
+                        dataSource[i] = sBook;
+                        i++;
+                        sAuthors = "";
+                    }
+                    ViewBag.dataSource = dataSource;
                 }
 
                 return PartialView("Search", books);
@@ -117,6 +184,51 @@ namespace VirtualLibrary.Controllers
                 if (booksList.Count == 0)
                 {
                     ViewBag.StatusMessage = "No Books found!!!";
+                    booksList = db.Books.OrderByDescending(s => s.views).ToList();
+                    SearchBooksFilter[] dataSource = new SearchBooksFilter[booksList.Count()];
+                    var i = 0;
+                    var sAuthors = "";
+                    foreach (var item1 in booksList)
+                    {
+                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
+                        sBook.itemNum = i;
+                        sBook.id = item1.id;
+                        sBook.title = item1.title;
+                        foreach (var author in item1.Author)
+                        {
+                            sAuthors += author.author_name + ", ";
+                        }
+                        sBook.authors = sAuthors;
+                        sBook.image = item1.image;
+                        dataSource[i] = sBook;
+                        i++;
+                        sAuthors = "";
+                    }
+                    ViewBag.dataSource = dataSource;
+                }
+                else
+                {
+                    SearchBooksFilter[] dataSource = new SearchBooksFilter[booksList.Count()];
+                    var i = 0;
+                    var sAuthors = "";
+                    foreach (var item1 in booksList)
+                    {
+                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
+                        sBook.itemNum = i;
+                        sBook.id = item1.id;
+                        sBook.title = item1.title;
+                        foreach (var author in item1.Author)
+                        {
+                            sAuthors += author.author_name + ", ";
+                        }
+                        sBook.authors = sAuthors;
+                        sBook.image = item1.image;
+                        dataSource[i] = sBook;
+                        i++;
+                        sAuthors = "";
+                    }
+
+                    ViewBag.dataSource = dataSource;
                 }
                 return PartialView("Search", booksList);
             }
@@ -146,10 +258,10 @@ namespace VirtualLibrary.Controllers
             {
                 foreach (var eve in e.EntityValidationErrors)
                 {
-                   log.Error("Entity of type "+eve.Entry.Entity.GetType().Name+" in state " + eve.Entry.State+" has the following validation errors:");
+                    log.Error("Entity of type " + eve.Entry.Entity.GetType().Name + " in state " + eve.Entry.State + " has the following validation errors:");
                     foreach (var ve in eve.ValidationErrors)
                     {
-                        log.Error("- Property: "+ ve.PropertyName + ", Error: "+ve.ErrorMessage);
+                        log.Error("- Property: " + ve.PropertyName + ", Error: " + ve.ErrorMessage);
                     }
                 }
             }
@@ -157,8 +269,11 @@ namespace VirtualLibrary.Controllers
         }
 
         public ActionResult GetRatings(int? id)
+
         {
-            return PartialView("Reviews",db.Books_Ratings.Where(x=>x.book_id == id).ToList());
+            return PartialView("Reviews", db.Books_Ratings.Where(x => x.book_id == id).ToList());
+
+
         }
     }
 }
