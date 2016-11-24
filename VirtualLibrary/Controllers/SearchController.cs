@@ -13,7 +13,7 @@ namespace VirtualLibrary.Controllers
 {
     public class SearchController : Controller
     {
-        VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
   (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         // GET: Search

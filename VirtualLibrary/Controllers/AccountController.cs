@@ -26,7 +26,7 @@ namespace VirtualLibrary.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -94,12 +94,12 @@ namespace VirtualLibrary.Controllers
             }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            using (var db = new ApplicationDbContext())
+            using (var appdb = new ApplicationDbContext())
             {
-                model.EmailOrUserName = (db.Users.Any(p => p.UserName == model.EmailOrUserName)) ?
+                model.EmailOrUserName = (appdb.Users.Any(p => p.UserName == model.EmailOrUserName)) ?
                 model.EmailOrUserName :
-                (db.Users.Any(p => p.Email == model.EmailOrUserName)) ?
-                db.Users.SingleOrDefault(p => p.Email == model.EmailOrUserName).UserName :
+                (appdb.Users.Any(p => p.Email == model.EmailOrUserName)) ?
+                appdb.Users.SingleOrDefault(p => p.Email == model.EmailOrUserName).UserName :
                 model.EmailOrUserName;
             }
 
@@ -202,6 +202,7 @@ namespace VirtualLibrary.Controllers
                         array = ms.ToArray();
                         ms.Close();
                     }
+                    img.Dispose();
 
                     NewUser.aspnet_user_id = currentUser.Id;
                     NewUser.active = false;
@@ -225,7 +226,7 @@ namespace VirtualLibrary.Controllers
                        "ConfirmEmail", "Account",
                        new { userId = user.Id, code = code },
                        protocol: Request.Url.Scheme);
-                    sendMail("Please confirm your account by clicking this link: <a href=\""
+                    SendMail("Please confirm your account by clicking this link: <a href=\""
                                                        + callbackUrl + "\">link</a>", user.Email, "Confirm your account");
                     return View("DisplayEmail");
                 }
@@ -273,7 +274,7 @@ namespace VirtualLibrary.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                sendMail("Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>", user.Email, "Reset Password");
+                SendMail("Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>", user.Email, "Reset Password");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
             // If we got this far, something failed, redisplay form
@@ -437,7 +438,7 @@ namespace VirtualLibrary.Controllers
                         array = ms.ToArray();
                         ms.Close();
                     }
-
+                    img.Dispose();
                     NewUser.aspnet_user_id = currentUser.Id;
                     NewUser.active = false;
                     NewUser.bad_user = false;
@@ -545,7 +546,7 @@ namespace VirtualLibrary.Controllers
                         "Login", "Account",
                         new { userId = user.Id },
                         protocol: Request.Url.Scheme);
-                sendMail("<h1>New account is available on Virtual Library.</h1>" +
+                SendMail("<h1>New account is available on Virtual Library.</h1>" +
                     "<p>With credentials:<br>" +
                     "username: " + user.Email + "<br>" +
                     "password: " + pass + "</p>" +
@@ -659,7 +660,7 @@ namespace VirtualLibrary.Controllers
                         UserManager.RemoveFromRole(user.Id, role.roleName);
                     }
                 }
-                //log.Info("User updated.");
+                log.Info("User updated.");
                 return Json(new { success = true });
             }
             return PartialView("_EditUser", model);
@@ -807,7 +808,7 @@ namespace VirtualLibrary.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-        void sendMail(string message, string to, string Subject)
+        private void SendMail(string message, string to, string Subject)
         {
             MailMessage msg = new MailMessage();
             msg.From = new MailAddress("acce.team.3@gmail.com");

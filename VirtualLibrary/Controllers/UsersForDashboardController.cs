@@ -15,7 +15,7 @@ namespace VirtualLibrary.Controllers
 {
     public class UsersForDashboardController : Controller
     {
-        private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
         private ApplicationUserManager _userManager;
 
         public ApplicationUserManager UserManager

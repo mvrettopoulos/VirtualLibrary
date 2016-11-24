@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using VirtualLibrary.Models;
 using VirtualLibrary.App_Start;
+using System.Threading.Tasks;
 
 [assembly: OwinStartup(typeof(VirtualLibrary.App_Start.Startup))]
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -18,7 +19,7 @@ namespace VirtualLibrary.App_Start
 {
     public class Startup
     {
-        private VirtualLibraryEntities db = new VirtualLibraryEntities();
+        private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
     (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public void Configuration(IAppBuilder app)
@@ -83,7 +84,7 @@ namespace VirtualLibrary.App_Start
                 ClientSecret = ConfigurationManager.AppSettings["GoogleClientSecret"]
             });
         }
-        public async void InitializeAdministrator()
+        public void InitializeAdministrator()
         {
 
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
@@ -101,23 +102,23 @@ namespace VirtualLibrary.App_Start
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists(roleAdmin))
             {
-                var roleresult = RoleManager.Create(new IdentityRole(roleAdmin));
+                RoleManager.Create(new IdentityRole(roleAdmin));
             }
             if (!RoleManager.RoleExists(roleGuest))
             {
-                var roleresult = RoleManager.Create(new IdentityRole(roleGuest));
+                RoleManager.Create(new IdentityRole(roleGuest));
             }
             if (!RoleManager.RoleExists(roleModerator))
             {
-                var roleresult = RoleManager.Create(new IdentityRole(roleModerator));
+                RoleManager.Create(new IdentityRole(roleModerator));
             }
             if (!RoleManager.RoleExists(roleUser))
             {
-                var roleresult = RoleManager.Create(new IdentityRole(roleUser));
+                RoleManager.Create(new IdentityRole(roleUser));
             }
             //Create User=Admin with password=123456
             var user = new ApplicationUser { UserName = email, Email = email };
-            var adminresult = await UserManager.CreateAsync(user, password);
+            var adminresult = UserManager.Create(user, password);
             //Add User Admin to Role Admin
             if (adminresult.Succeeded)
             {
@@ -129,7 +130,7 @@ namespace VirtualLibrary.App_Start
                 db.Users.Add(libraryUser);
                 db.SaveChanges();
 
-                var result = UserManager.AddToRole(currentUser.Id, roleAdmin);
+                UserManager.AddToRole(currentUser.Id, roleAdmin);
             }
         }
     }
