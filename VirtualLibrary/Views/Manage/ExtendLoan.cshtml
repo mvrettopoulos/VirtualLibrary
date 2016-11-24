@@ -1,23 +1,51 @@
-﻿
+﻿@model VirtualLibrary.Models.ExtendLoanView
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 class="modal-title">Extend Loan</h3>
 </div>
-<br />
 
-   
 
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">
-            <i class="fa fa-close fa-lg"></i>
-            <strong>Cancel</strong>
-        </button>
-        <button type="submit" class="btn btn-success">
-            <i class="fa fa-check fa-lg"></i>
-            <strong>Apply</strong>
-        </button>
+@using (Html.BeginForm("ExtendLoan", "Manage", FormMethod.Post, new { @id = "edit_loan_form" }))
+{
+<div class="modal-body" id="edit_loan_modal_body">
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.return_date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.return_date, new { htmlAttributes = new { @class = "form-control", id = "datepickerReturn" } })
+                @Html.ValidationMessageFor(model => model.return_date, "", new { @class = "text-danger" })
+            </div>
+        </div>
     </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal">
+        <i class="fa fa-close fa-lg"></i>
+        <strong>Cancel</strong>
+    </button>
+    <button type="submit" class="btn btn-success">
+        <i class="fa fa-check fa-lg"></i>
+        <strong>Apply</strong>
+    </button>
+
+</div>
 }
-<script src="@Url.Content("~/Scripts/js/loan.view.js")"></script>
+
+<script type="text/javascript">
+    var minDate = new Date('@Html.Raw(Model.minDate)');
+    var maxDate = new Date('@Html.Raw(Model.maxDate)');
+
+
+    $("#datepickerReturn").datepicker({
+        dateFormat: "dd-mm-yyyy",
+        min: minDate,
+        max: maxDate   
+    
+    });
+</script>

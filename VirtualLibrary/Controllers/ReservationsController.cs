@@ -112,7 +112,7 @@ namespace VirtualLibrary.Controllers
                 reservation.Users = db.Users.Single(x => x.username == model.username);
 
                 var bookAvailable = db.Books_Availability.Single(x => x.book_id == book.id && x.library_id == library_id);
-                if (!checkIfAvailable(book.id,library_id,bookAvailable.quantity, Convert.ToDateTime(model.reserved_date), Convert.ToDateTime(model.return_date)))
+                if (!CheckIfAvailable(book.id,library_id,bookAvailable.quantity, Convert.ToDateTime(model.reserved_date), Convert.ToDateTime(model.return_date)))
                 {
                     ViewBag.StatusMessage = "Book is not available the dates you selected!!!";
                     List<Books_Availability> bookAvailability = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == book.id).ToList();
@@ -141,7 +141,7 @@ namespace VirtualLibrary.Controllers
         }
 
        
-        private bool checkIfAvailable(int bookId,int libraryId,int? quantity, DateTime reservedDate, DateTime returnDate)
+        private bool CheckIfAvailable(int bookId,int libraryId,int? quantity, DateTime reservedDate, DateTime returnDate)
         {
             List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == bookId && x.library_id == libraryId && (reservedDate >= x.reserved_date && reservedDate <= x.return_date) || (returnDate >= x.reserved_date && returnDate <= x.return_date)).ToList();
 

@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <SonarQubeTestProject>False</SonarQubeTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -201,6 +202,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\BooksAvailabilityController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibrarianDashboardController.cs" />
@@ -270,6 +272,7 @@
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReservationsViewModel.cs" />
+    <Compile Include="Models\SearchBooksFilter.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
@@ -667,8 +670,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\js\datepicker.js" />
-    <Content Include="Scripts\js\loan.js" />
+    <Content Include="Scripts\js\loan.view.js" />
     <Content Include="Scripts\js\profile.view.js" />
     <Content Include="Scripts\js\dashboard.view.js" />
     <Content Include="Scripts\js\reserve.book.view.js" />
@@ -686,7 +688,6 @@
     <Content Include="Scripts\js\review.view.js" />
     <Content Include="Scripts\js\roles.view.js" />
     <Content Include="Scripts\js\libraries.view.js" />
-    <Content Include="Scripts\js\upload.view.js" />
     <Content Include="Scripts\js\users.view.js" />
     <Content Include="Scripts\leaflet-0.7.3.js" />
     <Content Include="Scripts\leaflet-0.7.3.min.js" />
@@ -771,10 +772,10 @@
     <Content Include="Views\Ratings\Index.cshtml" />
     <Content Include="Views\Ratings\_Delete.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
-    <Content Include="Views\Books_Availability\Create.cshtml" />
-    <Content Include="Views\Books_Availability\Delete.cshtml" />
-    <Content Include="Views\Books_Availability\Edit.cshtml" />
-    <Content Include="Views\Books_Availability\Index.cshtml" />
+    <Content Include="Views\BooksAvailability\Create.cshtml" />
+    <Content Include="Views\BooksAvailability\Delete.cshtml" />
+    <Content Include="Views\BooksAvailability\Edit.cshtml" />
+    <Content Include="Views\BooksAvailability\Index.cshtml" />
     <Content Include="Views\Ratings\Reviews.cshtml" />
     <Content Include="Views\Search\Reviews.cshtml" />
     <Content Include="Views\Reservations\Index.cshtml" />
@@ -788,7 +789,7 @@
     <Content Include="Views\LibrarianDashboard\Checkin.cshtml" />
     <Content Include="Views\LibrarianDashboard\Checkout.cshtml" />
     <Content Include="Views\Books\FileUpload.cshtml" />
-    <Content Include="Views\Manage\Loan.cshtml" />
+    <Content Include="Views\Manage\ExtendLoan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
