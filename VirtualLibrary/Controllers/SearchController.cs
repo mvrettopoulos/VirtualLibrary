@@ -27,26 +27,7 @@ namespace VirtualLibrary.Controllers
         public ActionResult Search()
         {
             var booksListByView = db.Books.OrderByDescending(s => s.views).ToList();
-            SearchBooksFilter[] dataSource = new SearchBooksFilter[booksListByView.Count()];
-            var i = 0;
-            var sAuthors = "";
-            foreach (var item1 in booksListByView)
-            {
-                VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
-                sBook.itemNum = i;
-                sBook.id = item1.id;
-                sBook.title = item1.title;
-                foreach (var author in item1.Author)
-                {
-                    sAuthors += author.author_name + ", ";
-                }
-                sBook.authors = sAuthors;
-                sBook.image = item1.image;
-                dataSource[i] = sBook;
-                i++;
-                sAuthors = "";
-            }
-            ViewBag.dataSource = dataSource;
+            
             return PartialView("Search", booksListByView);
 
         }
@@ -71,51 +52,6 @@ namespace VirtualLibrary.Controllers
                 if (books.Count == 0)
                 {
                     ViewBag.StatusMessage = "No Books found!!!";
-                    books = db.Books.OrderByDescending(s => s.views).ToList();
-                    SearchBooksFilter[] dataSource = new SearchBooksFilter[books.Count()];
-                    var i = 0;
-                    var sAuthors = "";
-                    foreach (var item1 in books)
-                    {
-                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
-                        sBook.itemNum = i;
-                        sBook.id = item1.id;
-                        sBook.title = item1.title;
-                        foreach (var author in item1.Author)
-                        {
-                            sAuthors += author.author_name + ", ";
-                        }
-                        sBook.authors = sAuthors;
-                        sBook.image = item1.image;
-                        dataSource[i] = sBook;
-                        i++;
-                        sAuthors = "";
-                    }
-                    ViewBag.dataSource = dataSource;
-                }
-                else
-                {
-
-                    SearchBooksFilter[] dataSource = new SearchBooksFilter[books.Count()];
-                    var i = 0;
-                    var sAuthors = "";
-                    foreach (var item1 in books)
-                    {
-                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
-                        sBook.itemNum = i;
-                        sBook.id = item1.id;
-                        sBook.title = item1.title;
-                        foreach (var author in item1.Author)
-                        {
-                            sAuthors += author.author_name + ", ";
-                        }
-                        sBook.authors = sAuthors;
-                        sBook.image = item1.image;
-                        dataSource[i] = sBook;
-                        i++;
-                        sAuthors = "";
-                    }
-                    ViewBag.dataSource = dataSource;
                 }
 
                 return PartialView("Search", books);
@@ -183,52 +119,7 @@ namespace VirtualLibrary.Controllers
                 booksList = booksList.OrderByDescending(b => b.views).ToList();
                 if (booksList.Count == 0)
                 {
-                    ViewBag.StatusMessage = "No Books found!!!";
-                    booksList = db.Books.OrderByDescending(s => s.views).ToList();
-                    SearchBooksFilter[] dataSource = new SearchBooksFilter[booksList.Count()];
-                    var i = 0;
-                    var sAuthors = "";
-                    foreach (var item1 in booksList)
-                    {
-                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
-                        sBook.itemNum = i;
-                        sBook.id = item1.id;
-                        sBook.title = item1.title;
-                        foreach (var author in item1.Author)
-                        {
-                            sAuthors += author.author_name + ", ";
-                        }
-                        sBook.authors = sAuthors;
-                        sBook.image = item1.image;
-                        dataSource[i] = sBook;
-                        i++;
-                        sAuthors = "";
-                    }
-                    ViewBag.dataSource = dataSource;
-                }
-                else
-                {
-                    SearchBooksFilter[] dataSource = new SearchBooksFilter[booksList.Count()];
-                    var i = 0;
-                    var sAuthors = "";
-                    foreach (var item1 in booksList)
-                    {
-                        VirtualLibrary.Models.SearchBooksFilter sBook = new SearchBooksFilter();
-                        sBook.itemNum = i;
-                        sBook.id = item1.id;
-                        sBook.title = item1.title;
-                        foreach (var author in item1.Author)
-                        {
-                            sAuthors += author.author_name + ", ";
-                        }
-                        sBook.authors = sAuthors;
-                        sBook.image = item1.image;
-                        dataSource[i] = sBook;
-                        i++;
-                        sAuthors = "";
-                    }
-
-                    ViewBag.dataSource = dataSource;
+                    ViewBag.StatusMessage = "No Books found!!!";  
                 }
                 return PartialView("Search", booksList);
             }
