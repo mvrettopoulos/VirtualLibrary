@@ -458,7 +458,7 @@ namespace VirtualLibrary.Controllers
             model.Date_of_Birth = user.date_of_birth;
             model.Email = aspNetUser.Email;
 
-            return PartialView("EditProfile",model);
+            return PartialView("EditProfile", model);
         }
         //POST:EditProfile
         [HttpPost]
@@ -477,8 +477,8 @@ namespace VirtualLibrary.Controllers
                 user.last_name = userprofile.lastName;
                 user.date_of_birth = userprofile.Date_of_Birth;
                 aspNetUser.Email = userprofile.Email;
-                
-                
+
+
 
                 db.Entry(user).State = EntityState.Modified;
                 db.Entry(aspNetUser).State = EntityState.Modified;
@@ -496,41 +496,54 @@ namespace VirtualLibrary.Controllers
         [HttpGet]
         public ActionResult GetExtendLoan(int id)
         {
-            Reservations reservation = db.Reservations.FirstOrDefault(m => m.id==(id));
-            DateTime returnDate = Convert.ToDateTime(reservation.return_date);
-            Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id==reservation.book_id && b.library_id==reservation.library_id);
+            Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (id));
+            Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id == reservation.book_id && b.library_id == reservation.library_id);
 
 
-            List<Reservations> reservationList = db.Reservations.ToList().Where(x => x.book_id == reservation.book_id 
-            && x.library_id == reservation.library_id 
-            && x.reserved_date > returnDate && x.reserved_date <= returnDate.AddDays(7))
-                               .OrderBy(x => x.reserved_date).ToList();
+            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && (reservation.reserved_date >= x.reserved_date && reservation.return_date <= x.return_date) || (reservation.return_date >= x.reserved_date && reservation.return_date <= x.return_date)).OrderBy(x => x.reserved_date).ToList();
             ExtendLoanView model = new ExtendLoanView();
             model.id = reservation.id;
-            if (reservationList.Count < availableBook.available)
+            if (reservationsList.Count < availableBook.quantity)
             {
-                model.minDate = returnDate.AddDays(1);
-                model.maxDate = returnDate.AddDays(7);
-                //model.returnDate = reservation.return_date;
-
-                //imerominia max_reservation_date kai id_reservation 
+                model.minDate = reservation.return_date.Value.AddDays(1).ToString("dd-mm-yyyy"); ;
+                model.maxDate = reservation.return_date.Value.AddDays(7).ToString("dd-mm-yyyy");
             }
             else
             {
-                var reservedDate=reservationList.Last().reserved_date;
-                model.minDate = returnDate.AddDays(1);
-                model.maxDate = Convert.ToDateTime(reservedDate).AddDays(-1);
-                //model.returnDate = reservation.return_date;
-
-
-                //imerominia max_reservation_date kai id_reservation  apla reservedDate-1
+                var reservationLast = reservationsList.Last();
+                model.minDate = reservation.return_date.Value.AddDays(1).ToString("dd-mm-yyyy");
+                model.maxDate = reservationLast.reserved_date.Value.AddDays(-1).ToString("dd-mm-yyyy");
             }
 
-            return PartialView("Loan",model);
+            return PartialView("ExtendLoan", model);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ExtendLoanView model)
+        {
+            if (ModelState.IsValid)
+            {
+                //Author author = new Author();
+                //author.id = Convert.ToInt32(model.id);
+                //author.author_name = model.authorName;
+                //try
+                //{
+                //    db.Entry(author).State = EntityState.Modified;
+                //    db.SaveChanges();
+                //}
+                //catch (DataException e)
+                //{
+                //    log.Error("Database error:", e);
+                //}
+                //log.Info("Author updated.");
+                return Json(new { success = true });
+            }
+            return PartialView("_Edit", model);
         }
 
 
-        
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
