@@ -520,7 +520,7 @@ namespace VirtualLibrary.Controllers
             {
                 model.minDate = returnDate.AddDays(1);
                 model.maxDate = returnDate.AddDays(7);
-                model.returnDate = reservation.return_date;
+                //model.returnDate = reservation.return_date;
 
                 //imerominia max_reservation_date kai id_reservation 
             }
@@ -529,7 +529,7 @@ namespace VirtualLibrary.Controllers
                 var reservedDate=reservationList.Last().reserved_date;
                 model.minDate = returnDate.AddDays(1);
                 model.maxDate = Convert.ToDateTime(reservedDate).AddDays(-1);
-                model.returnDate = reservation.return_date;
+                //model.returnDate = reservation.return_date;
 
 
                 //imerominia max_reservation_date kai id_reservation  apla reservedDate-1

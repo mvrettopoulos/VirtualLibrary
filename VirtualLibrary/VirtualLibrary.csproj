@@ -254,7 +254,7 @@
     <Compile Include="Models\C__MigrationHistory1.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ExtendLoan.cs" />
+    <Compile Include="Models\ExtendLoanView.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Librarians.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
