@@ -272,7 +272,6 @@
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReservationsViewModel.cs" />
-    <Compile Include="Models\SearchBooksFilter.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
