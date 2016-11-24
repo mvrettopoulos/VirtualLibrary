@@ -10,7 +10,7 @@
 
 <div class="pagination_wrapper">
     <section id="pinBoot" class = "pagination_wrapper" style="visibility:hidden;>
-            @foreach (var item in ViewBag.dataSource)
+            @foreach (var item in Model)
             {
                 <article class="white-panel">
 
@@ -25,10 +25,21 @@
                         <img src="@imageSrc" />
                     }
 
-                    <h2>@item.title</h2>
+                    <h2>@Html.ActionLink(item.title, "GetBook", "Search", new { id = item.id }, null)</h2>
                     <h3 id="by_authors">
                         By
-                        @item.authors
+                        @foreach (var author in item.Author)
+                {
+                    var last = item.Author.Last();
+                    if (author.Equals(last))
+                    {
+                                @Html.DisplayFor(modelItem => author.author_name)
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => author.author_name) @(", ")
+                            }
+                        }
                     </h3>
 
                 </article>
