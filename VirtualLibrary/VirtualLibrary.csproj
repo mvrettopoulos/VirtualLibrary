@@ -270,6 +270,7 @@
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReservationsViewModel.cs" />
+    <Compile Include="Models\SearchBooksFilter.cs" />
     <Compile Include="Models\SearchViewModels.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
@@ -665,7 +666,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\js\loan.view.js" />
     <Content Include="Scripts\js\profile.view.js" />
     <Content Include="Scripts\js\dashboard.view.js" />
     <Content Include="Scripts\js\reserve.book.view.js" />
@@ -688,6 +688,7 @@
     <Content Include="Scripts\leaflet-0.7.3.js" />
     <Content Include="Scripts\leaflet-0.7.3.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\pagination.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -784,7 +785,6 @@
     <Content Include="Views\LibrarianDashboard\Checkin.cshtml" />
     <Content Include="Views\LibrarianDashboard\Checkout.cshtml" />
     <Content Include="Views\Books\FileUpload.cshtml" />
-    <Content Include="Views\Manage\ExtendLoan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
