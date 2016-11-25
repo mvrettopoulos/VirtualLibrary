@@ -1,7 +1,7 @@
 ﻿@model VirtualLibrary.Models.Books_Availability
 
 
-@using (Html.BeginForm("Delete", "Books_Availability", FormMethod.Post, new { @id = "delete_availability_form" })) {
+@using (Html.BeginForm("Delete", "BooksAvailability", FormMethod.Post, new { @id = "delete_availability_form" })) {
     @Html.AntiForgeryToken()
     <h3>Are you sure you want to delete this?</h3>
     <div>
