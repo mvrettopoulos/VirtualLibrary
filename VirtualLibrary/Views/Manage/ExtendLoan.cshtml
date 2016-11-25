@@ -38,14 +38,15 @@
 }
 
 <script type="text/javascript">
-    var minDate = new Date('@Html.Raw(Model.minDate)');
-    var maxDate = new Date('@Html.Raw(Model.maxDate)');
+    var minDate = new Date(@Html.Raw(Model.minDate.Year),@Html.Raw(Model.minDate.Month),@Html.Raw(Model.minDate.Day));
+    var maxDate = new Date(@Html.Raw(Model.maxDate.Year),@Html.Raw(Model.maxDate.Month),@Html.Raw(Model.maxDate.Day));
+
 
 
     $("#datepickerReturn").datepicker({
-        dateFormat: "dd-mm-yyyy",
-        min: minDate,
-        max: maxDate   
-    
+        dateFormat: "dd-mm-yy",
+        minDate: minDate,
+        maxDate: maxDate
+
     });
 </script>

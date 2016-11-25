@@ -10,8 +10,8 @@ namespace VirtualLibrary.Models
     public class ExtendLoanView
     {
         public int id { get; set; }
-        public string minDate { get; set; }
-        public string maxDate { get; set; }
+        public DateTime minDate { get; set; }
+        public DateTime maxDate { get; set; }
 
         [Required]
         [Display(Name = "Reservation Date Expiration")]

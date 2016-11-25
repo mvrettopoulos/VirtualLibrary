@@ -505,14 +505,14 @@ namespace VirtualLibrary.Controllers
             model.id = reservation.id;
             if (reservationsList.Count < availableBook.quantity)
             {
-                model.minDate = reservation.return_date.Value.AddDays(1).ToString("dd-mm-yyyy"); ;
-                model.maxDate = reservation.return_date.Value.AddDays(7).ToString("dd-mm-yyyy");
+                model.minDate = reservation.return_date.Value.AddDays(1);
+                model.maxDate = reservation.return_date.Value.AddDays(7);
             }
             else
             {
                 var reservationLast = reservationsList.Last();
-                model.minDate = reservation.return_date.Value.AddDays(1).ToString("dd-mm-yyyy");
-                model.maxDate = reservationLast.reserved_date.Value.AddDays(-1).ToString("dd-mm-yyyy");
+                model.minDate = reservation.return_date.Value.AddDays(1);
+                model.maxDate = reservationLast.reserved_date.Value.AddDays(-1);
             }
 
             return PartialView("ExtendLoan", model);
@@ -521,23 +521,23 @@ namespace VirtualLibrary.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ExtendLoanView model)
+        public ActionResult ExtendLoan(ExtendLoanView model)
         {
             if (ModelState.IsValid)
             {
-                //Author author = new Author();
-                //author.id = Convert.ToInt32(model.id);
-                //author.author_name = model.authorName;
-                //try
-                //{
-                //    db.Entry(author).State = EntityState.Modified;
-                //    db.SaveChanges();
-                //}
-                //catch (DataException e)
-                //{
-                //    log.Error("Database error:", e);
-                //}
-                //log.Info("Author updated.");
+                Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.id));
+                reservation.return_date = Convert.ToDateTime(model.return_date);
+                reservation.renewTimes = --reservation.renewTimes;
+                try
+                {
+                    db.Entry(reservation).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (DataException e)
+                {
+                    log.Error("Database error:", e);
+                }
+                log.Info("Reservation updated.");
                 return Json(new { success = true });
             }
             return PartialView("_Edit", model);
