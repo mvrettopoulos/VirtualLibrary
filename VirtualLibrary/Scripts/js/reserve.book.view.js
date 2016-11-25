@@ -48,7 +48,7 @@ $("#datepickerReserve").datepicker({
         $('#datepickerReturn').datepicker('setDate', date2);
         //sets minDate to dt1 date + 1
         $('#datepickerReturn').datepicker('option', 'minDate', date2);
-
+        $('#datepickerReturn').datepicker('option', 'maxDate', date_add_days(date2,7));
     }
 });
 
@@ -67,16 +67,16 @@ $('#datepickerReturn').datepicker({
 });
 
 
-//function date_by_subtracting_days(date, days) {
-//    return new Date(
-//        date.getFullYear(),
-//        date.getMonth(),
-//        date.getDate() - days,
-//        date.getHours(),
-//        date.getMinutes(),
-//        date.getSeconds(),
-//        date.getMilliseconds()
-//    );
-//}
+function date_add_days(date, days) {
+    return new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + days,
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds()
+    );
+}
 
 

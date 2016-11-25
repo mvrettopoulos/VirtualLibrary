@@ -12,6 +12,7 @@ using System.IO;
 using System.Data.Entity;
 using System.Data;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace VirtualLibrary.Controllers
 {
@@ -75,6 +76,7 @@ namespace VirtualLibrary.Controllers
                 : message == ManageMessageId.FileTypeError ? "You need to upload a .png file."
                 : message == ManageMessageId.EditProfile ? "Your profile's infos has been changed."
                 : "";
+
 
             var userId = User.Identity.GetUserId();
             var model = db.Users.SingleOrDefault(s => s.aspnet_user_id == userId);
@@ -496,14 +498,19 @@ namespace VirtualLibrary.Controllers
         [HttpGet]
         public ActionResult GetExtendLoan(int id)
         {
+            ManageMessageId? message;
             Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (id));
             Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id == reservation.book_id && b.library_id == reservation.library_id);
+            if (reservation.renewTimes == 0)
+            {
+                ViewBag.ErrorMessage = "You cannot extend anymore your reservation!!!";
+                return PartialView("ExtendLoan", null);
+            }
 
-
-            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && (reservation.reserved_date >= x.reserved_date && reservation.return_date <= x.return_date) || (reservation.return_date >= x.reserved_date && reservation.return_date <= x.return_date)).OrderBy(x => x.reserved_date).ToList();
+            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && reservation.reserved_date >= x.reserved_date && reservation.return_date <= x.return_date).OrderBy(x => x.reserved_date).ToList();
             ExtendLoanView model = new ExtendLoanView();
             model.id = reservation.id;
-            if (reservationsList.Count < availableBook.quantity)
+            if (reservationsList.Count <= availableBook.quantity)
             {
                 model.minDate = reservation.return_date.Value.AddDays(1);
                 model.maxDate = reservation.return_date.Value.AddDays(7);
@@ -511,6 +518,12 @@ namespace VirtualLibrary.Controllers
             else
             {
                 var reservationLast = reservationsList.Last();
+                if(reservation.return_date.Value.AddDays(1) == reservationLast.reserved_date)
+                {
+                    ViewBag.ErrorMessage = "Extend loan is not available!!!";
+                    return PartialView("ExtendLoan", model);
+                }
+
                 model.minDate = reservation.return_date.Value.AddDays(1);
                 model.maxDate = reservationLast.reserved_date.Value.AddDays(-1);
             }
@@ -525,6 +538,15 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
+                string format = "dd-mm-yy";
+                DateTime dateTime;
+                if (DateTime.TryParseExact(model.return_date, format, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out dateTime))
+                {
+                    ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yy!");
+                    return PartialView("ExtendLoan", model);
+                }
+
                 Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.id));
                 reservation.return_date = Convert.ToDateTime(model.return_date);
                 reservation.renewTimes = --reservation.renewTimes;
@@ -540,7 +562,7 @@ namespace VirtualLibrary.Controllers
                 log.Info("Reservation updated.");
                 return Json(new { success = true });
             }
-            return PartialView("_Edit", model);
+            return PartialView("ExtendLoan", model);
         }
 
 

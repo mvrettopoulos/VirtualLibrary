@@ -143,7 +143,7 @@ namespace VirtualLibrary.Controllers
        
         private bool CheckIfAvailable(int bookId,int libraryId,int? quantity, DateTime reservedDate, DateTime returnDate)
         {
-            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == bookId && x.library_id == libraryId && (reservedDate >= x.reserved_date && reservedDate <= x.return_date) || (returnDate >= x.reserved_date && returnDate <= x.return_date)).ToList();
+            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == bookId && x.library_id == libraryId && (reservedDate >= x.reserved_date && reservedDate <= x.return_date) && (returnDate >= x.reserved_date && returnDate <= x.return_date)).ToList();
 
             if(reservationsList.Count< quantity)
             {

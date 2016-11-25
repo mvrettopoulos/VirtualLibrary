@@ -9,6 +9,13 @@
 @using (Html.BeginForm("ExtendLoan", "Manage", FormMethod.Post, new { @id = "edit_loan_form" }))
 {
 <div class="modal-body" id="edit_loan_modal_body">
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="text-center">
+            <h1 class="alert alert-danger">@ViewBag.ErrorMessage</h1>
+        </div>
+    }else{
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -22,9 +29,22 @@
             </div>
         </div>
     </div>
+    }
+
+
+
 </div>
 
 <div class="modal-footer">
+
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+    <button type="button" class="btn btn-danger" data-dismiss="modal">
+        <i class="fa fa-close fa-lg"></i>
+        <strong>Ok</strong>
+    </button>
+}else{
     <button type="button" class="btn btn-danger" data-dismiss="modal">
         <i class="fa fa-close fa-lg"></i>
         <strong>Cancel</strong>
@@ -33,13 +53,9 @@
         <i class="fa fa-check fa-lg"></i>
         <strong>Apply</strong>
     </button>
-
-</div>
-}
-
-<script type="text/javascript">
-    var minDate = new Date(@Html.Raw(Model.minDate.Year),@Html.Raw(Model.minDate.Month),@Html.Raw(Model.minDate.Day));
-    var maxDate = new Date(@Html.Raw(Model.maxDate.Year),@Html.Raw(Model.maxDate.Month),@Html.Raw(Model.maxDate.Day));
+    <script type="text/javascript">
+    var minDate = new Date(@Html.Raw(Model.minDate.Year),@Html.Raw(Model.minDate.Month)-1,@Html.Raw(Model.minDate.Day));
+    var maxDate = new Date(@Html.Raw(Model.maxDate.Year),@Html.Raw(Model.maxDate.Month)-1,@Html.Raw(Model.maxDate.Day));
 
 
 
@@ -49,4 +65,10 @@
         maxDate: maxDate
 
     });
-</script>
+    </script>
+}
+   
+
+</div>
+}
+
