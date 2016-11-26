@@ -6,6 +6,7 @@ $(document).ready(function () {
         placement: 'bottom'
     });
     authorsView.table = $('#authors_overview_table').DataTable({
+        scrollX: true,
         select: {
             style: 'single'
         },

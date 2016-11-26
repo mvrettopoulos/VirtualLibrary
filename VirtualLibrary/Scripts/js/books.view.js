@@ -11,7 +11,7 @@ $(document).ready(function () {
     });
 
     booksView.table = $('#books_overview_table').DataTable({
-
+        scrollX: true,
         select: {
             style: 'single'
         },

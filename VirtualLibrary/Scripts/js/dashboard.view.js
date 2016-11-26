@@ -6,6 +6,7 @@ $(document).ready(function () {
         placement: 'bottom'
     });
     reservationsView.table = $('#reservations_overview_table').DataTable({
+        scrollX: true,
         select: {
             style: 'single'
         },

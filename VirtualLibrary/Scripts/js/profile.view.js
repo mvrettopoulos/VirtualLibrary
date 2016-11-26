@@ -30,6 +30,7 @@ $(document).ready(function () {
         placement: 'bottom'
     });
     loansView.table = $('#loans_overview_table').DataTable({
+        scrollX: true,
         select: {
             style: 'single'
         },

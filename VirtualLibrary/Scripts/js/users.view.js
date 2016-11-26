@@ -11,7 +11,7 @@ $(document).ready(function () {
     });
 
     usersView.table = $('#users_overview_table').DataTable({
-
+        scrollX: true,
         select: {
             style: 'single'
         },

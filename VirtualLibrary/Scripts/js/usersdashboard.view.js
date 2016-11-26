@@ -11,6 +11,7 @@ $(document).ready(function () {
         placement: 'bottom'
     });
     usersdashboardView.table = $('#usersdashboard_overview_table').DataTable({
+        scrollX: true,
         select: {
             style: 'single'
         },

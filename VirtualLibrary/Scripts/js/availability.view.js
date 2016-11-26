@@ -8,6 +8,7 @@ $(document).ready(function () {
         placement: 'bottom'
     });
     availabilityView.table = $('#availability_overview_table').DataTable({
+        scrollX: true,
         select: {
             style: 'single'
         },
