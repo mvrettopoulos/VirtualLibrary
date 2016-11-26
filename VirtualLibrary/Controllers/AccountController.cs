@@ -1,23 +1,18 @@
 ﻿using VirtualLibrary.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Globalization;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VirtualLibrary.App_Start;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Web.Security;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Web.Services.Description;
 using System.IO;
 using System.Drawing;
 

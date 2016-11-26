@@ -49,7 +49,7 @@ namespace VirtualLibrary.Controllers
             db.Books_Ratings.Add(bookRating);
             db.SaveChanges();
             log.Info("Review created.");
-            return PartialView("Reviews", db.Books_Ratings.ToList());
+            return PartialView("Reviews", db.Books_Ratings.Where(x=>x.book_id== Convert.ToInt32(bookID)).ToList());
         }
 
 

@@ -11,7 +11,6 @@ $(document).ready(function () {
     });
 
     rolesView.table = $('#roles_overview_table').DataTable({
-        scrollX: true,
         select: {
             style: 'single'
         },

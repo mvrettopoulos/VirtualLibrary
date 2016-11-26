@@ -11,7 +11,6 @@ $(document).ready(function () {
     });
 
     librariesView.table = $('#libraries_overview_table').DataTable({
-        scrollX: true,
         select: {
             style: 'single'
         },

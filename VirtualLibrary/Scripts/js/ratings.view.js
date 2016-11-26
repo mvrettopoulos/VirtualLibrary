@@ -6,7 +6,6 @@ $(document).ready(function () {
         placement: 'bottom'
     });
     ratingsView.table = $('#ratings_overview_table').DataTable({
-        scrollX: true,
         select: {
             style: 'single'
         },

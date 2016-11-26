@@ -10,8 +10,6 @@ using Microsoft.Owin.Security.Twitter;
 using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using VirtualLibrary.Models;
-using VirtualLibrary.App_Start;
-using System.Threading.Tasks;
 
 [assembly: OwinStartup(typeof(VirtualLibrary.App_Start.Startup))]
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -24,11 +22,13 @@ namespace VirtualLibrary.App_Start
     (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public void Configuration(IAppBuilder app)
         {
+            log.Info("Initialization");
             ConfigureAuth(app);
             InitializeAdministrator();
         }
         public void ConfigureAuth(IAppBuilder app)
         {
+            log.Info("Initialize Authentication");
             // Configure the db context, user manager and signin manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
@@ -86,7 +86,7 @@ namespace VirtualLibrary.App_Start
         }
         public void InitializeAdministrator()
         {
-
+            log.Info("Initialize Administrator");
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
             string roleAdmin = "Admin";
@@ -95,9 +95,6 @@ namespace VirtualLibrary.App_Start
             string roleUser = "User";
             string password = ConfigurationManager.AppSettings["AdminPass"];
             string email = ConfigurationManager.AppSettings["AdminUser"];
-
-
-
 
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists(roleAdmin))

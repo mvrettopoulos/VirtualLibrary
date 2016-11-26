@@ -6,7 +6,6 @@ $(document).ready(function () {
         placement: 'bottom'
     });
     categoriesView.table = $('#categories_overview_table').DataTable({
-        scrollX: true,
         select: {
             style: 'single'
         },
