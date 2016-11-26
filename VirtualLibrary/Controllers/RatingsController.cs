@@ -37,8 +37,26 @@ namespace VirtualLibrary.Controllers
             string rating = form["rating"];
             string comment = form["comment"];
             string bookID = form["bookID"];
+            if (rating==string.Empty)
+            {
+                ViewBag.StatusMessage = "You have not rate the book!!!";
+                return View("../Search/GetBook", db.Books.SingleOrDefault(x => x.id == Convert.ToInt32(bookID)));
+            }
+            if (comment == string.Empty)
+            {
+                ViewBag.StatusMessage = "Comment is empty!!!";
+                return View("../Search/GetBook", db.Books.SingleOrDefault(x=>x.id==Convert.ToInt32(bookID)));
+            }
+
+
             var userName = User.Identity.Name;
             var model = db.Users.SingleOrDefault(s => s.username == userName);
+
+            if(db.Books_Ratings.Where(x=>x.Users.username == userName).Count() > 0)
+            {
+                ViewBag.StatusMessage = "You have already comment/rate this book!!!";
+                return View("../Search/GetBook", db.Books.SingleOrDefault(x => x.id == Convert.ToInt32(bookID)));
+            }
 
             var bookRating = new Books_Ratings();
             bookRating.book_id = Convert.ToInt32(bookID);

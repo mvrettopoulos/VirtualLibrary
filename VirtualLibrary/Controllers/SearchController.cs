@@ -46,7 +46,7 @@ namespace VirtualLibrary.Controllers
                 log.Info("Search");
                 var books = db.Books.Where(b => b.title.Contains(search)
                 || b.isbn.Contains(search) || b.publisher.Contains(search)
-                || b.description.Contains(search)).ToList();
+                || b.description.Contains(search) || b.Author.Any(x=>x.author_name.Contains(search))).ToList();
                 if (books.Count == 0)
                 {
                     ViewBag.StatusMessage = "No Books found!!!";

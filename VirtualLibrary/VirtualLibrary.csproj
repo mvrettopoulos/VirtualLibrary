@@ -575,7 +575,6 @@
     </Content>
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <None Include="Properties\PublishProfiles\virtual-library - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\virtual-library-dev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
