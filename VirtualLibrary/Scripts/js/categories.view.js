@@ -57,7 +57,7 @@ function bindFormInsert(dialog) {
     });
 }
 $('#delete_category_button').on('click', function () {
-    if (categoriesView.table.rows('.selected').data().length == 0) {
+    if (categoriesView.table.rows('.selected').data().length === 0) {
         $('#delete_category_button').prop('disabled', true);
         $('#categories_view_notification').notify({
             message: { text: 'No category has been selected' },

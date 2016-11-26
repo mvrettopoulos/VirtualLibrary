@@ -75,7 +75,7 @@ function bindFormInsert(dialog) {
 
 $('#delete_library_button').on('click', function () {
 
-    if (librariesView.table.rows('.selected').data().length == 0) {
+    if (librariesView.table.rows('.selected').data().length === 0) {
 
         $('#delete_library_button').prop('disabled', true);
 
@@ -106,7 +106,7 @@ $('#delete_library_button').on('click', function () {
 
 $('#edit_library_button').on('click', function () {
 
-    if (librariesView.table.rows('.selected').data().length == 0) {
+    if (librariesView.table.rows('.selected').data().length === 0) {
 
         $('#edit_library_button').prop('disabled', true);
 

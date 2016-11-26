@@ -38,7 +38,7 @@ $('#reservations_overview_table').on('click', 'tr', function () {
 });
 
 $('#delete_reservation_button').on('click', function () {
-    if (reservationsView.table.rows('.selected').data().length == 0) {
+    if (reservationsView.table.rows('.selected').data().length === 0) {
         $('#delete_reservation_button').prop('disabled', true);
         $('#reservations_view_notification').notify({
             message: { text: 'No reservation has been selected' },
