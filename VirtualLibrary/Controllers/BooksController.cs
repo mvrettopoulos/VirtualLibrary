@@ -230,7 +230,6 @@ namespace VirtualLibrary.Controllers
                 {
                     log.Error("Error",e);
                 }
-                db.SaveChanges();
 
                 return Json(new { success = true });
             }
