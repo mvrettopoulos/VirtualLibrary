@@ -106,6 +106,11 @@ namespace VirtualLibrary.Controllers
                             ms.Close();
                         }
                     }
+                    else
+                    {
+                        ModelState.AddModelError("image", "The image format is not supported! The following format are supported: jpg, jpeg, png");
+                        return PartialView(model);
+                    }
                 }
 
 
@@ -217,6 +222,10 @@ namespace VirtualLibrary.Controllers
                             log.Info("Image updated.");
                             ms.Close();
                         }
+                    }else
+                    {
+                        ModelState.AddModelError("image","The image format is not supported! The following format are supported: jpg, jpeg, png");
+                        return PartialView(model);
                     }
                 }
 
