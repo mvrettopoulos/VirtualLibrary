@@ -85,6 +85,11 @@ namespace VirtualLibrary.Controllers
 
             var userName = User.Identity.Name;
             var user = db.Users.SingleOrDefault(s => s.username == userName);
+            if ((bool)user.bad_user)
+            {
+                ViewBag.StatusMessage = "You can not reserve any book. Please contact your librarian";
+                return View("../Search/GetBook", book);
+            }
             reservation.username = user.username;
             ViewBag.Libraries = librariesList;
 
