@@ -65,8 +65,10 @@
 });
 
 $("#datepicker").datepicker({
-    dateFormat: "dd-mm-yy",
+    minDate: new Date(1900, 1 - 1, 1), maxDate: '-18Y',
+    dateFormat: 'dd-mm-yy',
+    defaultDate: new Date(1970, 1 - 1, 1),
     changeMonth: true,
     changeYear: true,
-    yearRange: "1930:2010"
+    yearRange: '-110:-18'
 });

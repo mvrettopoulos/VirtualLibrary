@@ -3,18 +3,16 @@
     ViewBag.Title = "Profile";
 }
 
-<div id="insert_image_modal" class="modal" role="dialog" aria-hidden="true">
+<div id="edit_image_modal" class="modal" role="dialog" aria-hidden="true" data-url="@Url.Action("GetFileUpload")">
     <div class="modal-dialog">
-        <div class="modal-content" id="insert_modal_modalContent">
-            @Html.Action("GetFileUpload")
+        <div class="modal-content" id="edit_image_modalContent">
         </div>
     </div>
 </div>
 
-<div id="edit_profile_modal" class="modal" role="dialog" aria-hidden="true">
+<div id="edit_profile_modal" class="modal" role="dialog" aria-hidden="true" data-url="@Url.Action("GetEditProfile")">
     <div class="modal-dialog">
         <div class="modal-content" id="edit_profile_modalContent">
-            @Html.Action("GetEditProfile")
         </div>
     </div>
 </div>
@@ -28,11 +26,18 @@
 
 
 <div class="row">
+    @if (ViewBag.StatusMessage != null)
+    {
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="text-center">
+                <h1 class="success alert-success">@ViewBag.StatusMessage</h1>
+            </div>
+        </div>
+    }
     <div class="page-main-layout col-lg-12">
         <div class="col-lg-12">
             <h1 class="page-header">Profile</h1>
             <h3 align="center"><strong>@Html.DisplayFor(model => model.first_name) @Html.DisplayFor(model => model.last_name)</strong></h3>
-            <div><p class="text-success">@ViewBag.StatusMessage</p></div>
         </div>
         <div class="panel">
 
@@ -102,7 +107,7 @@
             <div class="col-lg-12">
                 <div class="col-lg-12">
                     <div class="notifications" id="loans_view_notification"></div>
-                    <h4 class="page-header"><strong>Reservations:</strong></h4>
+                    <h4 class="page-header"><strong>Active reservations:</strong></h4>
                 </div>
 
                 <div class="col-lg-12">
@@ -131,7 +136,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var reservation in Model.Reservations)
+                                        @{ 
+                                            var today = DateTime.Now;
+                                            var avtiveReservations = Model.Reservations.Where(x=>x.check_in==false && x.check_out==false && x.return_date< today).ToList();
+                                        }
+                                        @foreach (var reservation in avtiveReservations)
                                     {
                                     if (reservation.check_out == false)
                                     {

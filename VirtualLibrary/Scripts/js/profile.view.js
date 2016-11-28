@@ -1,23 +1,25 @@
 ﻿$(document).ready(function () {
     $('#profile').click(function () {
+
         var url = $('#edit_profile_modal').data('url');
-
         $.get(url, function (data) {
-
-
+            $('#edit_profile_modalContent').html(data);
             $('#edit_profile_modal').modal('show');
+            bindFormEditProfile();
         });
     });
 });
 
 $(document).ready(function () {
     $('#upload').click(function () {
-        var url = $('#insert_image_modal').data('url');
+
+        var url = $('#edit_image_modal').data('url');
 
         $.get(url, function (data) {
 
-
-            $('#insert_image_modal').modal('show');
+            $('#edit_image_modalContent').html(data);
+            $('#edit_image_modal').modal('show');
+            bindFormEditImage();
         });
     });
 });
@@ -79,6 +81,7 @@ $('#edit_loan_button').on('click', function () {
         });
     }
 });
+
 function bindFormEdit(dialog) {
     $('form', dialog).submit(function (e) {
         e.preventDefault();
@@ -103,3 +106,56 @@ function bindFormEdit(dialog) {
     });
 }
 
+function bindFormEditProfile(dialog) {
+    $('form', dialog).submit(function (e) {
+        e.preventDefault();
+        if (!$(this).valid()) {
+            return false;
+        }
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize()
+        }).done(function (result) {
+            if (result.success) {
+                $('#edit_profile_modal').modal('hide');
+                location.reload();
+            } else {
+                $('#edit_profile_modalContent').html(result);
+                bindFormEditProfile();
+            }
+        }).fail(function (xhr, status, error) {
+            alert('failed');
+        });
+    });
+}
+
+function bindFormEditImage(dialog) {
+    $('form', dialog).submit(function (e) {
+        e.preventDefault();
+        if (!$(this).valid()) {
+            return false;
+        }
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (result) {
+            if (result.success) {
+
+                $('#edit_image_modal').modal('hide');
+                location.reload();
+            } else {
+                $('#edit_image_modalContent').html(result);
+                bindFormEditImage();
+            }
+        }).fail(function (xhr, status, error) {
+            alert('failed');
+        });
+    });
+}

@@ -1,21 +1,17 @@
-﻿@using System.Web.UI.WebControls
-@model VirtualLibrary.Models.UserProfileEdit
+﻿@model VirtualLibrary.Models.UserProfileEdit
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 class="modal-title">Edit Profile</h3>
 </div>
-<br />
 @using (Html.BeginForm("EditProfile", "Manage", FormMethod.Post,
     new {@class = "form-horizontal", role = "form"}))
 {
     <div class="modal-body" id="edit_profile_modal_body">
         @Html.AntiForgeryToken()
-
+        @Html.HiddenFor(model => model.username)
 
         <div class="form-horizontal">
-
-            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">
                 @Html.LabelFor(model => model.firstName, "First Name", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
@@ -23,8 +19,6 @@
                     @Html.ValidationMessageFor(model => model.firstName, "", new {@class = "text-danger"})
                 </div>
             </div>
-
-            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">
                 @Html.LabelFor(model => model.lastName, "Last Name", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
@@ -32,8 +26,6 @@
                     @Html.ValidationMessageFor(model => model.lastName, "", new {@class = "text-danger"})
                 </div>
             </div>
-
-            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
@@ -42,7 +34,6 @@
                 </div>
             </div>
 
-          @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">
                 @Html.LabelFor(model => model.Date_of_Birth, "Date of Birth", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">
@@ -69,10 +60,12 @@
        
 <script >
     $("#datepicker").datepicker({
-        dateFormat: "dd-mm-yy",
+        minDate: new Date(1900, 1 - 1, 1), maxDate: '-18Y',
+        dateFormat: 'dd-mm-yy',
+        defaultDate: new Date(1970, 1 - 1, 1),
         changeMonth: true,
         changeYear: true,
-        yearRange: "1930:2010"
+        yearRange: '-110:-18'
     });
 
 </script>

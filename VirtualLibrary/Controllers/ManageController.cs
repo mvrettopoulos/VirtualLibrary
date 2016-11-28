@@ -383,16 +383,17 @@ namespace VirtualLibrary.Controllers
 
         //GET: Upload Profile Picture
         [HttpGet]
+        [Authorize]
         public ActionResult GetFileUpload()
         {
 
-            return PartialView("FileUpload"); // toDo
+            return PartialView("FileUpload");
         }
         // POST:Upload Profile Picture
         [HttpPost]
+        [Authorize]
         public ActionResult FileUpload(HttpPostedFileBase file)
         {
-            ManageMessageId? message;
             var userId = User.Identity.GetUserId();
             var user = db.Users.SingleOrDefault(s => s.aspnet_user_id == userId);
 
@@ -403,10 +404,6 @@ namespace VirtualLibrary.Controllers
                 var fileExt = System.IO.Path.GetExtension(file.FileName).Substring(1);
                 if (supportedTypes.Contains(fileExt))
                 {
-                    //file.FileName.Contains(".png")
-                    // save the image path path to the database or you can send image
-                    // directly to database
-                    // in-case if you want to store byte[] ie. for DB
                     using (MemoryStream ms = new MemoryStream())
                     {
                         file.InputStream.CopyTo(ms);
@@ -426,25 +423,21 @@ namespace VirtualLibrary.Controllers
                         ms.Close();
 
                     }
-                    message = ManageMessageId.FileUploadSuccess;
+                    return Json(new { success = true });
                 }
                 else
                 {
-                    message = ManageMessageId.FileTypeError;
+                    ModelState.AddModelError("", "The image format is not supported! The following format are supported: jpg, jpeg, png");
+                    return PartialView("FileUpload");
                 }
             }
-            else
-            {
-                message = ManageMessageId.FileUploadError;
-            }
-
-
-            // after successfully uploading redirect the user
-            return RedirectToAction("Index", new { Message = message });
+            ModelState.AddModelError("", "You have not selected any file");
+            return PartialView("FileUpload");
         }
 
         //GET:EditProfile
         [HttpGet]
+        [Authorize]
         public ActionResult GetEditProfile()
         {
             string username = User.Identity.Name;
@@ -459,43 +452,49 @@ namespace VirtualLibrary.Controllers
             model.lastName = user.last_name;
             model.Date_of_Birth = user.date_of_birth;
             model.Email = aspNetUser.Email;
+            model.username = username;
 
             return PartialView("EditProfile", model);
         }
         //POST:EditProfile
         [HttpPost]
-        public ActionResult EditProfile(UserProfileEdit userprofile)
+        [Authorize]
+        public ActionResult EditProfile(UserProfileEdit model)
         {
-            if (!ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                ManageMessageId? message;
-                string username = User.Identity.Name;
                 // Get the userprofile
-                Users user = db.Users.FirstOrDefault(u => u.username.Equals(username));
-                AspNetUsers aspNetUser = db.AspNetUsers.FirstOrDefault(m => m.UserName.Equals(username));
+                Users user = db.Users.FirstOrDefault(u => u.username.Equals(model.username));
+                AspNetUsers aspNetUser = db.AspNetUsers.FirstOrDefault(m => m.UserName.Equals(model.username));
 
                 // Update fields
-                user.first_name = userprofile.firstName;
-                user.last_name = userprofile.lastName;
-                user.date_of_birth = userprofile.Date_of_Birth;
-                aspNetUser.Email = userprofile.Email;
+                user.first_name = model.firstName;
+                user.last_name = model.lastName;
+                user.date_of_birth = model.Date_of_Birth;
+                aspNetUser.Email = model.Email;
 
+                try
+                {
+                    db.Entry(user).State = EntityState.Modified;
+                    db.Entry(aspNetUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (DataException e)
+                {
+                    log.Error("Database error:", e);
+                }
+                log.Info("User updated.");
 
-
-                db.Entry(user).State = EntityState.Modified;
-                db.Entry(aspNetUser).State = EntityState.Modified;
-
-                db.SaveChanges();
-                message = ManageMessageId.EditProfile;
-
-                return RedirectToAction("Index", new { Message = message }); // or whatever
+                return Json(new { success = true });
             }
-            return View(userprofile);
+            return PartialView("EditProfile", model);
         }
 
 
         //GET: Extend Loan
         [HttpGet]
+        [Authorize]
         public ActionResult GetExtendLoan(int id)
         {
             ManageMessageId? message;
