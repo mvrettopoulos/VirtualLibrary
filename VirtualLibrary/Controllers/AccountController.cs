@@ -605,7 +605,7 @@ namespace VirtualLibrary.Controllers
                 return HttpNotFound();
             }
             UserEditViewModel editUser = new UserEditViewModel();
-            editUser.userName = user.UserName;
+            editUser.Username = user.UserName;
             editUser.email = user.Email;
             editUser.roles = new List<UserEditRoleView>();
             var userRoles = UserManager.GetRoles(user.Id);
@@ -630,7 +630,7 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = UserManager.FindByName(model.userName);
+                var user = UserManager.FindByName(model.Username);
                 user.Email = model.email;
                 var result = UserManager.Update(user);
                 if (!result.Succeeded)

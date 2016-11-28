@@ -104,7 +104,7 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                var book = db.Books.Single(x => x.title == model.book);
+                var book = db.Books.Single(x => x.id == model.id);
                 Reservations reservation = new Reservations();
                 var library_id = Convert.ToInt32(model.library);
                 reservation.Books = book;
