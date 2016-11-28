@@ -12,6 +12,7 @@
         @Html.HiddenFor(model => model.username)
 
         <div class="form-horizontal">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(model => model.firstName, "First Name", htmlAttributes: new {@class = "control-label col-md-2"})
                 <div class="col-md-10">

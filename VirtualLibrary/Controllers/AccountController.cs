@@ -209,9 +209,7 @@ namespace VirtualLibrary.Controllers
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
                     NewUser.image = array;
-                    NewUser.membership_id = model.membership_id;
-                    model.membership_id = Convert.ToInt64(model.membership_id_string);
-                    NewUser.membership_id = model.membership_id;
+                    NewUser.membership_id = Convert.ToInt64(model.membership_id_string);
 
                     db.Users.Add(NewUser);
                     db.SaveChanges();
@@ -444,9 +442,7 @@ namespace VirtualLibrary.Controllers
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
                     NewUser.image = array;
-                    NewUser.membership_id = model.membership_id;
-                    model.membership_id = Convert.ToInt64(model.membership_id_string);
-                    NewUser.membership_id = model.membership_id;
+                    NewUser.membership_id = Convert.ToInt64(model.membership_id_string);
 
                     db.Users.Add(NewUser);
                     db.SaveChanges();
