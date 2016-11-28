@@ -34,6 +34,11 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
+            if(reservation.check_in!=reservation.check_out )
+            {
+                ModelState.AddModelError("error", "You cannot delete this reservation until is completed");
+                return PartialView("Delete", reservation);
+            }
             return PartialView("Delete", reservation);
         }
         // POST: Authors/Delete/5
@@ -43,6 +48,11 @@ namespace VirtualLibrary.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var reservation = db.Reservations.Find(id);
+            if (reservation.check_in != reservation.check_out)
+            {
+                ViewBag.ErrorMessage = "You cannot delete this reservation until is completed";
+                return View("Index", db.Reservations.ToList());
+            }
             db.Reservations.Remove(reservation);
             db.SaveChanges();
             return RedirectToAction("Index");
