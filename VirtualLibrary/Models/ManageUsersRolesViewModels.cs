@@ -47,13 +47,6 @@ namespace VirtualLibrary.Models
         [Display(Name = "Last Name")]
         public string lastName { get; set; }
 
-        [Required(ErrorMessage = "Date of Birth is required")]
-        [MinimumAge(18)]
-        [Display(Name = "Date of Birth")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}")]
-        public string Date_of_Birth { get; set; }
-
         [Required(ErrorMessage = "Membership ID is required.")]
         [RegularExpression(@"^[0-9]*$", ErrorMessage = "Membership ID must be a 12-digit number")]
         [StringLength(12, MinimumLength = 12, ErrorMessage = "Membership ID must be a 12-digit number")]
@@ -87,12 +80,12 @@ namespace VirtualLibrary.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "User Email")]
+        [Display(Name = "Email")]
         public string email { get; set; }
 
         [Required(ErrorMessage = "Username is required.")]
         [StringLength(15, MinimumLength = 3)]
-        [Display(Name = "User Name")]
+        [Display(Name = "UserName")]
         [RegularExpression(@"(\S)+", ErrorMessage = " White Space is not allowed in User Names")]
         [ScaffoldColumn(false)]
         public string Username { get; set; }
@@ -110,7 +103,6 @@ namespace VirtualLibrary.Models
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]
         [Display(Name = "Date of Birth")]
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}")]
         public string Date_of_Birth { get; set; }
 

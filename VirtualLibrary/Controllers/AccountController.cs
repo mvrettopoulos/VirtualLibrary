@@ -15,6 +15,8 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.IO;
 using System.Drawing;
+using System.Data.Entity;
+using System.Data;
 
 namespace VirtualLibrary.Controllers
 {
@@ -513,7 +515,7 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = new ApplicationUser();
-                user.UserName = model.email;
+                user.UserName = model.Username;
                 user.Email = model.email;
                 var pass = Guid.NewGuid().ToString().Substring(0, 12);
                 var result = UserManager.Create(user, pass);
@@ -528,6 +530,10 @@ namespace VirtualLibrary.Controllers
                 newUser.active = true;
                 newUser.aspnet_user_id = currentUser.Id;
                 newUser.bad_user = false;
+                newUser.date_of_birth = model.Date_of_Birth;
+                newUser.first_name = model.firstName;
+                newUser.last_name = model.lastName;
+                newUser.membership_id = Convert.ToInt64(model.membership_id_string);
                 DateTime today = DateTime.Today;
                 newUser.date_of_registration = Convert.ToString(today);
                 newUser.username = currentUser.UserName;
@@ -599,16 +605,20 @@ namespace VirtualLibrary.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser user = UserManager.FindById(id.ToString());
-            if (user == null)
+            ApplicationUser identityUser = UserManager.FindById(id.ToString());
+            if (identityUser == null)
             {
                 return HttpNotFound();
             }
+            var user = db.Users.Single(x => x.aspnet_user_id == identityUser.Id);
             UserEditViewModel editUser = new UserEditViewModel();
-            editUser.Username = user.UserName;
-            editUser.email = user.Email;
+            editUser.Username = identityUser.UserName;
+            editUser.email = identityUser.Email;
+            editUser.firstName = user.first_name;
+            editUser.lastName = user.last_name;
+            editUser.membership_id_string = Convert.ToString(user.membership_id);
             editUser.roles = new List<UserEditRoleView>();
-            var userRoles = UserManager.GetRoles(user.Id);
+            var userRoles = UserManager.GetRoles(identityUser.Id);
             var roleList = RoleManager.Roles.ToList();
             foreach (var role in roleList)
             {
@@ -630,25 +640,40 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = UserManager.FindByName(model.Username);
-                user.Email = model.email;
-                var result = UserManager.Update(user);
+                var identityUser = UserManager.FindByName(model.Username);
+                identityUser.Email = model.email;
+                var result = UserManager.Update(identityUser);
                 if (!result.Succeeded)
                 {
                     log.Error("User update failed");
                     AddErrors(result);
-                    return PartialView("_EditRole", user);
+                    return PartialView("_EditRole", identityUser);
                 }
+                Users user = new Users();
+                user.first_name = model.firstName;
+                user.last_name = model.lastName;
+                user.membership_id = Convert.ToInt64(model.membership_id_string);
+                try
+                {
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (DataException e)
+                {
+                    log.Error("Database error:", e);
+                }
+
+
                 foreach (var role in model.roles)
                 {
-                    if (role.isRole && !UserManager.IsInRole(user.Id, role.roleName))
+                    if (role.isRole && !UserManager.IsInRole(identityUser.Id, role.roleName))
                     {
-                        UserManager.AddToRole(user.Id, role.roleName);
+                        UserManager.AddToRole(identityUser.Id, role.roleName);
                         log.Info(role.roleName + "-" + role.isRole);
                     }
-                    else if (!role.isRole && UserManager.IsInRole(user.Id, role.roleName))
+                    else if (!role.isRole && UserManager.IsInRole(identityUser.Id, role.roleName))
                     {
-                        UserManager.RemoveFromRole(user.Id, role.roleName);
+                        UserManager.RemoveFromRole(identityUser.Id, role.roleName);
                     }
                 }
                 log.Info("User updated.");

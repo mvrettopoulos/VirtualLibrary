@@ -174,29 +174,39 @@
                 </button>
                 @if (Model.Reservations.Where(x => x.Users.username == User.Identity.Name).Count() > 0)
                 {
-                    var reservation = Model.Reservations.SingleOrDefault(x => x.Users.username == User.Identity.Name);
+                    var reservation = Model.Reservations.Where(x => x.Users.username == User.Identity.Name).OrderBy(x => x.return_date).Last();
 
-                    <button class="btn btn-facebook" id="shareBtn" >
-                        <i class="fa fa-facebook fa-lg">
-                        </i>
-                        <strong>Share</strong>
-                    </button>
+                    if (reservation.check_in == false || reservation.check_out == false)
+                    {
+                        <button class="btn btn-facebook" id="shareBtn">
+                            <i class="fa fa-facebook fa-lg">
+                            </i>
+                            <strong>Share</strong>
+                        </button>
 
-                    <a href="https://twitter.com/share" class="btn btn-twitter twitter-share-button" data-text='@string.Format("Book reserved for the dates {0}-{1}", @reservation.reserved_date, @reservation.return_date)' data-show-count="false">Tweet</a>
-                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <a href="https://twitter.com/share" class="btn btn-twitter twitter-share-button" data-text='@string.Format("Book reserved for the dates {0}-{1}", @reservation.reserved_date, @reservation.return_date)' data-show-count="false">Tweet</a>
+                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-                   
-                    <script>
-                        document.getElementById('shareBtn').onclick = function () {
-                            FB.ui({
-                                method: 'share',
-                                display: 'popup',
-                                quote:'@string.Format("Book reserved for the dates {0}-{1}", @reservation.reserved_date, @reservation.return_date)',
-                                href: '@string.Format("https://virtual-library.azurewebsites.net/Search/GetBook/{0}", Model.id)' ,
+
+                        <script>
+                            document.getElementById('shareBtn').onclick = function () {
+                                FB.ui({
+                                    method: 'share',
+                                    display: 'popup',
+                                    quote: '@string.Format("Book reserved for the dates {0}-{1}", @reservation.reserved_date, @reservation.return_date)',
+                                    href: '@string.Format("https://virtual-library.azurewebsites.net/Search/GetBook/{0}", Model.id)',
                                 }, function (response) { });
-                        }
-                    </script>
+                            }
+                        </script>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default" href="@Url.Action("Reserve", "Reservations",new {id = Model.id})" id="reserve_button" data-toggle="tooltip" title="Reserve Book">
+                            <i class="fa fa-plus fa-lg"></i>
+                            <strong>Reserve Book</strong>
+                        </a>
+                    }
 
                 }
                 else
