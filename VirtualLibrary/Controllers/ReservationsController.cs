@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -109,7 +110,25 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
+                string format = "dd-mm-yy";
+                DateTime dateTime;
+                
+
                 var book = db.Books.Single(x => x.id == model.id);
+                if (!DateTime.TryParseExact(model.return_date, format, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out dateTime))
+                {
+                    ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
+                    ViewBag.Libraries = availableLibraries(book.id);
+                    return View("Reserve", model);
+                }
+                if (!DateTime.TryParseExact(model.reserved_date, format, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out dateTime))
+                {
+                    ModelState.AddModelError("reserved_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
+                    ViewBag.Libraries = availableLibraries(book.id);
+                    return View("Reserve", model);
+                }
                 Reservations reservation = new Reservations();
                 var library_id = Convert.ToInt32(model.library);
                 reservation.Books = book;

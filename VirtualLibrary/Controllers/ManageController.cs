@@ -537,12 +537,12 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                string format = "dd-mm-yy";
+                string format = "dd-mm-yyyy";
                 DateTime dateTime;
-                if (DateTime.TryParseExact(model.return_date, format, CultureInfo.InvariantCulture,
+                if (!DateTime.TryParseExact(model.return_date, format, CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out dateTime))
                 {
-                    ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yy!");
+                    ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
                     return PartialView("ExtendLoan", model);
                 }
 
