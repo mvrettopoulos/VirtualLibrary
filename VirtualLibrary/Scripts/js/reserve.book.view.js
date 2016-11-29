@@ -63,6 +63,10 @@ $('#datepickerReturn').datepicker({
             var minDate = $('#datepickerReturn').datepicker('option', 'minDate');
             $('#datepickerReturn').datepicker('setDate', minDate);
         }
+        if (dt2 > date_add_days(dt1, 7)) {
+            var maxDate = date_add_days(dt1, 7);
+            $('#datepickerReturn').datepicker('setDate', maxDate);
+        }
     }
 });
 

@@ -81,12 +81,7 @@ namespace VirtualLibrary.Controllers
             }
             ReservationsViewModel reservation = new ReservationsViewModel();
             reservation.book = book.title;
-            List<Books_Availability> bookAvailable = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == id).ToList();
-            var librariesList = new List<Libraries>();
-            foreach (var available in bookAvailable)
-            {
-                librariesList.Add(available.Libraries);
-            }
+            var librariesList = availableLibraries(book.id);
             if (librariesList.Count == 0)
             {
                 ViewBag.StatusMessage = "Book is not available yet!!";
@@ -121,22 +116,23 @@ namespace VirtualLibrary.Controllers
                 reservation.check_in = false;
                 reservation.check_out = false;
                 reservation.Libraries = db.Libraries.Single(x => x.id == library_id);
-                reservation.reserved_date = DateTime.ParseExact(model.reserved_date, "dd-mm-yyyy", System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat);
-                reservation.return_date = DateTime.ParseExact(model.return_date, "dd-mm-yyyy", System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat);
+                reservation.reserved_date =Convert.ToDateTime(model.reserved_date);
+                reservation.return_date = Convert.ToDateTime(model.return_date);
                 reservation.renewTimes = 3;
                 reservation.Users = db.Users.Single(x => x.username == model.username);
+
+                if (reservation.reserved_date > reservation.return_date || reservation.reserved_date.Value.AddDays(7) <reservation.return_date )
+                {
+                    ViewBag.StatusMessage = "The dates you selected are invalid!!!";
+                    ViewBag.Libraries = availableLibraries(book.id);
+                    return View("Reserve", model);
+                }
 
                 var bookAvailable = db.Books_Availability.Single(x => x.book_id == book.id && x.library_id == library_id);
                 if (!CheckIfAvailable(book.id,library_id,bookAvailable.quantity, reservation.reserved_date, reservation.return_date))
                 {
                     ViewBag.StatusMessage = "Book is not available the dates you selected!!!";
-                    List<Books_Availability> bookAvailability = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == book.id).ToList();
-                    var librariesList = new List<Libraries>();
-                    foreach (var available in bookAvailability)
-                    {
-                        librariesList.Add(available.Libraries);
-                    }
-                    ViewBag.Libraries = librariesList;
+                    ViewBag.Libraries = availableLibraries(book.id);
                     return View("Reserve", model);
                 }
                 try
@@ -166,6 +162,17 @@ namespace VirtualLibrary.Controllers
             }
 
             return false;
+        }
+
+        private List<Libraries> availableLibraries(int id)
+        {
+            List<Books_Availability> bookAvailability = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == id).ToList();
+            var librariesList = new List<Libraries>();
+            foreach (var available in bookAvailability)
+            {
+                librariesList.Add(available.Libraries);
+            }
+            return librariesList;
         }
     }
 }
