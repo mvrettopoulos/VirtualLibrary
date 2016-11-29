@@ -48,13 +48,13 @@
 
                         @if (Model.image == null)
                         {
-                        <img alt="User Pic" src="~/Content/images/no_available_image.png" class="img-circle img-responsive" style="width: 150px; height: 150px; border: 2px">
+                            <img alt="User Pic" src="~/Content/images/no_available_image.png" class="img-circle img-responsive" style="width: 150px; height: 150px; border: 2px">
                         }
                         else
                         {
-                        string imageBase64 = Convert.ToBase64String(Model.image);
-                        string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                        <img alt="User Pic" src="@imageSrc" class="img-rounded img-responsive" style="width: auto; max-width: 150px; height: auto; max-height: 150px;" />
+                            string imageBase64 = Convert.ToBase64String(Model.image);
+                            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                            <img alt="User Pic" src="@imageSrc" class="img-rounded img-responsive" style="width: auto; max-width: 150px; height: auto; max-height: 150px;" />
                         }
 
 
@@ -136,14 +136,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @{ 
+                                        @{
                                             var today = DateTime.Now;
-                                            var avtiveReservations = Model.Reservations.Where(x=>x.check_in==false && x.check_out==false && x.return_date< today).ToList();
+                                            var avtiveReservations = Model.Reservations.Where(x => x.check_out == false && x.return_date > today).ToList();
                                         }
                                         @foreach (var reservation in avtiveReservations)
-                                    {
-                                    if (reservation.check_out == false)
-                                    {
+                                        {
+                                            if (reservation.check_out == false)
+                                            {
                                                 <tr>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => reservation.id)
@@ -164,8 +164,8 @@
                                                         @Html.DisplayFor(modelItem => reservation.renewTimes)
                                                     </td>
                                                 </tr>
-                                    }
-                                    }
+                                            }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
