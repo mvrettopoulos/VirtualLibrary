@@ -121,13 +121,13 @@ namespace VirtualLibrary.Controllers
                 reservation.check_in = false;
                 reservation.check_out = false;
                 reservation.Libraries = db.Libraries.Single(x => x.id == library_id);
-                reservation.reserved_date = Convert.ToDateTime(model.reserved_date);
-                reservation.return_date = Convert.ToDateTime(model.return_date);
+                reservation.reserved_date = DateTime.ParseExact(model.reserved_date, "dd-mm-yyyy", System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat);
+                reservation.return_date = DateTime.ParseExact(model.return_date, "dd-mm-yyyy", System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat);
                 reservation.renewTimes = 3;
                 reservation.Users = db.Users.Single(x => x.username == model.username);
 
                 var bookAvailable = db.Books_Availability.Single(x => x.book_id == book.id && x.library_id == library_id);
-                if (!CheckIfAvailable(book.id,library_id,bookAvailable.quantity, Convert.ToDateTime(model.reserved_date), Convert.ToDateTime(model.return_date)))
+                if (!CheckIfAvailable(book.id,library_id,bookAvailable.quantity, reservation.reserved_date, reservation.return_date))
                 {
                     ViewBag.StatusMessage = "Book is not available the dates you selected!!!";
                     List<Books_Availability> bookAvailability = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == book.id).ToList();
@@ -156,7 +156,7 @@ namespace VirtualLibrary.Controllers
         }
 
        
-        private bool CheckIfAvailable(int bookId,int libraryId,int? quantity, DateTime reservedDate, DateTime returnDate)
+        private bool CheckIfAvailable(int bookId,int libraryId,int? quantity, DateTime? reservedDate, DateTime? returnDate)
         {
             List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == bookId && x.library_id == libraryId && (reservedDate >= x.reserved_date && reservedDate <= x.return_date) && (returnDate >= x.reserved_date && returnDate <= x.return_date)).ToList();
 

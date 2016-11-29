@@ -547,7 +547,7 @@ namespace VirtualLibrary.Controllers
                 }
 
                 Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.id));
-                reservation.return_date = Convert.ToDateTime(model.return_date);
+                reservation.return_date = DateTime.ParseExact(model.return_date, "dd-mm-yyyy", System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat);
                 reservation.renewTimes = --reservation.renewTimes;
                 try
                 {
