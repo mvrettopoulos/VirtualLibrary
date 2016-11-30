@@ -178,15 +178,55 @@
 
                     if (reservation.check_in == false || reservation.check_out == false)
                     {
-                        <button class="btn btn-facebook" id="shareBtn">
+                        <button class="btn btn-social btn-facebook" id="shareBtn">
                             <i class="fa fa-facebook fa-lg">
                             </i>
-                            <strong>Share</strong>
+                            <strong>Share on Facebook</strong>
                         </button>
 
-                        <a href="https://twitter.com/share" class="btn btn-twitter twitter-share-button" data-text='@string.Format("Book reserved for the dates {0}-{1}", @reservation.reserved_date, @reservation.return_date)' data-show-count="false">Tweet</a>
-                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+                        <a id="twitterButton" title="Twitter share" target="_blank" class="btn btn-social btn-twitter customer share" data-text='@string.Format("Book reserved for the dates {0}-{1}", @reservation.reserved_date, @reservation.return_date)' data-show-count="false">
+                            <i class="fa fa-twitter"></i><strong>Share on Twitter</strong>
+                        </a>
+
+
+                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <script>
+                            var url = location.href.replace("#", "");
+                            var twitterButton = document.getElementById('twitterButton');
+                            twitterButton.setAttribute("href", 'http://twitter.com/share?url=' + url + ';text=@string.Format("Book reserved for the dates {0}-{1}", @reservation.reserved_date, @reservation.return_date);');
+
+
+                            ; (function ($) {
+
+                                $.fn.customerPopup = function (e, intWidth, intHeight, blnResize) {
+
+                                    // Prevent default anchor event
+                                    e.preventDefault();
+
+                                    // Set values for window
+                                    intWidth = intWidth || '500';
+                                    intHeight = intHeight || '400';
+                                    strResize = (blnResize ? 'yes' : 'no');
+
+                                    // Set title and open popup with focus on it
+                                    var strTitle = ((typeof this.attr('title') !== 'undefined') ? this.attr('title') : 'Social Share'),
+                                        strParam = 'width=' + intWidth + ',height=' + intHeight + ',resizable=' + strResize,
+                                        objWindow = window.open(this.attr('href'), strTitle, strParam).focus();
+                                }
+
+                                /* ================================================== */
+
+                                $(document).ready(function ($) {
+                                    $('.customer.share').on("click", function (e) {
+                                        $(this).customerPopup(e);
+                                    });
+                                });
+
+                            }(jQuery));
+
+
+                        </script>
 
 
                         <script>
@@ -199,6 +239,7 @@
                                 }, function (response) { });
                             }
                         </script>
+
                     }
                     else
                     {
@@ -268,7 +309,7 @@
         $('#reviewMessage').text(message.responseJSON.error);
         $('#reviewMessageDiv').removeClass("hidden");
     };
-    
+
     function AjaxBegin() {
         $body.addClass("loading");
 
@@ -280,4 +321,6 @@
 
 </script>
 <div class="modal modal-loading"><!-- Place at bottom of page --></div>
+
+
 <script src="@Url.Content("~/Scripts/js/review.view.js")"></script>

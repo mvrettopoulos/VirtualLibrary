@@ -110,7 +110,7 @@ namespace VirtualLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                string format = "dd-mm-yy";
+                string format = "dd-mm-yyyy";
                 DateTime dateTime;
                 
 

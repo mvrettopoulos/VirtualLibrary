@@ -497,37 +497,23 @@ namespace VirtualLibrary.Controllers
         [Authorize]
         public ActionResult GetExtendLoan(int id)
         {
-            ManageMessageId? message;
             Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (id));
-            Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id == reservation.book_id && b.library_id == reservation.library_id);
+
             if (reservation.renewTimes == 0)
             {
                 ViewBag.ErrorMessage = "You cannot extend anymore your reservation!!!";
                 return PartialView("ExtendLoan", null);
             }
-
-            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && reservation.reserved_date >= x.reserved_date && reservation.return_date <= x.return_date).OrderBy(x => x.reserved_date).ToList();
             ExtendLoanView model = new ExtendLoanView();
             model.id = reservation.id;
-            if (reservationsList.Count <= availableBook.quantity)
+            var newModel = GetAvailable(model);
+            if (newModel == null)
             {
-                model.minDate = reservation.return_date.Value.AddDays(1);
-                model.maxDate = reservation.return_date.Value.AddDays(7);
-            }
-            else
-            {
-                var reservationLast = reservationsList.Last();
-                if(reservation.return_date.Value.AddDays(1) == reservationLast.reserved_date)
-                {
-                    ViewBag.ErrorMessage = "Extend loan is not available!!!";
-                    return PartialView("ExtendLoan", model);
-                }
-
-                model.minDate = reservation.return_date.Value.AddDays(1);
-                model.maxDate = reservationLast.reserved_date.Value.AddDays(-1);
+                ViewBag.ErrorMessage = "Extend loan is not available!!!";
+                return PartialView("ExtendLoan", null);
             }
 
-            return PartialView("ExtendLoan", model);
+            return PartialView("ExtendLoan", newModel);
 
         }
 
@@ -539,15 +525,30 @@ namespace VirtualLibrary.Controllers
             {
                 string format = "dd-mm-yyyy";
                 DateTime dateTime;
+
                 if (!DateTime.TryParseExact(model.return_date, format, CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out dateTime))
                 {
                     ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
                     return PartialView("ExtendLoan", model);
                 }
+                var newModel = GetAvailable(model);
+                if (newModel == null)
+                {
+                    ViewBag.ErrorMessage = "Extend loan is not available!!!";
+                    return PartialView("ExtendLoan", model);
+                }
 
                 Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.id));
-                reservation.return_date = DateTime.ParseExact(model.return_date, "dd-mm-yyyy", System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat);
+                var newReturnDate = Convert.ToDateTime(model.return_date);
+                if (reservation.return_date > newReturnDate || reservation.return_date.Value.AddDays(7) < newReturnDate)
+                {
+                    ViewBag.StatusMessage = "The dates you selected are invalid!!!";
+                    ModelState.AddModelError("return_date", "The date you selected is invalid!!!");
+                   
+                    return PartialView("ExtendLoan", newModel);
+                }
+                reservation.return_date = newReturnDate;
                 reservation.renewTimes = --reservation.renewTimes;
                 try
                 {
@@ -564,6 +565,29 @@ namespace VirtualLibrary.Controllers
             return PartialView("ExtendLoan", model);
         }
 
+        private ExtendLoanView GetAvailable(ExtendLoanView model)
+        {
+            Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.id));
+            Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id == reservation.book_id && b.library_id == reservation.library_id);
+            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && reservation.reserved_date >= x.reserved_date && reservation.return_date <= x.return_date).OrderBy(x => x.reserved_date).ToList();
+            if (reservationsList.Count <= availableBook.quantity)
+            {
+                model.minDate = reservation.return_date.Value.AddDays(1);
+                model.maxDate = reservation.return_date.Value.AddDays(7);
+            }
+            else
+            {
+                var reservationLast = reservationsList.Last();
+                if (reservation.return_date.Value.AddDays(1) == reservationLast.reserved_date)
+                {
+                    return null;
+                }
+
+                model.minDate = reservation.return_date.Value.AddDays(1);
+                model.maxDate = reservationLast.reserved_date.Value.AddDays(-1);
+            }
+            return model;
+        }
 
         #region Helpers
         // Used for XSRF protection when adding external logins
