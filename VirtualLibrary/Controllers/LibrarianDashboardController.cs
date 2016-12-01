@@ -122,5 +122,120 @@ namespace VirtualLibrary.Controllers
             log.Info("Checkout done");
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateReservation()
+        {
+            ViewBag.Libraries = availableLibraries();
+            return PartialView("CreateReservation");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateReservation(LibrarianCreateReservationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                string format = "dd-mm-yyyy";
+                DateTime dateTime;
+
+
+                var book = db.Books.SingleOrDefault(x => x.isbn == model.isbn);
+                if (book == null)
+                {
+                    ModelState.AddModelError("isbn", "Book does not exist with ISBN: " + model.isbn + " !!!");
+                    ViewBag.Libraries = availableLibraries();
+                    return PartialView("CreateReservation", model);
+                }
+
+                var user = db.Users.SingleOrDefault(x => x.username == model.username);
+                if (user == null)
+                {
+                    ModelState.AddModelError("username", "User does not exists with usernaem: " + model.username + "!!!");
+                    ViewBag.Libraries = availableLibraries();
+                    return PartialView("CreateReservation", model);
+                }
+
+
+                if (!DateTime.TryParseExact(model.return_date, format, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out dateTime))
+                {
+                    ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
+                    ViewBag.Libraries = availableLibraries();
+                    return PartialView("CreateReservation", model);
+                }
+                if (!DateTime.TryParseExact(model.reserved_date, format, CultureInfo.InvariantCulture,
+                    DateTimeStyles.None, out dateTime))
+                {
+                    ModelState.AddModelError("reserved_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
+                    ViewBag.Libraries = availableLibraries();
+                    return PartialView("CreateReservation", model);
+                }
+                Reservations reservation = new Reservations();
+                var library_id = Convert.ToInt32(model.library);
+                reservation.Books = book;
+                reservation.check_in = true;
+                reservation.check_out = false;
+                reservation.Libraries = db.Libraries.Single(x => x.id == library_id);
+                reservation.reserved_date = Convert.ToDateTime(model.reserved_date);
+                reservation.return_date = Convert.ToDateTime(model.return_date);
+                reservation.renewTimes = 3;
+                reservation.Users = db.Users.Single(x => x.username == model.username);
+
+                if (reservation.reserved_date > reservation.return_date || reservation.reserved_date.Value.AddDays(7) < reservation.return_date)
+                {
+                    ModelState.AddModelError("", "The dates you selected are invalid!!!");
+                    ViewBag.Libraries = availableLibraries();
+                    return PartialView("CreateReservation", model);
+                }
+
+                var bookAvailable = db.Books_Availability.Single(x => x.book_id == book.id && x.library_id == library_id);
+                if (!CheckIfAvailable(book.id, library_id, bookAvailable.quantity, reservation.reserved_date, reservation.return_date))
+                {
+                    ModelState.AddModelError("", "Book is not available the dates you selected!!!");
+                    ViewBag.Libraries = availableLibraries();
+                    return PartialView("CreateReservation", model);
+                }
+                try
+                {
+                    db.Reservations.Add(reservation);
+                    db.SaveChanges();
+                }
+                catch (DataException e)
+                {
+                    log.Error("Database error:", e);
+                }
+                log.Info("Reservation created.");
+
+                return Json(new { success = true });
+            }
+            return PartialView("CreateReservation", model);
+        }
+
+        private bool CheckIfAvailable(int bookId, int libraryId, int? quantity, DateTime? reservedDate, DateTime? returnDate)
+        {
+            List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == bookId && x.library_id == libraryId && (reservedDate >= x.reserved_date && reservedDate <= x.return_date) && (returnDate >= x.reserved_date && returnDate <= x.return_date)).ToList();
+
+            if (reservationsList.Count < quantity)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private List<Libraries> availableLibraries()
+        {
+            string username = User.Identity.Name;
+            var librarianLibraries = db.Librarians.Where(x => x.Users.username == username).ToList();
+            var libraries = new List<Libraries>();
+            foreach (var library in librarianLibraries)
+            {
+                libraries.Add(library.Libraries);
+            }
+            return libraries;
+        }
     }
 }

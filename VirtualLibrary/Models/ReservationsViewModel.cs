@@ -26,5 +26,23 @@ namespace VirtualLibrary.Models
 
     }
   
+    public class LibrarianCreateReservationViewModel
+    {
+        [Required]
+        [Display(Name = "ISBN")]
+        public string isbn { get; set; }
+        [Required]
+        [Display(Name = "Username")]
+        public string username { get; set; }
+        [Required]
+        [Display(Name = "Reservation Date")]
+        public string reserved_date { get; set; }
+        [Required]
+        [Display(Name = "Reservation Date Expiration")]
+        public string return_date { get; set; }
 
+        [Required]
+        [Display(Name = "Library Building")]
+        public string library { get; set; }
+    }
 }

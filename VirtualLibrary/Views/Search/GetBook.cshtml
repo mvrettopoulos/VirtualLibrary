@@ -172,7 +172,7 @@
                     </i>
                     <strong>Leave a Review</strong>
                 </button>
-                @if (Model.Reservations.Where(x => x.Users.username == User.Identity.Name).Count() > 0)
+                @if (Model.Reservations.Where(x => x.Users.username == User.Identity.Name && x.check_out == false).Count() > 0)
                 {
                     var reservation = Model.Reservations.Where(x => x.Users.username == User.Identity.Name).OrderBy(x => x.return_date).Last();
 

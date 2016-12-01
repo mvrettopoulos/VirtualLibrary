@@ -102,3 +102,36 @@ $('#checkin_modal_submit_button').on('click', function () {
 $('#checkout_modal_submit_button').on('click', function () {
     $('#checkout_form').submit();
 });
+
+$('#new_reservation_button').on('click', function (e) {
+
+    e.preventDefault();
+    $('#insert_reservation_modal').modal('show');
+    bindFormInsert();
+});
+
+function bindFormInsert(dialog) {
+    $('form', dialog).submit(function (e) {
+        e.preventDefault();
+        if (!$(this).valid()) {
+            return false;
+        }
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize()
+        }).done(function (result) {
+            if (result.success) {
+
+                $('#insert_reservation_modal').modal('hide');
+                location.reload();
+            } else {
+                $('#insert_reservation_modalContent').html(result);
+                bindFormInsert();
+            }
+        }).fail(function (xhr, status, error) {
+            alert('failed');
+        });
+    });
+}

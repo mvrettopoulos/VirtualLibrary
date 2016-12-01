@@ -673,7 +673,6 @@
     <Content Include="Scripts\js\profile.view.js" />
     <Content Include="Scripts\js\dashboard.view.js" />
     <Content Include="Scripts\js\reserve.book.view.js" />
-    <Content Include="Scripts\js\social.view.js" />
     <Content Include="Scripts\js\usersdashboard.view.js" />
     <Content Include="Scripts\js\availability.view.js" />
     <Content Include="Scripts\js\authors.view.js" />
@@ -789,6 +788,7 @@
     <Content Include="Views\LibrarianDashboard\Checkin.cshtml" />
     <Content Include="Views\LibrarianDashboard\Checkout.cshtml" />
     <Content Include="Views\Manage\ExtendLoan.cshtml" />
+    <Content Include="Views\LibrarianDashboard\CreateReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
