@@ -17,6 +17,7 @@ using System.IO;
 using System.Drawing;
 using System.Data.Entity;
 using System.Data;
+using EntityFramework.Extensions;
 
 namespace VirtualLibrary.Controllers
 {
@@ -589,9 +590,9 @@ namespace VirtualLibrary.Controllers
             var user = UserManager.FindById(id.ToString());
 
             var libraryUser = db.Users.Single(s => s.aspnet_user_id == user.Id);
-            libraryUser.Librarians.Clear();
-            libraryUser.Books_Ratings.Clear();
-            libraryUser.Reservations.Clear();
+            db.Librarians.Where(c => c.username_id == libraryUser.id).Delete();
+            db.Reservations.Where(c => c.username_id == libraryUser.id).Delete();
+            db.Books_Ratings.Where(c => c.user_id == libraryUser.id).Delete();
             db.Users.Remove(libraryUser);
             db.SaveChanges();
             UserManager.Delete(user);
