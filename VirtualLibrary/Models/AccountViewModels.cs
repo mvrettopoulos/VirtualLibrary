@@ -16,12 +16,12 @@ namespace VirtualLibrary.Models
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(20, MinimumLength = 3)]
         [Display(Name = "First Name")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name is required.")]
         [StringLength(15, MinimumLength = 3)]
         [Display(Name = "Last Name")]
-        public string lastName { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]
@@ -125,12 +125,12 @@ namespace VirtualLibrary.Models
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(20, MinimumLength = 3)]
         [Display(Name = "First Name")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name is required.")]
         [StringLength(15, MinimumLength = 3)]
         [Display(Name = "Last Name")]
-        public string lastName { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]

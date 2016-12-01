@@ -15,27 +15,27 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.username, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Username, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.username, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => Model.username, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => Model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.Username, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.isbn, "ISBN", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Isbn, "ISBN", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.isbn, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => Model.isbn, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => Model.Isbn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => Model.Isbn, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.library, "Library", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Library, "Library", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.library, new SelectList(ViewBag.Libraries, "id", "Building"), "Select a Library",
+                    @Html.DropDownListFor(model => model.Library, new SelectList(ViewBag.Libraries, "id", "Building"), "Select a Library",
                                    new { id = "librarySelect" })
-                    @Html.ValidationMessageFor(model => model.library, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Library, "", new { @class = "text-danger" })
                 </div>
             </div>
 

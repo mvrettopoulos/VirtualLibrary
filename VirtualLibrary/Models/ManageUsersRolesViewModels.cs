@@ -20,7 +20,7 @@ namespace VirtualLibrary.Models
 
         [Required]
         [Display(Name = "oldName")]
-        public string oldName { get; set; }
+        public string OldName { get; set; }
     }
 
     public class UserEditViewModel
@@ -28,7 +28,7 @@ namespace VirtualLibrary.Models
         [Required]
         [EmailAddress]
         [Display(Name = "User Email")]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Username is required.")]
         [StringLength(15, MinimumLength = 3)]
@@ -40,12 +40,12 @@ namespace VirtualLibrary.Models
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(20, MinimumLength = 3)]
         [Display(Name = "First Name")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name is required.")]
         [StringLength(15, MinimumLength = 3)]
         [Display(Name = "Last Name")]
-        public string lastName { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Membership ID is required.")]
         [RegularExpression(@"^[0-9]*$", ErrorMessage = "Membership ID must be a 12-digit number")]
@@ -55,11 +55,11 @@ namespace VirtualLibrary.Models
 
         [Required]
         [Display(Name = "Roles")]
-        public List<UserEditRoleView> roles { get; set; }
+        public List<UserEditRoleView> Roles { get; set; }
 
         public UserEditViewModel()
         {
-            roles = new List<UserEditRoleView>();
+            Roles = new List<UserEditRoleView>();
         }
     }
 
@@ -67,13 +67,13 @@ namespace VirtualLibrary.Models
     {
         public UserEditRoleView(string roleName, bool isRole)
         {
-            this.isRole = isRole;
-            this.roleName = roleName;
+            this.IsRole = isRole;
+            this.RoleName = roleName;
         }
 
         public UserEditRoleView() { }
-        public bool isRole { get; set; }
-        public string roleName { get; set; }
+        public bool IsRole { get; set; }
+        public string RoleName { get; set; }
     }
 
     public class CreateUserView
@@ -81,7 +81,7 @@ namespace VirtualLibrary.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Username is required.")]
         [StringLength(15, MinimumLength = 3)]
@@ -93,12 +93,12 @@ namespace VirtualLibrary.Models
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(20, MinimumLength = 3)]
         [Display(Name = "First Name")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name is required.")]
         [StringLength(15, MinimumLength = 3)]
         [Display(Name = "Last Name")]
-        public string lastName { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]
@@ -114,11 +114,11 @@ namespace VirtualLibrary.Models
 
         [Required]
         [Display(Name = "Roles")]
-        public List<UserEditRoleView> roles { get; set; }
+        public List<UserEditRoleView> Roles { get; set; }
 
         public CreateUserView()
         {
-            roles = new List<UserEditRoleView>();
+            Roles = new List<UserEditRoleView>();
         }
 
     }

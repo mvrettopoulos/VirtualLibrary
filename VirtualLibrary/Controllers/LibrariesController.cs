@@ -184,7 +184,7 @@ namespace VirtualLibrary.Controllers
                                 {
                                     Value = x.id.ToString(),
                                     Text = x.username,
-                                }); ;
+                                });
 
             return new MultiSelectList(all_librarians, "Value", "Text", selected);
         }

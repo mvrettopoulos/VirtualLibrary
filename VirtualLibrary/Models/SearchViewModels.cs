@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace VirtualLibrary.Models
 {
-    public class filterViewModel
+    public class FilterViewModel
     {
-        public string search { get; set; }
-        public string category { get; set; }
-        public string filter { get; set; }
-        public string author { get; set; }
-        public string words { get; set; }
+        public string Search { get; set; }
+        public string Category { get; set; }
+        public string Filter { get; set; }
+        public string Author { get; set; }
+        public string Words { get; set; }
     }
 }

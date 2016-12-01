@@ -44,7 +44,7 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 Category category = new Category();
-                category.Description = model.description;
+                category.Description = model.Description;
                 db.Category.Add(category);
                 db.SaveChanges();
                 log.Info("Category created.");
@@ -84,7 +84,7 @@ namespace VirtualLibrary.Controllers
                 return HttpNotFound();
             }
             var model = new CategoryViewModel();
-            model.description = category.Description;
+            model.Description = category.Description;
             return PartialView("_Edit", model);
         }
 
@@ -98,8 +98,8 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 Category category = new Category();
-                category.id = Convert.ToInt32(model.id);
-                category.Description = model.description;
+                category.id = Convert.ToInt32(model.Id);
+                category.Description = model.Description;
                 try
                 {
                     db.Entry(category).State = EntityState.Modified;

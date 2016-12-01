@@ -42,7 +42,7 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 Author author = new Author();
-                author.author_name = model.authorName;
+                author.author_name = model.AuthorName;
                 db.Author.Add(author);
                 db.SaveChanges();
                 log.Info("Author created.");
@@ -81,7 +81,7 @@ namespace VirtualLibrary.Controllers
                 return HttpNotFound();
             }
             var model = new AuthorViewModel();
-            model.authorName = author.author_name;
+            model.AuthorName = author.author_name;
             return PartialView("_Edit", model);
         }
         // POST: Authors/Edit/5
@@ -96,8 +96,8 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 Author author = new Author();
-                author.id = Convert.ToInt32(model.id);
-                author.author_name = model.authorName;
+                author.id = Convert.ToInt32(model.Id);
+                author.author_name = model.AuthorName;
                 try
                 {
                     db.Entry(author).State = EntityState.Modified;

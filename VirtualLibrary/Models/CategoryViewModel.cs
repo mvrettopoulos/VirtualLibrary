@@ -9,9 +9,9 @@ namespace VirtualLibrary.Models
 {
     public class CategoryViewModel
     {
-        public string id { get; set; }
+        public string Id { get; set; }
         [Required]
         [Display(Name = "Description")]
-        public string description { get; set; }
+        public string Description { get; set; }
     }
 }

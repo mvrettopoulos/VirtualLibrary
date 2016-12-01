@@ -84,7 +84,7 @@ namespace VirtualLibrary.Controllers
                 return HttpNotFound();
             }
             ReservationsViewModel reservation = new ReservationsViewModel();
-            reservation.book = book.title;
+            reservation.Book = book.title;
             var librariesList = AvailableLibraries(book.id);
             if (librariesList.Count == 0)
             {
@@ -99,7 +99,7 @@ namespace VirtualLibrary.Controllers
                 ViewBag.StatusMessage = "You can not reserve any book. Please contact your librarian";
                 return View("../Search/GetBook", book);
             }
-            reservation.username = user.username;
+            reservation.Username = user.username;
             ViewBag.Libraries = librariesList;
 
 
@@ -118,7 +118,7 @@ namespace VirtualLibrary.Controllers
                 DateTime dateTime;
                 
 
-                var book = db.Books.Single(x => x.id == model.id);
+                var book = db.Books.Single(x => x.id == model.Id);
                 if (!DateTime.TryParseExact(model.return_date, format, CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out dateTime))
                 {
@@ -134,7 +134,7 @@ namespace VirtualLibrary.Controllers
                     return View("Reserve", model);
                 }
                 Reservations reservation = new Reservations();
-                var library_id = Convert.ToInt32(model.library);
+                var library_id = Convert.ToInt32(model.Library);
                 reservation.Books = book;
                 reservation.check_in = false;
                 reservation.check_out = false;
@@ -142,7 +142,7 @@ namespace VirtualLibrary.Controllers
                 reservation.reserved_date =Convert.ToDateTime(model.reserved_date);
                 reservation.return_date = Convert.ToDateTime(model.return_date);
                 reservation.renewTimes = 3;
-                reservation.Users = db.Users.Single(x => x.username == model.username);
+                reservation.Users = db.Users.Single(x => x.username == model.Username);
 
                 if (reservation.reserved_date > reservation.return_date || reservation.reserved_date.Value.AddDays(7) <reservation.return_date )
                 {

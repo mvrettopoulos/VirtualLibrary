@@ -29,29 +29,29 @@
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
-                                @Html.LabelFor(model => model.book, "title", htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.Book, "title", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DisplayFor(model => model.book, "title", new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.HiddenFor(model => model.book)
+                                    @Html.DisplayFor(model => model.Book, "title", new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(model => model.Book)
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.username, "username", htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.Username, "username", htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DisplayFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.HiddenFor(model => model.username)
+                                    @Html.DisplayFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(model => model.Username)
                                 </div>
                             </div>
 
                             
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.library, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.Library, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.library, new SelectList(ViewBag.Libraries, "id", "Building"), "Select a Library",
+                                    @Html.DropDownListFor(model => model.Library, new SelectList(ViewBag.Libraries, "id", "Building"), "Select a Library",
                                    new { id = "librarySelect" })
-                                    @Html.ValidationMessageFor(model => model.library, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.Library, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 

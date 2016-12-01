@@ -9,9 +9,9 @@ namespace VirtualLibrary.Models
 {
     public class AuthorViewModel
     {
-        public string id { get; set; }
+        public string Id { get; set; }
         [Required]
         [Display(Name = "Author Name")]
-        public string authorName { get; set; }
+        public string AuthorName { get; set; }
     }
 }

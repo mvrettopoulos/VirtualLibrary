@@ -10,9 +10,9 @@ namespace VirtualLibrary.Models
     public class ReservationsViewModel
     {
 
-        public int id { get; set; }
-        public string book { get; set; }
-        public string username { get; set; }
+        public int Id { get; set; }
+        public string Book { get; set; }
+        public string Username { get; set; }
         [Required]
         [Display(Name = "Reservation Date")]
         public string reserved_date { get; set; }
@@ -22,7 +22,7 @@ namespace VirtualLibrary.Models
 
         [Required]
         [Display(Name = "Library Building")]
-        public string library { get; set; }
+        public string Library { get; set; }
 
     }
   
@@ -30,10 +30,10 @@ namespace VirtualLibrary.Models
     {
         [Required]
         [Display(Name = "ISBN")]
-        public string isbn { get; set; }
+        public string Isbn { get; set; }
         [Required]
         [Display(Name = "Username")]
-        public string username { get; set; }
+        public string Username { get; set; }
         [Required]
         [Display(Name = "Reservation Date")]
         public string reserved_date { get; set; }
@@ -43,6 +43,6 @@ namespace VirtualLibrary.Models
 
         [Required]
         [Display(Name = "Library Building")]
-        public string library { get; set; }
+        public string Library { get; set; }
     }
 }

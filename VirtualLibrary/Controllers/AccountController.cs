@@ -206,8 +206,8 @@ namespace VirtualLibrary.Controllers
                     NewUser.active = false;
                     NewUser.bad_user = false;
                     NewUser.username = model.Username;
-                    NewUser.first_name = model.firstName;
-                    NewUser.last_name = model.lastName;
+                    NewUser.first_name = model.FirstName;
+                    NewUser.last_name = model.LastName;
                     NewUser.date_of_birth = model.Date_of_Birth;
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
@@ -439,8 +439,8 @@ namespace VirtualLibrary.Controllers
                     NewUser.active = false;
                     NewUser.bad_user = false;
                     NewUser.username = model.Username;
-                    NewUser.first_name = model.firstName;
-                    NewUser.last_name = model.lastName;
+                    NewUser.first_name = model.FirstName;
+                    NewUser.last_name = model.LastName;
                     NewUser.date_of_birth = model.Date_of_Birth;
                     DateTime today = DateTime.Today;
                     NewUser.date_of_registration = Convert.ToString(today);
@@ -500,11 +500,11 @@ namespace VirtualLibrary.Controllers
         public ActionResult CreateUser()
         {
             CreateUserView userModel = new CreateUserView();
-            userModel.roles = new List<UserEditRoleView>();
+            userModel.Roles = new List<UserEditRoleView>();
             var roleList = RoleManager.Roles.ToList();
             foreach (var role in roleList)
             {
-                userModel.roles.Add(new UserEditRoleView(role.Name, false));
+                userModel.Roles.Add(new UserEditRoleView(role.Name, false));
             }
             return PartialView("_CreateUser", userModel);
         }
@@ -517,7 +517,7 @@ namespace VirtualLibrary.Controllers
             {
                 ApplicationUser user = new ApplicationUser();
                 user.UserName = model.Username;
-                user.Email = model.email;
+                user.Email = model.Email;
                 var pass = Guid.NewGuid().ToString().Substring(0, 12);
                 var result = UserManager.Create(user, pass);
                 if (!result.Succeeded)
@@ -532,8 +532,8 @@ namespace VirtualLibrary.Controllers
                 newUser.aspnet_user_id = currentUser.Id;
                 newUser.bad_user = false;
                 newUser.date_of_birth = model.Date_of_Birth;
-                newUser.first_name = model.firstName;
-                newUser.last_name = model.lastName;
+                newUser.first_name = model.FirstName;
+                newUser.last_name = model.LastName;
                 newUser.membership_id = Convert.ToInt64(model.membership_id_string);
                 DateTime today = DateTime.Today;
                 newUser.date_of_registration = Convert.ToString(today);
@@ -551,15 +551,15 @@ namespace VirtualLibrary.Controllers
                     "<p>You can log in by clicking this link: <a href=\"" + callbackUrl + "\">link</a></p>" +
                     "<p>Please change your password at your first log in in the profile menu!</p>"
                     , user.Email, "Virtual Library Acoount");
-                foreach (var role in model.roles)
+                foreach (var role in model.Roles)
                 {
-                    if (role.isRole && !UserManager.IsInRole(user.Id, role.roleName))
+                    if (role.IsRole && !UserManager.IsInRole(user.Id, role.RoleName))
                     {
-                        UserManager.AddToRole(user.Id, role.roleName);
+                        UserManager.AddToRole(user.Id, role.RoleName);
                     }
-                    else if (!role.isRole && UserManager.IsInRole(user.Id, role.roleName))
+                    else if (!role.IsRole && UserManager.IsInRole(user.Id, role.RoleName))
                     {
-                        UserManager.RemoveFromRole(user.Id, role.roleName);
+                        UserManager.RemoveFromRole(user.Id, role.RoleName);
                     }
                 }
                 log.Info("User created.");
@@ -614,22 +614,22 @@ namespace VirtualLibrary.Controllers
             var user = db.Users.Single(x => x.aspnet_user_id == identityUser.Id);
             UserEditViewModel editUser = new UserEditViewModel();
             editUser.Username = identityUser.UserName;
-            editUser.email = identityUser.Email;
-            editUser.firstName = user.first_name;
-            editUser.lastName = user.last_name;
+            editUser.Email = identityUser.Email;
+            editUser.FirstName = user.first_name;
+            editUser.LastName = user.last_name;
             editUser.membership_id_string = Convert.ToString(user.membership_id);
-            editUser.roles = new List<UserEditRoleView>();
+            editUser.Roles = new List<UserEditRoleView>();
             var userRoles = UserManager.GetRoles(identityUser.Id);
             var roleList = RoleManager.Roles.ToList();
             foreach (var role in roleList)
             {
                 if (userRoles.Contains(role.Name))
                 {
-                    editUser.roles.Add(new UserEditRoleView(role.Name, true));
+                    editUser.Roles.Add(new UserEditRoleView(role.Name, true));
                 }
                 else
                 {
-                    editUser.roles.Add(new UserEditRoleView(role.Name, false));
+                    editUser.Roles.Add(new UserEditRoleView(role.Name, false));
                 }
             }
             return PartialView("_EditUser", editUser);
@@ -642,7 +642,7 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 var identityUser = UserManager.FindByName(model.Username);
-                identityUser.Email = model.email;
+                identityUser.Email = model.Email;
                 var result = UserManager.Update(identityUser);
                 if (!result.Succeeded)
                 {
@@ -651,8 +651,8 @@ namespace VirtualLibrary.Controllers
                     return PartialView("_EditRole", identityUser);
                 }
                 Users user = new Users();
-                user.first_name = model.firstName;
-                user.last_name = model.lastName;
+                user.first_name = model.FirstName;
+                user.last_name = model.LastName;
                 user.membership_id = Convert.ToInt64(model.membership_id_string);
                 try
                 {
@@ -665,16 +665,16 @@ namespace VirtualLibrary.Controllers
                 }
 
 
-                foreach (var role in model.roles)
+                foreach (var role in model.Roles)
                 {
-                    if (role.isRole && !UserManager.IsInRole(identityUser.Id, role.roleName))
+                    if (role.IsRole && !UserManager.IsInRole(identityUser.Id, role.RoleName))
                     {
-                        UserManager.AddToRole(identityUser.Id, role.roleName);
-                        log.Info(role.roleName + "-" + role.isRole);
+                        UserManager.AddToRole(identityUser.Id, role.RoleName);
+                        log.Info(role.RoleName + "-" + role.IsRole);
                     }
-                    else if (!role.isRole && UserManager.IsInRole(identityUser.Id, role.roleName))
+                    else if (!role.IsRole && UserManager.IsInRole(identityUser.Id, role.RoleName))
                     {
-                        UserManager.RemoveFromRole(identityUser.Id, role.roleName);
+                        UserManager.RemoveFromRole(identityUser.Id, role.RoleName);
                     }
                 }
                 log.Info("User updated.");
@@ -758,7 +758,7 @@ namespace VirtualLibrary.Controllers
                 return HttpNotFound();
             }
             RoleEditViewModel roleView = new RoleEditViewModel();
-            roleView.oldName = role.Name;
+            roleView.OldName = role.Name;
             roleView.Name = role.Name;
             return PartialView("_EditRole", roleView);
         }
@@ -766,7 +766,7 @@ namespace VirtualLibrary.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditRole([Bind(Include = "name,oldName")] RoleEditViewModel roleView)
         {
-            IdentityRole role = RoleManager.FindByName(roleView.oldName);
+            IdentityRole role = RoleManager.FindByName(roleView.OldName);
             role.Name = roleView.Name;
             if (ModelState.IsValid)
             {

@@ -13,17 +13,17 @@ namespace VirtualLibrary.Models
         [Display(Name = "User Name")]
         [RegularExpression(@"(\S)+", ErrorMessage = " White Space is not allowed in User Names")]
         [ScaffoldColumn(false)]
-        public string username { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "First Name is required.")]
         [StringLength(50, MinimumLength = 4)]
         [Display(Name = "First Name")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name is required.")]
         [StringLength(50, MinimumLength = 4)]
         [Display(Name = "Last Name")]
-        public string lastName { get; set; }
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "Date of Birth is required")]
         [MinimumAge(18)]

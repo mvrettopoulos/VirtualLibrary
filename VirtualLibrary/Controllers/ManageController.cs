@@ -171,14 +171,6 @@ namespace VirtualLibrary.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
-        // GET: /Manage/VerifyPhoneNumber
-        public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
-        {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-            // Send an SMS through the SMS provider to verify the phone number
-            return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
-        }
 
         //
         // POST: /Manage/VerifyPhoneNumber
@@ -448,11 +440,11 @@ namespace VirtualLibrary.Controllers
 
             // Construct the viewmodel
             UserProfileEdit model = new UserProfileEdit();
-            model.firstName = user.first_name;
-            model.lastName = user.last_name;
+            model.FirstName = user.first_name;
+            model.LastName = user.last_name;
             model.Date_of_Birth = user.date_of_birth;
             model.Email = aspNetUser.Email;
-            model.username = username;
+            model.Username = username;
 
             return PartialView("EditProfile", model);
         }
@@ -466,12 +458,12 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                 // Get the userprofile
-                Users user = db.Users.FirstOrDefault(u => u.username.Equals(model.username));
-                AspNetUsers aspNetUser = db.AspNetUsers.FirstOrDefault(m => m.UserName.Equals(model.username));
+                Users user = db.Users.FirstOrDefault(u => u.username.Equals(model.Username));
+                AspNetUsers aspNetUser = db.AspNetUsers.FirstOrDefault(m => m.UserName.Equals(model.Username));
 
                 // Update fields
-                user.first_name = model.firstName;
-                user.last_name = model.lastName;
+                user.first_name = model.FirstName;
+                user.last_name = model.LastName;
                 user.date_of_birth = model.Date_of_Birth;
                 aspNetUser.Email = model.Email;
 
@@ -506,7 +498,7 @@ namespace VirtualLibrary.Controllers
                 return PartialView("ExtendLoan", null);
             }
             ExtendLoanView model = new ExtendLoanView();
-            model.id = reservation.id;
+            model.Id = reservation.id;
             var newModel = GetAvailable(model);
             if (newModel == null)
             {
@@ -541,7 +533,7 @@ namespace VirtualLibrary.Controllers
                     return PartialView("ExtendLoan", model);
                 }
 
-                Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.id));
+                Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.Id));
                 var newReturnDate = Convert.ToDateTime(model.return_date);
                 if (reservation.return_date > newReturnDate || reservation.return_date.Value.AddDays(7) < newReturnDate)
                 {
@@ -569,13 +561,13 @@ namespace VirtualLibrary.Controllers
 
         private ExtendLoanView GetAvailable(ExtendLoanView model)
         {
-            Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.id));
+            Reservations reservation = db.Reservations.FirstOrDefault(m => m.id == (model.Id));
             Books_Availability availableBook = db.Books_Availability.FirstOrDefault(b => b.book_id == reservation.book_id && b.library_id == reservation.library_id);
             List<Reservations> reservationsList = db.Reservations.Where(x => x.book_id == reservation.book_id && x.library_id == reservation.library_id && reservation.reserved_date >= x.reserved_date && reservation.return_date <= x.return_date).OrderBy(x => x.reserved_date).ToList();
             if (reservationsList.Count <= availableBook.quantity)
             {
-                model.minDate = reservation.return_date.Value.AddDays(1);
-                model.maxDate = reservation.return_date.Value.AddDays(7);
+                model.MinDate = reservation.return_date.Value.AddDays(1);
+                model.MaxDate = reservation.return_date.Value.AddDays(7);
             }
             else
             {
@@ -585,8 +577,8 @@ namespace VirtualLibrary.Controllers
                     return null;
                 }
 
-                model.minDate = reservation.return_date.Value.AddDays(1);
-                model.maxDate = reservationLast.reserved_date.Value.AddDays(-1);
+                model.MinDate = reservation.return_date.Value.AddDays(1);
+                model.MaxDate = reservationLast.reserved_date.Value.AddDays(-1);
             }
             return model;
         }

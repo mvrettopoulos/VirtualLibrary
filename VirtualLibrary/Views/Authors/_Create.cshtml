@@ -10,10 +10,10 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.authorName, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.AuthorName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.authorName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.authorName, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.AuthorName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AuthorName, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

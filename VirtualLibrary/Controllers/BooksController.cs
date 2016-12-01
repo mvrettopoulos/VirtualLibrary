@@ -67,10 +67,10 @@ namespace VirtualLibrary.Controllers
             {
                 VirtualLibrary.Models.Books book = new Books();
                 //map obj BooksViewModel to ModelDataBase book
-                book.title = model.title;
-                book.description = model.description;
-                book.isbn = model.isbn;
-                book.publisher = model.publisher;
+                book.title = model.Title;
+                book.description = model.Description;
+                book.isbn = model.Isbn;
+                book.publisher = model.Publisher;
                 if (model.ThisAuthor != null)
                 {
                     foreach (var author in model.ThisAuthor)
@@ -143,7 +143,7 @@ namespace VirtualLibrary.Controllers
             }
             ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null, books.Author.Select(u => u.id).ToList());
             ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null, books.Category.Select(u => u.id).ToList());
-            var model = new BooksViewModel { id = books.id, description = books.description, isbn = books.isbn, title = books.title, publisher = books.publisher, ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories };
+            var model = new BooksViewModel { Id = books.id, Description = books.description, Isbn = books.isbn, Title = books.title, Publisher = books.publisher, ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories };
   
             return PartialView(model);
         }
@@ -157,11 +157,11 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
                
-                Books bookToUpdate = db.Books.Where(c => c.id == model.id).Single();
-                bookToUpdate.title = model.title;
-                bookToUpdate.description = model.description;
-                bookToUpdate.isbn = model.isbn;
-                bookToUpdate.publisher = model.publisher;
+                Books bookToUpdate = db.Books.Where(c => c.id == model.Id).Single();
+                bookToUpdate.title = model.Title;
+                bookToUpdate.description = model.Description;
+                bookToUpdate.isbn = model.Isbn;
+                bookToUpdate.publisher = model.Publisher;
                 bookToUpdate.Author.Clear();
                 bookToUpdate.Category.Clear();
                 if (model.ThisAuthor != null)

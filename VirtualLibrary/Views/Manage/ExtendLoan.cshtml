@@ -19,7 +19,7 @@
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
             @Html.LabelFor(model => model.return_date, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,8 +54,8 @@
         <strong>Apply</strong>
     </button>
     <script type="text/javascript">
-    var minDate = new Date(@Html.Raw(Model.minDate.Year),@Html.Raw(Model.minDate.Month)-1,@Html.Raw(Model.minDate.Day));
-    var maxDate = new Date(@Html.Raw(Model.maxDate.Year),@Html.Raw(Model.maxDate.Month)-1,@Html.Raw(Model.maxDate.Day));
+    var minDate = new Date(@Html.Raw(Model.MinDate.Year),@Html.Raw(Model.MinDate.Month)-1,@Html.Raw(Model.MinDate.Day));
+    var maxDate = new Date(@Html.Raw(Model.MaxDate.Year),@Html.Raw(Model.MaxDate.Month)-1,@Html.Raw(Model.MaxDate.Day));
 
 
 

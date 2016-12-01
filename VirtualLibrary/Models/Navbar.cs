@@ -8,14 +8,14 @@ namespace VirtualLibrary.Models
     public class Navbar
     {
         public int Id { get; set; }
-        public string nameOption { get; set; }
-        public string controller { get; set; }
-        public string action { get; set; }
-        public string area { get; set; }
-        public string imageClass { get; set; }
-        public string activeli { get; set; }
-        public bool status { get; set; }
-        public int parentId { get; set; }
-        public bool isParent { get; set; }
+        public string NameOption { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public string Area { get; set; }
+        public string ImageClass { get; set; }
+        public string Activeli { get; set; }
+        public bool Status { get; set; }
+        public int ParentId { get; set; }
+        public bool IsParent { get; set; }
     }
 }

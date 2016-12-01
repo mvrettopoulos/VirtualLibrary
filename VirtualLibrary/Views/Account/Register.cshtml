@@ -14,19 +14,19 @@
                 <hr class="colorgraph">
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.firstName)
+                            @Html.LabelFor(m => m.FirstName)
                             @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
-                            @Html.TextBoxFor(m => m.firstName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.firstName)
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FirstName)
                         </div>
                     </div>
                    
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.lastName)
+                            @Html.LabelFor(m => m.LastName)
                             @Html.Label("*", new { id = "star", @class = "requiredFiledCol" })
-                            @Html.TextBoxFor(m => m.lastName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" })
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
