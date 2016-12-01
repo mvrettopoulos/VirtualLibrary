@@ -185,7 +185,7 @@ namespace VirtualLibrary.Controllers
                 reservation.reserved_date = Convert.ToDateTime(model.reserved_date);
                 reservation.return_date = Convert.ToDateTime(model.return_date);
                 reservation.renewTimes = 3;
-                reservation.Users = db.Users.Single(x => x.username == model.Username);
+                reservation.Users = user;
 
                 if (reservation.reserved_date > reservation.return_date || reservation.reserved_date.Value.AddDays(7) < reservation.return_date)
                 {
@@ -209,6 +209,9 @@ namespace VirtualLibrary.Controllers
                 catch (DataException e)
                 {
                     log.Error("Database error:", e);
+                    ModelState.AddModelError("", "Book is not available with the setting you selected!!!");
+                    ViewBag.Libraries = AvailableLibraries();
+                    return PartialView("CreateReservation", model);
                 }
                 log.Info("Reservation created.");
 
