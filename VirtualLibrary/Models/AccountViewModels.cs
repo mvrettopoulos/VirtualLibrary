@@ -96,7 +96,7 @@ namespace VirtualLibrary.Models
 
     public class MinimumAgeAttribute : ValidationAttribute
     {
-        int _minimumAge;
+        readonly int _minimumAge;
         public MinimumAgeAttribute(int minimumAge)
         {
             _minimumAge = minimumAge;

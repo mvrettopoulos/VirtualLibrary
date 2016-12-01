@@ -456,6 +456,7 @@ namespace VirtualLibrary.Controllers
 
             return PartialView("EditProfile", model);
         }
+        
         //POST:EditProfile
         [HttpPost]
         [Authorize]
@@ -518,6 +519,7 @@ namespace VirtualLibrary.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult ExtendLoan(ExtendLoanView model)
         {
@@ -607,26 +609,6 @@ namespace VirtualLibrary.Controllers
             {
                 ModelState.AddModelError("", error);
             }
-        }
-
-        private bool HasPassword()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PasswordHash != null;
-            }
-            return false;
-        }
-
-        private bool HasPhoneNumber()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PhoneNumber != null;
-            }
-            return false;
         }
 
         public enum ManageMessageId

@@ -12,7 +12,6 @@ namespace VirtualLibrary.Controllers
     public class LibrariesController : Controller
     {
         private readonly VirtualLibraryEntities db = new VirtualLibraryEntities();
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -147,6 +146,7 @@ namespace VirtualLibrary.Controllers
 
         // POST: Libraries/Librarians/1
         [HttpPost, ActionName("Librarians")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Librarians(int? id, UsersForLibraryViewModel model)
         {
@@ -187,20 +187,6 @@ namespace VirtualLibrary.Controllers
                                 }); ;
 
             return new MultiSelectList(all_librarians, "Value", "Text", selected);
-        }
-
-
-        private IEnumerable<SelectListItem> GetAuthors(int authorid)
-        {
-            var selected = db.Books.Where(c => c.Author.Any(x=>x.id == authorid)).ToList();
-            var all_authors = db.Author.ToList().Select(x =>
-                                new SelectListItem
-                                {
-                                    Value = x.id.ToString(),
-                                    Text = x.author_name,
-                                }); ;
-
-            return new MultiSelectList(all_authors, "Value", "Text", selected);
         }
 
     }

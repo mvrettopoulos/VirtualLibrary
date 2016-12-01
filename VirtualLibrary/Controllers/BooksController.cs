@@ -20,7 +20,7 @@ namespace VirtualLibrary.Controllers
             (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Books
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
             return View(db.Books.ToList());
@@ -43,8 +43,9 @@ namespace VirtualLibrary.Controllers
         }
 
         // GET: Books/Create
-        [Authorize(Roles = "Admin, Moderator")]
+       
         [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Create()
         {
             
@@ -126,16 +127,9 @@ namespace VirtualLibrary.Controllers
             return PartialView(model);
         }
 
-        // POST:Upload Profile Picture
-        [HttpPost]
-        public ActionResult FileUpload(HttpPostedFileBase file)
-        {
-            return PartialView(file);
-        }
-
         // GET: Books/Edit/5
-        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -147,31 +141,14 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpNotFound();
             }
-            int[] currentAuthorsIdAsArray = new int[books.Author.Count()];
-            var x = 0;
-            var y = 0;
-            foreach( var author2 in books.Author.ToList() )
-            {
-                currentAuthorsIdAsArray[x] = author2.id;
-                x++;
-            }
-            
-            int[] currentCategoriesIdAsArray = new int[books.Category.Count()];
-            foreach (var category2 in books.Category.ToList())
-            {
-                currentCategoriesIdAsArray[y] = category2.id;
-                y++;
-            }
-            ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null, currentAuthorsIdAsArray);
-            ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null, currentCategoriesIdAsArray);
+            ViewBag.Authors = new MultiSelectList(db.Author.ToList(), "id", "author_name", null, books.Author.Select(u => u.id).ToList());
+            ViewBag.Categories = new MultiSelectList(db.Category.ToList(), "id", "Description", null, books.Category.Select(u => u.id).ToList());
             var model = new BooksViewModel { id = books.id, description = books.description, isbn = books.isbn, title = books.title, publisher = books.publisher, ThisAuthor = null, ThisCategory = null, AllAuthors = ViewBag.Authors, AllCategories = ViewBag.Categories };
   
             return PartialView(model);
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]

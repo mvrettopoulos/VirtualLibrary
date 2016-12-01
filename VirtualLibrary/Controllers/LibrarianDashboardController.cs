@@ -18,8 +18,8 @@ namespace VirtualLibrary.Controllers
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
+        [Authorize(Roles = "Moderator,Admin ")]
         // GET: LibrarianDashboard
         public ActionResult Index()
         {
@@ -31,8 +31,8 @@ namespace VirtualLibrary.Controllers
             return View(selected_reservations_new.ToList());
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
+        [Authorize(Roles = "Moderator,Admin ")]
         // GET: LibrarianDashboard/Checkin/4
         public ActionResult Checkin(int? id)
         {
@@ -48,8 +48,9 @@ namespace VirtualLibrary.Controllers
             return PartialView("Checkin", reservation);
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+        
         [HttpPost, ActionName("Checkin")]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         // POST: LibrarianDashboard/Checkin/4
         public ActionResult CheckinConfirmed(int id)
@@ -74,8 +75,9 @@ namespace VirtualLibrary.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, Moderator")]
+        
         [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         // GET: LibrarianDashboard/Checkout/4
         public ActionResult Checkout(int? id)
         {
@@ -91,8 +93,9 @@ namespace VirtualLibrary.Controllers
             return PartialView("Checkout", reservation);
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+        
         [HttpPost, ActionName("Checkout")]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         // POST: LibrarianDashboard/Checkout/4
         public ActionResult CheckoutConfirmed(int id)
@@ -124,15 +127,15 @@ namespace VirtualLibrary.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         public ActionResult CreateReservation()
         {
-            ViewBag.Libraries = availableLibraries();
+            ViewBag.Libraries = AvailableLibraries();
             return PartialView("CreateReservation");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         public ActionResult CreateReservation(LibrarianCreateReservationViewModel model)
         {
             if (ModelState.IsValid)
@@ -146,7 +149,7 @@ namespace VirtualLibrary.Controllers
                 if (book == null)
                 {
                     ModelState.AddModelError("isbn", "Book does not exist with ISBN: " + model.isbn + " !!!");
-                    ViewBag.Libraries = availableLibraries();
+                    ViewBag.Libraries = AvailableLibraries();
                     return PartialView("CreateReservation", model);
                 }
 
@@ -154,7 +157,7 @@ namespace VirtualLibrary.Controllers
                 if (user == null)
                 {
                     ModelState.AddModelError("username", "User does not exists with usernaem: " + model.username + "!!!");
-                    ViewBag.Libraries = availableLibraries();
+                    ViewBag.Libraries = AvailableLibraries();
                     return PartialView("CreateReservation", model);
                 }
 
@@ -163,14 +166,14 @@ namespace VirtualLibrary.Controllers
                     DateTimeStyles.None, out dateTime))
                 {
                     ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
-                    ViewBag.Libraries = availableLibraries();
+                    ViewBag.Libraries = AvailableLibraries();
                     return PartialView("CreateReservation", model);
                 }
                 if (!DateTime.TryParseExact(model.reserved_date, format, CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out dateTime))
                 {
                     ModelState.AddModelError("reserved_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
-                    ViewBag.Libraries = availableLibraries();
+                    ViewBag.Libraries = AvailableLibraries();
                     return PartialView("CreateReservation", model);
                 }
                 Reservations reservation = new Reservations();
@@ -187,7 +190,7 @@ namespace VirtualLibrary.Controllers
                 if (reservation.reserved_date > reservation.return_date || reservation.reserved_date.Value.AddDays(7) < reservation.return_date)
                 {
                     ModelState.AddModelError("", "The dates you selected are invalid!!!");
-                    ViewBag.Libraries = availableLibraries();
+                    ViewBag.Libraries = AvailableLibraries();
                     return PartialView("CreateReservation", model);
                 }
 
@@ -195,7 +198,7 @@ namespace VirtualLibrary.Controllers
                 if (!CheckIfAvailable(book.id, library_id, bookAvailable.quantity, reservation.reserved_date, reservation.return_date))
                 {
                     ModelState.AddModelError("", "Book is not available the dates you selected!!!");
-                    ViewBag.Libraries = availableLibraries();
+                    ViewBag.Libraries = AvailableLibraries();
                     return PartialView("CreateReservation", model);
                 }
                 try
@@ -226,7 +229,7 @@ namespace VirtualLibrary.Controllers
             return false;
         }
 
-        private List<Libraries> availableLibraries()
+        private List<Libraries> AvailableLibraries()
         {
             string username = User.Identity.Name;
             var librarianLibraries = db.Librarians.Where(x => x.Users.username == username).ToList();

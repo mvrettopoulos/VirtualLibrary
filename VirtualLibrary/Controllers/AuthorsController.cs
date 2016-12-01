@@ -26,14 +26,16 @@ namespace VirtualLibrary.Controllers
                 return View("Index");
             }
         }
-        [Authorize(Roles = "Admin, Moderator")]
+        
         [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Create()
         {
             return PartialView("_Create");
         }
-        [Authorize(Roles = "Admin, Moderator")]
+       
         [HttpPost]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AuthorViewModel model)
         {
@@ -85,8 +87,9 @@ namespace VirtualLibrary.Controllers
         // POST: Authors/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Moderator")]
+        
         [HttpPost]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(AuthorViewModel model)
         {
@@ -109,8 +112,9 @@ namespace VirtualLibrary.Controllers
             }
             return PartialView("_Edit", model);
         }
-        [Authorize(Roles = "Admin, Moderator")]
+       
         [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

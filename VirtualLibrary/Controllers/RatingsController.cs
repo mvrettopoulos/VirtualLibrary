@@ -30,8 +30,9 @@ namespace VirtualLibrary.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin, Moderator, User")]
+        
         [HttpPost]
+        [Authorize(Roles = "Admin, Moderator, User")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection form)
         {
@@ -61,7 +62,7 @@ namespace VirtualLibrary.Controllers
             bookRating.book_id = Convert.ToInt32(bookID);
             bookRating.comment = comment;
             bookRating.rating = Convert.ToInt32(rating);
-            bookRating.timestamp = DateTime.Now.ToString("dd/mm/yyyy HH:mm:ss"); ;
+            bookRating.timestamp = DateTime.Now.ToString("dd/mm/yyyy HH:mm:ss");
             bookRating.user_id = model.id;
             db.Books_Ratings.Add(bookRating);
             db.SaveChanges();
@@ -71,8 +72,9 @@ namespace VirtualLibrary.Controllers
 
 
 
-        [Authorize(Roles = "Admin, Moderator")]
+        
         [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -88,8 +90,8 @@ namespace VirtualLibrary.Controllers
         }
 
         // POST: Ratingss/Delete/5
-        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

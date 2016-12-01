@@ -22,8 +22,9 @@ namespace VirtualLibrary.Controllers
             return View(db.Reservations.ToList());
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+        
         [HttpGet]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -42,9 +43,10 @@ namespace VirtualLibrary.Controllers
             }
             return PartialView("Delete", reservation);
         }
+
         // POST: Authors/Delete/5
-        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin, Moderator")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -67,8 +69,9 @@ namespace VirtualLibrary.Controllers
             base.Dispose(disposing);
         }
 
-        [Authorize(Roles = "User,Admin, Moderator")]
+        
         [HttpGet]
+        [Authorize(Roles = "User,Admin, Moderator")]
         public ActionResult Reserve(int? id)
         {
             if (id == null)
@@ -82,7 +85,7 @@ namespace VirtualLibrary.Controllers
             }
             ReservationsViewModel reservation = new ReservationsViewModel();
             reservation.book = book.title;
-            var librariesList = availableLibraries(book.id);
+            var librariesList = AvailableLibraries(book.id);
             if (librariesList.Count == 0)
             {
                 ViewBag.StatusMessage = "Book is not available yet!!";
@@ -103,8 +106,9 @@ namespace VirtualLibrary.Controllers
             return View("Reserve", reservation);
         }
 
-        [Authorize(Roles = "User, Admin, Moderator")]
+        
         [HttpPost]
+        [Authorize(Roles = "User, Admin, Moderator")]
         [ValidateAntiForgeryToken]
         public ActionResult Reserve(ReservationsViewModel model)
         {
@@ -119,14 +123,14 @@ namespace VirtualLibrary.Controllers
                     DateTimeStyles.None, out dateTime))
                 {
                     ModelState.AddModelError("return_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
-                    ViewBag.Libraries = availableLibraries(book.id);
+                    ViewBag.Libraries = AvailableLibraries(book.id);
                     return View("Reserve", model);
                 }
                 if (!DateTime.TryParseExact(model.reserved_date, format, CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out dateTime))
                 {
                     ModelState.AddModelError("reserved_date", "Date format is not correct!!!Format expected is dd-mm-yyyy!");
-                    ViewBag.Libraries = availableLibraries(book.id);
+                    ViewBag.Libraries = AvailableLibraries(book.id);
                     return View("Reserve", model);
                 }
                 Reservations reservation = new Reservations();
@@ -143,7 +147,7 @@ namespace VirtualLibrary.Controllers
                 if (reservation.reserved_date > reservation.return_date || reservation.reserved_date.Value.AddDays(7) <reservation.return_date )
                 {
                     ViewBag.StatusMessage = "The dates you selected are invalid!!!";
-                    ViewBag.Libraries = availableLibraries(book.id);
+                    ViewBag.Libraries = AvailableLibraries(book.id);
                     return View("Reserve", model);
                 }
 
@@ -151,7 +155,7 @@ namespace VirtualLibrary.Controllers
                 if (!CheckIfAvailable(book.id,library_id,bookAvailable.quantity, reservation.reserved_date, reservation.return_date))
                 {
                     ViewBag.StatusMessage = "Book is not available the dates you selected!!!";
-                    ViewBag.Libraries = availableLibraries(book.id);
+                    ViewBag.Libraries = AvailableLibraries(book.id);
                     return View("Reserve", model);
                 }
                 try
@@ -183,7 +187,7 @@ namespace VirtualLibrary.Controllers
             return false;
         }
 
-        private List<Libraries> availableLibraries(int id)
+        private List<Libraries> AvailableLibraries(int id)
         {
             List<Books_Availability> bookAvailability = db.Books_Availability.Where(x => x.quantity > 0 && x.book_id == id).ToList();
             var librariesList = new List<Libraries>();

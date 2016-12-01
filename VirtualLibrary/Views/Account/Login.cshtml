@@ -1,5 +1,5 @@
-﻿<di<div class="container">
-    
+﻿<div class="container">
+
     @using VirtualLibrary.Models
     @model LoginViewModel
     @{
@@ -7,31 +7,34 @@
     }
     <section id="loginForm">
         <div class="omb_login">
-            
+
                 <h3 class="omb_authTitle">Login or @Html.ActionLink("Register as a new user", "Register")</h3>
 
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
 
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                     <div class="omb_login">
                         <div class="row omb_row-sm-offset-3">
                             <div class="col-xs-12 col-sm-6">
                                 <form class="omb_loginForm" action="" autocomplete="off" method="POST">
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.EmailOrUserName)
-                                        @Html.TextBoxFor(m => m.EmailOrUserName, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.EmailOrUserName, "", new { @class = "text-danger" })
-                                    </div>
-                                    <span class="help-block"></span>
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.Password)
-                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                    </div>
-                                    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Log in">Login</button>
-                                </form>
+                                        <div class="form-group">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.EmailOrUserName)
+                                            @Html.TextBoxFor(m => m.EmailOrUserName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.EmailOrUserName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <span class="help-block"></span>
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Password)
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit" value="Log in">Login</button>
+</form>
                             </div>
                         </div>
                         <div class="row omb_row-sm-offset-3">
