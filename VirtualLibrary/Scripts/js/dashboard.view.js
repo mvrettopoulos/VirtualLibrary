@@ -130,7 +130,7 @@ function bindFormInsert(dialog) {
                 $('#insert_reservation_modalContent').html(result);
                 bindFormInsert();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });

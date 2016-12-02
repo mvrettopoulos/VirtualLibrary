@@ -100,7 +100,7 @@ function bindFormEdit(dialog) {
                 $('#edit_loan_modalContent').html(result);
                 bindFormEdit();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });
@@ -124,7 +124,7 @@ function bindFormEditProfile(dialog) {
                 $('#edit_profile_modalContent').html(result);
                 bindFormEditProfile();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });
@@ -154,7 +154,7 @@ function bindFormEditImage(dialog) {
                 $('#edit_image_modalContent').html(result);
                 bindFormEditImage();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });

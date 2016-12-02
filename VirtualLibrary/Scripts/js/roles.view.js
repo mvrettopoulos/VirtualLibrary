@@ -128,7 +128,7 @@ function bindFormEdit(dialog) {
                 $('#edit_role_modalContent').html(result);
                 bindFormEdit();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });
@@ -162,7 +162,7 @@ function bindFormInsert(dialog) {
                 $('#insert_role_modalContent').html(result);
                 bindFormInsert();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });

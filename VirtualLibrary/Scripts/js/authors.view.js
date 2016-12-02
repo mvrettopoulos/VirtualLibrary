@@ -51,7 +51,7 @@ function bindFormInsert(dialog) {
                 $('#insert_author_modalContent').html(result);
                 bindFormInsert();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });
@@ -117,7 +117,7 @@ function bindFormEdit(dialog) {
                 $('#edit_author_modalContent').html(result);
                 bindFormEdit();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });

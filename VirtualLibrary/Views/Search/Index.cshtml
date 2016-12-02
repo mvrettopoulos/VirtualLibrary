@@ -4,11 +4,11 @@
     ViewBag.Title = "Search View";
 }
 <div class="row rowHomePage">
-    @using (Ajax.BeginForm("SearchBooks", "Search", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultArea" }))
+    @using (Ajax.BeginForm("SearchBooks", "Search", new AjaxOptions { HttpMethod = "POST", OnBegin = "AjaxBegin",OnComplete = "AjaxComplete", InsertionMode = InsertionMode.Replace, UpdateTargetId = "resultArea" }))
     {
         <div class="col-md-12">
             <div class="input-group" id="adv-search">
-                @Html.EditorFor(model => model.search, new { htmlAttributes = new { @class = "form-control form-search", placeholder = "Search for Books" ,id="searchAll"} })
+                @Html.EditorFor(model => model.Search, new { htmlAttributes = new { @class = "form-control form-search", placeholder = "Search for Books" ,id="searchAll"} })
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
@@ -18,20 +18,20 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-2" for="contain">Category</label>
                                         <div class="col-md-10">
-                                            @Html.ListBoxFor(model => model.category, ViewBag.Categories as MultiSelectList,  new { @class = "form-control chosen-select", style = "width:100%;" })
+                                            @Html.ListBoxFor(model => model.Category, ViewBag.Categories as MultiSelectList,  new { @class = "form-control chosen-select", style = "width:100%;" })
                                         </div>
 
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-2" for="contain">Author</label>
                                         <div class="col-md-10">
-                                            @Html.EditorFor(model => model.author, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-4" for="contain">Contains the words</label>
                                         <div class="col-md-8">
-                                            @Html.EditorFor(model => model.words, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.EditorFor(model => model.Words, new { htmlAttributes = new { @class = "form-control" } })
                                         </div>
                                     </div>
                                     <button type="submit" name="command" value="AdvancedSearch" class="input-block-level form-control btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
@@ -70,6 +70,21 @@
     });
     
     </script>
+
+<script>
+    $body = $("body");
+
+    function AjaxBegin() {
+        $body.addClass("loading");
+
+    }
+    function AjaxComplete() {
+        $body.removeClass("loading")
+    }
+
+
+</script>
+<div class="modal modal-loading"><!-- Place at bottom of page --></div>
 <script src="@Url.Content("~/Scripts/js/home.view.js")"></script>
 <script src="@Url.Content("~/bower_components/morrisjs/morris.min.js")"></script>
 <script src="@Url.Content("~/Scripts/morris-data.js")"></script>

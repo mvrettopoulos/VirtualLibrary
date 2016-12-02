@@ -32,7 +32,7 @@ http://www.jqueryscript.net/layout/Simple-jQuery-Plugin-To-Create-Pinterest-Styl
 
 
 */
-; (function ($, window, document, undefined) {
+ (function ($, window) {
     var pluginName = 'pinterest_grid',
         defaults = {
             padding_x: 10,
@@ -73,10 +73,8 @@ http://www.jqueryscript.net/layout/Simple-jQuery-Plugin-To-Create-Pinterest-Styl
 
     Plugin.prototype.calculate = function (single_column_mode) {
         var self = this,
-            tallest = 0,
             row = 0,
-            $container = $(this.element),
-            container_width = $container.width();
+            $container = $(this.element);
         $article = $(this.element).children();
 
         if (single_column_mode === true) {
@@ -93,11 +91,9 @@ http://www.jqueryscript.net/layout/Simple-jQuery-Plugin-To-Create-Pinterest-Styl
 
         $article.each(function (index) {
             var current_column,
-                left_out = 0,
                 top = 0,
                 $this = $(this),
-                prevAll = $this.prevAll(),
-                tallest = 0;
+                prevAll = $this.prevAll();
 
             if (single_column_mode === false) {
                 current_column = (index % columns);
@@ -116,7 +112,7 @@ http://www.jqueryscript.net/layout/Simple-jQuery-Plugin-To-Create-Pinterest-Styl
             $this.addClass('c' + current_column);
             $this.addClass('r' + row);
 
-            prevAll.each(function (index) {
+            prevAll.each(function () {
                 if ($(this).hasClass('c' + current_column)) {
                     top += $(this).outerHeight() + self.options.padding_y;
                 }
@@ -139,14 +135,13 @@ http://www.jqueryscript.net/layout/Simple-jQuery-Plugin-To-Create-Pinterest-Styl
     };
 
     Plugin.prototype.tallest = function (_container) {
-        var column_heights = [],
-            largest = 0;
-
+        var column_heights = [];
+        var func = function () {
+            temp_height += $(this).outerHeight();
+        };
         for (var z = 0; z < columns; z++) {
             var temp_height = 0;
-            _container.find('.c' + z).each(function () {
-                temp_height += $(this).outerHeight();
-            });
+            _container.find('.c' + z).each(func);
             column_heights[z] = temp_height;
         }
 
@@ -171,4 +166,4 @@ http://www.jqueryscript.net/layout/Simple-jQuery-Plugin-To-Create-Pinterest-Styl
         });
     }
 
-})(jQuery, window, document);
+})(jQuery, window);

@@ -98,7 +98,7 @@ function bindFormEdit(dialog) {
                 $('#edit_reservation_modalContent').html(result);
                 bindFormEdit();
             }
-        }).fail(function (xhr, status, error) {
+        }).fail(function () {
             alert('failed');
         });
     });
