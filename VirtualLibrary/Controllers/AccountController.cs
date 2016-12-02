@@ -182,40 +182,15 @@ namespace VirtualLibrary.Controllers
             if (ModelState.IsValid)
             {
 
-                string role = "Guest";
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = UserManager.Create(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var currentUser = UserManager.FindByName(user.UserName);
-                    UserManager.AddToRole(currentUser.Id, role);
-
-                    var NewUser = new Users();
-
-                    byte[] array;
-                    Image img = Image.FromFile(Server.MapPath("/Content/images/no_available_image.png"));
-                    using (MemoryStream ms = new MemoryStream())
+                    if(!SaveUser(user.UserName, model.FirstName, model.LastName, model.Date_of_Birth, model.membership_id_string))
                     {
-                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        array = ms.ToArray();
-                        ms.Close();
+                        ModelState.AddModelError("", "Something went wrong!!! Please try again or contact administrator.");
+                        return View(model);
                     }
-                    img.Dispose();
-
-                    NewUser.aspnet_user_id = currentUser.Id;
-                    NewUser.active = false;
-                    NewUser.bad_user = false;
-                    NewUser.username = model.Username;
-                    NewUser.first_name = model.FirstName;
-                    NewUser.last_name = model.LastName;
-                    NewUser.date_of_birth = model.Date_of_Birth;
-                    DateTime today = DateTime.Today;
-                    NewUser.date_of_registration = Convert.ToString(today);
-                    NewUser.image = array;
-                    NewUser.membership_id = Convert.ToInt64(model.membership_id_string);
-
-                    db.Users.Add(NewUser);
-                    db.SaveChanges();
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action(
@@ -400,8 +375,6 @@ namespace VirtualLibrary.Controllers
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
 
-            string role = "Guest";
-
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Manage");
@@ -421,35 +394,11 @@ namespace VirtualLibrary.Controllers
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    var currentUser = UserManager.FindByName(user.UserName);
-                    UserManager.AddToRole(currentUser.Id, role);
-
-                    var NewUser = new Users();
-
-                    byte[] array;
-                    Image img = Image.FromFile(Server.MapPath("/Content/images/no_available_image.png"));
-                    using (MemoryStream ms = new MemoryStream())
+                    if (!SaveUser(user.UserName, model.FirstName, model.LastName, model.Date_of_Birth, model.membership_id_string))
                     {
-                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                        array = ms.ToArray();
-                        ms.Close();
+                        ModelState.AddModelError("", "Something went wrong!!! Please try again or contact administrator.");
+                        return View(model);
                     }
-                    img.Dispose();
-                    NewUser.aspnet_user_id = currentUser.Id;
-                    NewUser.active = false;
-                    NewUser.bad_user = false;
-                    NewUser.username = model.Username;
-                    NewUser.first_name = model.FirstName;
-                    NewUser.last_name = model.LastName;
-                    NewUser.date_of_birth = model.Date_of_Birth;
-                    DateTime today = DateTime.Today;
-                    NewUser.date_of_registration = Convert.ToString(today);
-                    NewUser.image = array;
-                    NewUser.membership_id = Convert.ToInt64(model.membership_id_string);
-
-                    db.Users.Add(NewUser);
-                    db.SaveChanges();
-
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
@@ -808,6 +757,47 @@ namespace VirtualLibrary.Controllers
             {
                 return HttpContext.GetOwinContext().Authentication;
             }
+        }
+        private bool SaveUser(string username, string FirstName,string LastName,string Date_of_Birth,string membership_id_string)
+        {
+            string role = "Guest";
+            var currentUser = UserManager.FindByName(username);
+            UserManager.AddToRole(currentUser.Id, role);
+
+            var NewUser = new Users();
+
+            byte[] array;
+            Image img = Image.FromFile(Server.MapPath("/Content/images/no_available_image.png"));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                array = ms.ToArray();
+                ms.Close();
+            }
+            img.Dispose();
+
+            NewUser.aspnet_user_id = currentUser.Id;
+            NewUser.active = false;
+            NewUser.bad_user = false;
+            NewUser.username = username;
+            NewUser.first_name = FirstName;
+            NewUser.last_name = LastName;
+            NewUser.date_of_birth = Date_of_Birth;
+            DateTime today = DateTime.Today;
+            NewUser.date_of_registration = Convert.ToString(today);
+            NewUser.image = array;
+            NewUser.membership_id = Convert.ToInt64(membership_id_string);
+            try
+            {
+                db.Users.Add(NewUser);
+                db.SaveChanges();
+            }
+            catch (DataException e)
+            {
+                log.Error("Database error:", e);
+                return false;
+            }
+            return true;
         }
         private void AddErrors(IdentityResult result)
         {

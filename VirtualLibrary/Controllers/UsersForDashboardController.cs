@@ -36,7 +36,7 @@ namespace VirtualLibrary.Controllers
         public ActionResult Index()
         {
             var users = db.Users.Include(u => u.AspNetUsers);
-            ViewBag.inactive_users = db.Users.Include(u => u.AspNetUsers).Where(u => u.active == false).ToList();
+            ViewBag.inactive_users = db.Users.Include(u => u.AspNetUsers).Where(u => !u.active).ToList();
             return View(users.ToList());
         }
 

@@ -266,6 +266,7 @@
     <Compile Include="Models\Libraries.cs">
       <DependentUpon>VirtualLibraryEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LibraryViewModel.cs" />
     <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\ManageUsersRolesViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -672,14 +673,6 @@
     <Content Include="Scripts\js\roles.view.js" />
     <Content Include="Scripts\js\libraries.view.js" />
     <Content Include="Scripts\js\users.view.js" />
-    <Content Include="Scripts\leaflet-0.7.3.js" />
-    <Content Include="Scripts\leaflet-0.7.3.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\pagination.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -783,7 +776,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
