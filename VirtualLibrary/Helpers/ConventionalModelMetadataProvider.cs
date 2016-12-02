@@ -13,7 +13,7 @@ namespace VirtualLibrary.Helper
         {
             if (value != null) 
             {
-                value = value.First().ToString().ToUpper() + value.Substring(1);
+                value = value.First().ToString().ToUpperInvariant() + value.Substring(1);
                 return Regex.Replace(value, "([a-z](?=[A-Z0-9])|[A-Z](?=[A-Z][a-z]))", "$1 ").Trim(); 
             }
             else 

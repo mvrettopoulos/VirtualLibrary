@@ -13,12 +13,11 @@ $(function () {
     var ratingsField = $('#ratings-hidden');
     var reviewButton = $('#save-review');
 
-    openReviewBtn.click(function (e) {
+    openReviewBtn.click(function () {
         reviewBox.slideDown(400, function () {
             $('#new-review').trigger('autosize.resize');
             newReview.focus();
         });
-      //  openReviewBtn.fadeOut(100);
         closeReviewBtn.show();
     });
 
@@ -26,15 +25,13 @@ $(function () {
         e.preventDefault();
         reviewBox.slideUp(300, function () {
             newReview.focus();
-        //    openReviewBtn.fadeIn(200);
         });
         closeReviewBtn.hide();
     });
 
-    reviewButton.click(function (e) {
+    reviewButton.click(function () {
         reviewBox.slideUp(300, function () {
             newReview.focus();
-        //    openReviewBtn.fadeIn(200);
         });
         closeReviewBtn.hide();
     });

@@ -5,6 +5,11 @@ namespace VirtualLibrary.App_Start
 {
     public class BundleConfig
     {
+        protected BundleConfig()
+        {
+
+        }
+
         public static void RegisterBundles(BundleCollection bundles)
         {
 

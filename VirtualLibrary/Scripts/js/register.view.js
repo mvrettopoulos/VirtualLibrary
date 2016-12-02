@@ -65,9 +65,9 @@
 });
 
 $("#datepicker").datepicker({
-    minDate: new Date(1900, 1 - 1, 1), maxDate: '-18Y',
+    minDate: new Date(1900, 0, 1), maxDate: '-18Y',
     dateFormat: 'dd-mm-yy',
-    defaultDate: new Date(1970, 1 - 1, 1),
+    defaultDate: new Date(1970, 0, 1),
     changeMonth: true,
     changeYear: true,
     yearRange: '-110:-18'
