@@ -147,7 +147,7 @@
                                 var sum = 0;
                                 if (Model.Books_Ratings.Count() == 0)
                                 {
-                                    @Html.Display("Book Not Rated Yet")
+                                    @:Book Not Rated Yet
                                 }
                                 else
                                 {
@@ -286,7 +286,7 @@
 
             <div class="col-lg-12">
                 @using (Ajax.BeginForm("Create", "Ratings", new AjaxOptions { HttpMethod = "POST", OnBegin = "AjaxBegin",
-                    OnComplete = "AjaxComplete", OnFailure = "setErrorMessage", InsertionMode = InsertionMode.Replace, UpdateTargetId = "review-list" }))
+                    OnComplete = "AjaxComplete", OnSuccess="resetRatings",  OnFailure = "setErrorMessage", InsertionMode = InsertionMode.Replace, UpdateTargetId = "review-list" }))
                 {
                     @Html.AntiForgeryToken()
                     <input id="ratings-hidden" name="rating" type="hidden">
@@ -325,7 +325,9 @@
         $body.removeClass("loading")
     }
 
-
+    function resetRatings(data) {
+        location.reload();
+    }
 </script>
 <div class="modal modal-loading"><!-- Place at bottom of page --></div>
 
