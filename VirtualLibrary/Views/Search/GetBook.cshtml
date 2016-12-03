@@ -145,12 +145,19 @@
                         <div class="col-lg-10">
                             @{
                                 var sum = 0;
-                                foreach (var review in Model.Books_Ratings)
+                                if (Model.Books_Ratings.Count() == 0)
                                 {
-                                    sum += Convert.ToInt32(review.rating);
+                                    @Html.Display("Book Not Rated Yet")
                                 }
-                                var average = Math.Round((Double)sum / Model.Books_Ratings.Count, 2);
-                                @Html.DisplayFor(m => average)
+                                else
+                                {
+                                    foreach (var review in Model.Books_Ratings)
+                                    {
+                                        sum += Convert.ToInt32(review.rating);
+                                    }
+                                    var average = Math.Round((Double)sum / Model.Books_Ratings.Count, 2);
+                                    @Html.DisplayFor(m => average)
+                                }
                             }
                         </div>
                     </div>
